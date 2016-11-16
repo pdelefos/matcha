@@ -1,0 +1,128 @@
+/*------------------------------------*\
+  #NORMALIZER
+\*------------------------------------*/
+
+  html, body {
+  	margin: 0;
+  	padding: 0;
+  }
+
+/*------------------------------------*\
+  #COLORS
+\*------------------------------------*/
+
+/*
+
+#4ED0A3
+#72D27C
+#637CFE
+#965FF4
+
+*/
+
+/*------------------------------------*\
+  #FONTS
+\*------------------------------------*/
+
+  @font-face {
+  	font-family: 'Amarillo';
+  	src: url('../fonts/Amarillo.otf');
+  }
+
+  @font-face {
+  	font-family: 'Lato';
+  	src: url('../fonts/Lato-Regular.ttf');
+  }
+
+/*------------------------------------*\
+  #HOME SECTION
+\*------------------------------------*/
+
+  .home-wrap {
+  	background: #637CFE; /* For browsers that do not support gradients */
+  	background: -webkit-linear-gradient(125deg, #637CFE, #965FF4 80%); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(125deg, #637CFE, #965FF4 80%); /*For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(125deg, #637CFE, #965FF4 80%); /* For Firefox 3.6 to 15 */
+  	background: linear-gradient(125deg, #637CFE, #965FF4 80%); /* Standard syntax */
+  	height: 100vh;
+  	display: flex;
+  }
+
+  .home-connection-link {
+  	position: absolute;
+  	top: 30px;
+  	right: 30px;
+  	border: 2px solid #fff;
+  	border-radius: 8px;
+  	padding: 8px;
+  	text-decoration: none;
+  	color: #fff;
+  	font-size: 18px;
+  	font-family: 'Lato';
+  }
+
+  .home-container {
+  	width: 800px;
+  	height: 600px;
+  	margin-left: auto;
+  	margin-right: auto;
+  	margin-top: 150px;
+  	padding: 20px;
+  }
+
+  .home-pres {
+  	float: left;
+  	text-align: center;
+  	height: 100%;
+  	width: 50%;
+  	margin: 0;
+  }
+
+  .home-pres__title {
+  	color: #fff;
+  	font-family: 'Amarillo';
+  	font-size: 30px;
+  }
+
+  .home-pres__info {
+	font-family: 'Lato';
+	color: #fff;
+  }
+
+  .home-register {
+  	float: right;
+    width: 49%;
+    height: 100%;
+    text-align: center;
+    border: 2px solid #fff;
+    border-radius: 8px;
+  }
+
+  .home-register__title {
+  	font-family: 'Lato';
+  	font-size: 30px;
+  	color: #fff;
+  }
+
+  .form-register__input {
+  	text-align: center;
+  	width: 80%;
+  	height: 40px;
+  	margin-bottom: 31px;
+  	margin-top: 10px;
+  	border-radius: 4px;
+  	border: 2px solid #fff;
+  	background: none;
+  	font-family: 'Lato';
+  	font-size: 20px;
+  	color: #fff;
+  }
+
+  .form-register__input::-webkit-input-placeholder {
+	color: #55FEDE;
+  }
+
+  .btn-submit {
+  	text-transform: uppercase;
+  }
+
