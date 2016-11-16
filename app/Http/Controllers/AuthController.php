@@ -17,11 +17,11 @@ class AuthController extends Controller
         //
     }
 
-    public function get(Request $request) {
-        return view('register', ['url' => $request->url()]);
+    public function showRegister(Request $request) {
+        return view('pages.home', ['url' => $request->url()]);
     }
 
-    public function post(Request $request) {
+    public function submitRegister(Request $request) {
         $user = new User();
         $user->setLogin($request->input('login'));
         $user->setEmail($request->input('email'));

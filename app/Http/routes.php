@@ -11,6 +11,20 @@
 |
 */
 
-$app->get('/', "AuthController@get");
+use Illuminate\Http\Request;
 
-$app->post('/', "AuthController@post");
+/*--------------------------------------------------------------------------
+| Home Route 															   |
+--------------------------------------------------------------------------*/
+
+// $app->get('/', function(Request $request) {
+// 	return view('pages.home', ['url' => $request->url()]);
+// });
+
+/*--------------------------------------------------------------------------
+| Authentification Routes 												   |
+--------------------------------------------------------------------------*/
+
+$app->get('/', "AuthController@showRegister");
+
+$app->post('/', "AuthController@submitRegister");
