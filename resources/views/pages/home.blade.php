@@ -12,11 +12,11 @@
 			<div class="home-register">
 				<h2 class="home-register__title">INSCRIPTION</h2>
 				<form action="#" method="post" class="form-register">
+				<input class="form-register__input" type="text" name="nom" placeholder="NOM">
+				<input class="form-register__input" type="text" name="prenom" placeholder="PRENOM">
 				<input class="form-register__input" type="text" name="email" placeholder="EMAIL">
 				<input class="form-register__input" type="text" name="login" placeholder="PSEUDO">
-				<input class="form-register__input" type="text" name="prenom" placeholder="PRENOM">
-				<input class="form-register__input" type="text" name="nom" placeholder="NOM">
-				<input class="form-register__input" type="text" name="password" placeholder="MOT DE PASSE">
+				<input class="form-register__input" type="password" name="password" placeholder="MOT DE PASSE">
 				<input class="form-register__input btn-submit" type="submit" name="submit" value="Je m'inscris">
 			</form>
 			</div>
