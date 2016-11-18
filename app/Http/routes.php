@@ -28,3 +28,7 @@ use Illuminate\Http\Request;
 $app->get('/', "AuthController@showRegister");
 
 $app->post('/', "AuthController@submitRegister");
+
+$app->get('/connexion', "AuthController@showConnection");
+
+$app->post('/connexion', "AuthController@submitConnection");

@@ -17,6 +17,9 @@ class AuthController extends Controller
         //
     }
 
+    /*
+    * Render la page d'inscription
+    */
     public function showRegister(Request $request) {
         return view('pages.home', ['url' => $request->url()]);
     }
@@ -30,5 +33,10 @@ class AuthController extends Controller
         $user->save();
     }
 
-    //
+    /*
+    * Render la page de connexion
+    */
+    public function showConnection(Request $request) {
+        return view('pages.connection', ['url' => $request->url()]);
+    }
 }
