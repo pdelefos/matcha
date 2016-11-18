@@ -1,0 +1,195 @@
+/*------------------------------------*\
+  #NORMALIZER =========================
+	#COLORS =============================
+	#FONTS ==============================
+	#HOME ===============================
+	#WAVE_TEXT ==========================
+\*------------------------------------*/
+
+/*------------------------------------*\
+  #NORMALIZER
+\*------------------------------------*/
+
+  html, body {
+  	margin: 0;
+  	padding: 0;
+  }
+
+/*------------------------------------*\
+  #COLORS
+\*------------------------------------*/
+
+$purple: #965FF4;
+$blue1: #637CFE;
+$green: #55FEDE;
+$blue2: #4ED0A3;
+
+/*------------------------------------*\
+  #COLORS
+\*------------------------------------*/
+
+$small-text: 15px;
+$medium-text: 20px;
+$big-text: 25px;
+
+/*------------------------------------*\
+  #FONTS
+\*------------------------------------*/
+
+  @font-face {
+  	font-family: 'Amarillo';
+  	src: url('../fonts/Amarillo.otf');
+  }
+
+  @font-face {
+  	font-family: 'Lato';
+  	src: url('../fonts/Lato-Regular.ttf');
+		font-weight: normal;
+  }
+
+	@font-face {
+  	font-family: 'LatoBold';
+  	src: url('../fonts/Lato-Bold.ttf');
+		font-weight: bold;
+  }
+
+/*------------------------------------*\
+  #HOME
+\*------------------------------------*/
+
+  .home-wrap {
+  	display: flex;
+  }
+
+	.home-background {
+		background: $blue1; /* For browsers that do not support gradients */
+  	background: -webkit-linear-gradient(125deg, $blue1, $purple 80%); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(125deg, $blue1, $purple 80%); /*For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(125deg, $blue1, $purple 80%); /* For Firefox 3.6 to 15 */
+  	background: linear-gradient(125deg, $blue1, $purple 80%); /* Standard syntax */
+		/*background-size: cover;*/
+	}
+
+  .home-connection-link {
+  	position: absolute;
+  	top: 2em;
+  	right: 2em;
+  }
+
+	.btn-connection {
+		border: 2px solid #fff;
+  	border-radius: 8px;
+  	padding: 5px 8px 8px 8px;
+  	text-decoration: none;
+  	color: #fff;
+  	font-size: $medium-text;
+  	font-family: 'Lato';
+	}
+
+  .home-container {
+  	width: 800px;
+  	height: 600px;
+  	margin-left: auto;
+  	margin-right: auto;
+  	margin-top: 130px;
+		margin-bottom: 130px;
+  	padding: 20px;
+  	font-family: 'Lato';
+  }
+
+  .home-pres {
+  	float: left;
+  	text-align: center;
+  	height: 100%;
+  	width: 50%;
+  	margin: 0;
+  }
+
+  .home-pres__title {
+  	color: #fff;
+  	font-family: 'Amarillo';
+  	font-size: 40px;
+  }
+
+  .home-pres__info {
+	  color: #fff;
+    font-size: $medium-text;
+  }
+
+  .home-register {
+  	float: right;
+    width: 49%;
+    height: 100%;
+    text-align: center;
+    border: 2px solid #fff;
+    border-radius: 8px;
+		box-shadow: 10px 10px 0px $green;
+  }
+
+  .home-register__title {
+  	font-size: $big-text;
+  	color: #fff;
+  }
+
+  .form-register__input {
+  	padding: 5px;
+  	text-align: left;
+  	width: 80%;
+  	height: 40px;
+  	margin-bottom: 15px;
+  	margin-top: 10px;
+  	border-radius: 4px;
+  	border: 2px solid #fff;
+  	background: none;
+  	font-size: $small-text;
+  	color: #fff;
+  }
+
+  .form-register__input::-webkit-input-placeholder {
+    color: $green;
+  }
+
+  .btn-submit {
+		font-size: $medium-text;
+		padding: 5px;
+  	margin-top: 50px;
+  	height: 50px;
+    width: 80%;
+  	text-align: center;
+  	text-transform: uppercase;
+		font-family: 'LatoBold';
+  }
+  
+  .btn-hover:hover {
+    background: #fff;
+    color: $purple;
+    cursor: pointer;
+  }
+
+	/*------------------------------------*\
+		#WAVE_TEXT
+	\*------------------------------------*/
+
+	$offset : -30px;
+	$count : 15;
+	$duration : 1.5;
+
+	@keyframes wave {
+		from { transform : translateY(0);}
+		to   { transform : translateY( $offset ); }
+	}
+
+	.wavetext span {
+		display: inline-block;
+		animation-duration: #{$duration}s;
+		animation-name: wave;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		transition-duration: 1s;
+	}
+
+	@for $i from 0 to $count {
+		.wavetext :nth-child( #{$count}n + #{$i} ) {
+				animation-delay : -#{($count - $i) * 1 * $duration / $count }s;
+		}
+	}

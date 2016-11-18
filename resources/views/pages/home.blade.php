@@ -1,10 +1,17 @@
-@extends('layouts.default_noheader', array('url', $url))
+<?php
+$page_need = array(
+	'url', $url
+);
+?>
+@extends('layouts.default_noheader', $page_need)
 @section('content')
 	<div class='home-wrap'>
-		<a href="{{ $url }}/connection" class="home-connection-link">se connecter</a>
+		<a href="{{ $url }}/connection" class="home-connection-link btn-connection btn-hover">se connecter</a>
 		<div class="home-container">
 			<div class="home-pres">
-				<h2 class="home-pres__title">Matcha</h2>
+				<h2 class="home-pres__title">
+					<div class="wavetext"></div>
+				</h2>
 				<div class="home-pres__info">
 					Site de rencontre à la cool.
 				</div>
@@ -17,7 +24,7 @@
 				<input class="form-register__input" type="text" name="email" placeholder="EMAIL">
 				<input class="form-register__input" type="text" name="login" placeholder="PSEUDO">
 				<input class="form-register__input" type="password" name="password" placeholder="MOT DE PASSE">
-				<input class="form-register__input btn-submit" type="submit" name="submit" value="Je m'inscris">
+				<input class="form-register__input btn-submit btn-hover" type="submit" name="submit" value="Je m'inscris">
 			</form>
 			</div>
 		<div>
