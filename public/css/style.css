@@ -9,6 +9,7 @@
   #NORMALIZER
 \*------------------------------------*/
 html, body {
+  height: 100%;
   margin: 0;
   padding: 0; }
 
@@ -49,7 +50,8 @@ html, body {
   /* For Firefox 3.6 to 15 */
   background: linear-gradient(125deg, #637CFE, #965FF4 80%);
   /* Standard syntax */
-  /*background-size: cover;*/ }
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
 
 .home-connection-link {
   position: absolute;
@@ -97,8 +99,7 @@ html, body {
   height: 100%;
   text-align: center;
   border: 2px solid #fff;
-  border-radius: 8px;
-  box-shadow: 10px 10px 0px #55FEDE; }
+  border-radius: 8px; }
 
 .home-register__title {
   font-size: 25px;

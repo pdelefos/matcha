@@ -11,6 +11,7 @@
 \*------------------------------------*/
 
   html, body {
+		height: 100%;
   	margin: 0;
   	padding: 0;
   }
@@ -67,7 +68,9 @@ $big-text: 25px;
   	background: -o-linear-gradient(125deg, $blue1, $purple 80%); /*For Opera 11.1 to 12.0 */
   	background: -moz-linear-gradient(125deg, $blue1, $purple 80%); /* For Firefox 3.6 to 15 */
   	background: linear-gradient(125deg, $blue1, $purple 80%); /* Standard syntax */
-		/*background-size: cover;*/
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		// position: absolute;
 	}
 
   .home-connection-link {
@@ -123,7 +126,6 @@ $big-text: 25px;
     text-align: center;
     border: 2px solid #fff;
     border-radius: 8px;
-		box-shadow: 10px 10px 0px $green;
   }
 
   .home-register__title {
