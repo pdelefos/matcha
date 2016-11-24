@@ -13,20 +13,21 @@ class CreateUserTable extends Migration
     public function up()
     {
         Schema::create('user', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('login', 50)->unique();
-            $table->string('email', 255)->unique();
-            $table->string('nom', 255);
-            $table->string('prenom', 255);
-            // $table->integer('sexe_id')->unsigned();
-            // // $table->foreign('sexe_id')->references('id')->on('sexe');
-            // $table->integer('orientation_sexe_id')->unsigned();
-            // // $table->foreign('orientation_sexe_id')->references('id')->on('orientation_sexe');
-            // $table->string('bio', 500);
-            // $table->integer('interets_id')->unsigned();
-            // // $table->foreign('interets_id')->references('id')->on('interet');
-            // $table->integer('images')->unsigned();
-            // $table->string('localisation');
+            $table->primary('id')->increments()->unsigned();
+            $table->string('email', 250);
+            $table->string('login', 50);
+            $table->string('nom', 50);
+            $table->string('prenom', 50);
+            $table->string('password', 250);
+            $table->integer('sexe_id')->unsigned();
+            $table->foreign('sexe_id')->references('id')->on('sexe');
+            $table->integer('orientation_sexe_id')->unsigned();
+            $table->foreign('orientation_sexe_id')->references('id')->on('orientation_sexe');
+            $table->longText('bio', 500);
+            $table->integer('interets')->unsigned();
+            $table->foreign('interets')->references('id')->on('user_interets');
+            $table->integer('photos')->unsigned();
+            $table->foreign('photos')->references('id')->on('user_photos');
             $table->timestamps();
         });
     }
