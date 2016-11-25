@@ -8,6 +8,7 @@ class User {
 	private $email;
 	private $nom;
 	private $prenom;
+	private $password;
 
 	public function __construct() {
 	}
@@ -28,6 +29,10 @@ class User {
 
 	public function setPrenom($prenom) {
 		$this->prenom = $prenom;
+	}
+
+	public function setPassword($password) {
+		$this->password = $password;
 	}
 
 	// get
@@ -51,13 +56,14 @@ class User {
 	//save on db
 
 	public function save() {
-		app('db')->insert('INSERT INTO user (login, email, nom, prenom) 
-			VALUES (:login, :email, :nom, :prenom)',
+		app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
+			VALUES (:login, :email, :nom, :prenom, :password)',
 			[
 				'login' => $this->login,
 				'email' => $this->email,
 				'nom' => $this->nom,
-				'prenom' => $this->prenom
+				'prenom' => $this->prenom,
+				'password' => $this->password
 			]);
 	}
 }
