@@ -68,7 +68,7 @@ html, body {
   font-family: 'Lato'; }
 
 .home-container {
-  width: 800px;
+  width: 730px;
   height: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -87,11 +87,13 @@ html, body {
 .home-pres__title {
   color: #fff;
   font-family: 'Amarillo';
-  font-size: 40px; }
+  font-size: 40px;
+  float: left; }
 
 .home-pres__info {
   color: #fff;
-  font-size: 20px; }
+  font-size: 20px;
+  float: left; }
 
 .home-register {
   float: right;

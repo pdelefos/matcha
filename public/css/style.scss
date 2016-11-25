@@ -90,7 +90,7 @@ $big-text: 25px;
 	}
 
   .home-container {
-  	width: 800px;
+  	width: 730px;
   	height: 600px;
   	margin-left: auto;
   	margin-right: auto;
@@ -112,11 +112,13 @@ $big-text: 25px;
   	color: #fff;
   	font-family: 'Amarillo';
   	font-size: 40px;
+		float: left;
   }
 
   .home-pres__info {
 	  color: #fff;
     font-size: $medium-text;
+		float: left;
   }
 
   .home-register {
