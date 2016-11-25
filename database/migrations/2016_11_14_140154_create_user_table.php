@@ -13,20 +13,20 @@ class CreateUserTable extends Migration
     public function up()
     {
         Schema::create('user', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('email', 250);
             $table->string('login', 50);
             $table->string('nom', 50);
             $table->string('prenom', 50);
             $table->string('password', 250);
-            $table->integer('sexe_id')->unsigned();
+            $table->integer('sexe_id')->unsigned()->nullable();
             $table->foreign('sexe_id')->references('id')->on('sexe');
-            $table->integer('orientation_sexe_id')->unsigned();
+            $table->integer('orientation_sexe_id')->unsigned()->nullable();
             $table->foreign('orientation_sexe_id')->references('id')->on('orientation_sexe');
-            $table->longText('bio', 500);
-            $table->integer('interets')->unsigned();
+            $table->longText('bio', 500)->nullable();
+            $table->integer('interets')->unsigned()->nullable();
             $table->foreign('interets')->references('id')->on('user_interets');
-            $table->integer('photos')->unsigned();
+            $table->integer('photos')->unsigned()->nullable();
             $table->foreign('photos')->references('id')->on('user_photos');
             $table->timestamps();
         });
