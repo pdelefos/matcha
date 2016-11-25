@@ -23,7 +23,7 @@ $page_need = array(
 				<input class="form-register__input" type="text" name="prenom" placeholder="PRENOM">
 				<input class="form-register__input" type="text" name="email" placeholder="EMAIL">
 				<input class="form-register__input" type="text" name="login" placeholder="PSEUDO">
-				<input class="form-register__input" type="password" name="password" placeholder="MOT DE PASSE">
+				<input class="form-register__input" type="text" name="password" placeholder="MOT DE PASSE">
 				<input class="form-register__input btn-submit btn-hover" type="submit" name="submit" value="Je m'inscris">
 			</form>
 			</div>
