@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserInteretsTable extends Migration
+class CreateUserPhotosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateUserInteretsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_interets', function (Blueprint $table) {
+        Schema::create('user_photos', function (Blueprint $table) {
+            $table->integer('id')->increments()->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('interets_id')->unsigned();
-            $table->primary(['user_id', 'interets_id']);
+            $table->foreign('user_id')->references('id')->on('user');
+            $table->integer('photo_id')->unsigned();
+            $table->foreign('photo_id')->references('id')->on('photo');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateUserInteretsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_interets');
+        Schema::drop('user_photos');
     }
 }

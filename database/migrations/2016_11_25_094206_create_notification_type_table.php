@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSexeTable extends Migration
+class CreateNotificationTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class CreateSexeTable extends Migration
      */
     public function up()
     {
-        Schema::create('sexe', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsignde();
+        Schema::create('notification_type', function (Blueprint $table) {
+            $table->integer('id')->increments()->unsigned();
             $table->string('description', 50);
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateSexeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sexe');
+        Schema::drop('notification_type');
     }
 }
