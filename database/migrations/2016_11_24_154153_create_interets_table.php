@@ -13,7 +13,7 @@ class CreateInteretsTable extends Migration
     public function up()
     {
         Schema::create('interets', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('description', 100)->unique();
             $table->timestamps();
         });

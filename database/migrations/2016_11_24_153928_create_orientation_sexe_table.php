@@ -13,7 +13,7 @@ class CreateOrientationSexeTable extends Migration
     public function up()
     {
         Schema::create('orientation_sexe', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('description', 50);
             $table->timestamps();
         });

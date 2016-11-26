@@ -13,7 +13,7 @@ class CreatePhotoTable extends Migration
     public function up()
     {
         Schema::create('photo', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('src', 500);
             $table->timestamps();
         });

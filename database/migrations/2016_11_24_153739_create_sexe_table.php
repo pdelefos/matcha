@@ -13,7 +13,7 @@ class CreateSexeTable extends Migration
     public function up()
     {
         Schema::create('sexe', function (Blueprint $table) {
-            $table->integer('id')->increments()->unsignde();
+            $table->increments('id')->unsigned();
             $table->string('description', 50);
             $table->timestamps();
         });
