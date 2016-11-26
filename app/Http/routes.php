@@ -25,10 +25,10 @@ use Illuminate\Http\Request;
 | Authentification Routes 												   |
 --------------------------------------------------------------------------*/
 
-$app->get('/', "AuthController@showRegister");
+$app->get('/', ['as' => 'register', 'uses' => 'AuthController@showRegister']);
 
 $app->post('/', "AuthController@submitRegister");
 
-$app->get('/connexion', "AuthController@showConnection");
+$app->get('/connexion', ['as' => 'connection', 'uses' => 'AuthController@showConnection']);
 
 $app->post('/connexion', "AuthController@submitConnection");

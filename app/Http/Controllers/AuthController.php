@@ -9,68 +9,67 @@ use App\Classes\ErrorHandler;
 
 class AuthController extends Controller
 {
-    /*
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         //
     }
 
-    /*
-     * Render la page d'inscription
-     */
+    
+    // Render la page d'inscription
     public function showRegister(Request $request) {
-        return view('pages.home', ['url' => $request->url()]);
+        return view('pages.register', ['url' => $request->url()]);
     }
 
-    /*
-     * Validation et insertion des données en base
-     */
+    //Validation et insertion des données en base
     public function submitRegister(Request $request) {
-        $array = $request->all();
+        $inputs = $request->all();
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
-        $validator->check($array, [
+        $validator->check($inputs, [
             'nom' => [
                 'required' => true,
-                'maj' => true
+                'alnum' => true,
+                'maxlength' => 150
             ],
             'prenom' => [
-                'required' => true
+                'required' => true,
+                'alnum' => true,
+                'maxlength' => 150
             ],
             'email' => [
                 'required' => true,
-                'email' => true
+                'email' => true,
+                'unique' => true
             ],
             'login' => [
                 'required' => true,
-                'maxlength' => 20,
-                'minlength' => 3,
-                'maj' => true
+                'alnum' => true,
+                'minlength' => 5,
+                'maxlength' => 150,
+                'unique' => true
             ],
             'password' => [
-                'required' => true
+                'required' => true,
+                'minlength' => 5,
+                'maxlength' => 150,
+                'password' => true
             ]
         ]);
-        if ($validator->fails())
-            print_r($validator->errors());
-        else {
+        if ($validator->fails()) {
+            return view('pages.register', ['url' => $request->url(), 'prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        } else {
             $user = new User();     
             $user->setLogin($request->input('login'));
             $user->setEmail($request->input('email'));
             $user->setNom($request->input('nom'));
             $user->setPrenom($request->input('prenom'));
-            $user->setPassword($request->input('password'));
-            $user->save();
+            $user->setPassword(hash("whirlpool", $request->input('password')));
+            $user->register();
         }
     }
 
-    /*
-     * Render la page de connexion
-     */
+    // Render la page de connexion
     public function showConnection(Request $request) {
         return view('pages.connection', ['url' => $request->url()]);
     }

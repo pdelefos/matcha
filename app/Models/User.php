@@ -55,7 +55,7 @@ class User {
 
 	//save on db
 
-	public function save() {
+	public function register() {
 		app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
 			VALUES (:login, :email, :nom, :prenom, :password)',
 			[
@@ -65,5 +65,21 @@ class User {
 				'prenom' => $this->prenom,
 				'password' => $this->password
 			]);
+	}
+
+	// static functions
+
+	public static function emailExists($email) {
+		$ret = app('db')->select('SELECT id FROM user WHERE email = :email', ['email' => $email]);
+		if ($ret)
+			return true;
+		return false;
+	}
+
+	public static function loginExists($login) {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login', ['login' => $login]);
+		if ($ret)
+			return true;
+		return false;
 	}
 }
