@@ -107,7 +107,24 @@ html, body {
   font-size: 25px;
   color: #fff; }
 
+.home-register__error {
+  position: relative; }
+
+*[data-error]::before {
+  content: attr(data-error);
+  color: white;
+  display: block;
+  position: absolute;
+  top: 13%;
+  left: 97%;
+  background: #d2545a;
+  width: 280px;
+  padding: 4px;
+  box-shadow: -6px 6px 10px black;
+  border-radius: 8px 8px 8px 0px; }
+
 .form-register__input {
+  position: relative;
   padding: 5px;
   text-align: left;
   width: 80%;

@@ -24,6 +24,7 @@ $purple: #965FF4;
 $blue1: #637CFE;
 $green: #55FEDE;
 $blue2: #4ED0A3;
+$red: #d2545a;
 
 /*------------------------------------*\
   #COLORS
@@ -135,7 +136,26 @@ $big-text: 25px;
   	color: #fff;
   }
 
+	.home-register__error {
+		position: relative;
+	}
+
+	*[data-error]::before {
+    content: attr(data-error);
+		color: white;
+    display: block;
+    position: absolute;
+    top: 13%;
+    left: 97%;
+    background: $red;
+    width: 280px;
+    padding: 4px;
+    box-shadow: -6px 6px 10px black;
+    border-radius: 8px 8px 8px 0px;
+	}
+
   .form-register__input {
+		position: relative;
   	padding: 5px;
   	text-align: left;
   	width: 80%;
