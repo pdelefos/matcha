@@ -40,14 +40,14 @@ class AuthController extends Controller
             'email' => [
                 'required' => true,
                 'email' => true,
-                'unique' => true
+                'uniqueEmail' => true
             ],
             'login' => [
                 'required' => true,
                 'alnum' => true,
                 'minlength' => 5,
                 'maxlength' => 150,
-                'unique' => true
+                'uniqueLogin' => true
             ],
             'password' => [
                 'required' => true,
