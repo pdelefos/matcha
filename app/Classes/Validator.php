@@ -3,26 +3,29 @@
 namespace App\Classes;
 
 use App\Classes\ErrorHandler;
+use App\Models\User;
 
 class Validator {
 
     protected $errorHandler;
 
-    protected $rules = ['required', 'minlength', 'maxlength', 'email', 'alnum', 'maj'];
+    protected $rules = ['required', 'minlength', 'maxlength', 'email', 'alnum', 'password', 'unique'];
 
     public $messages = [
-        'required' => 'The :field field is required',
-        'minlength' => 'The :field field must be a minimum of :satisfier length',
-        'maxlength' => 'The :field field must be a maximum of :satisfier length',
-        'email' => 'email invalid',
-        'alnum' => 'The :field field must be alphanumeric',
-        'maj' => 'il faut des maj sur :field'
+        'required' => 'Le champ :field est obligatoire',
+        'minlength' => 'Le champ :field doit faire au minimum :condition caractères',
+        'maxlength' => 'Le champ :field doit faire au maximum :condition caractères',
+        'email' => 'l\'email est invalide',
+        'alnum' => 'Le champ :field doit être composé uniquement de chiffres et de lettres',
+        'password' => 'Le mot de passe doit comporter une majuscule, une minuscule et un chiffre', 
+        'unique' => 'déjà utilisé'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
         $this->errorHandler = $errorHandler;
     }
 
+    // Récupère pour chaque input la valeur et les regles, puis les valide
     public function check($items, $rules) {
         foreach ($items as $item => $value) {
             if (in_array($item, array_keys($rules))) {
@@ -35,21 +38,15 @@ class Validator {
         }
     }
 
-    public function fails() {
-        return $this->errorHandler->hasErrors();
-    }
-
-    public function errors() {
-        return $this->errorHandler;
-    }
-
+    // Applique chaque function de validation a l'input
+    // les erreurs sont ajouté a l'errorHandler
     protected function validate($item) {
         $field = $item['field'];
-        foreach ($item['rules'] as $rule => $satisfier) {
-            if (in_array($rule, $this->rules)) {
-                if (!call_user_func_array([$this, $rule], [$field, $item['value'], $satisfier])) {
+        foreach ($item['rules'] as $rule => $condition) {
+            if (in_array($rule, $this->rules) && $condition != false) {
+                if (!call_user_func_array([$this, $rule], [$field, $item['value'], $condition])) {
                     $this->errorHandler->addError(
-                        str_replace([':field', ':satisfier'], [$field, $satisfier], $this->messages[$rule]),
+                        str_replace([':field', ':condition'], [$field, $condition], $this->messages[$rule]),
                         $field
                     );
                 }
@@ -57,27 +54,61 @@ class Validator {
         }
     }
 
-    protected function required($field, $value, $satisfier) {
+    // renvoi false s'il y a des erreurs dans l'errorHandler
+    public function fails() {
+        return $this->errorHandler->hasErrors();
+    }
+
+    // renvoi l'errorHandler
+    public function errors() {
+        return $this->errorHandler;
+    }
+
+    //======================================================================
+    // VALIDATION FUNCTIONS
+    //======================================================================
+
+    // Verifie que le valeur n'est pas vide
+    protected function required($field, $value, $condition) {
         return !empty(trim($value));
     }
 
-    protected function minlength($field, $value, $satisfier) {
-        return mb_strlen($value) >= $satisfier;
+    // Verifie que la valeur est superieur a la condition
+    protected function minlength($field, $value, $condition) {
+        return mb_strlen($value) >= $condition;
     }
 
-    protected function maxlength($field, $value, $satisfier) {
-        return mb_strlen($value) <= $satisfier;
+    // Verifie que la valeur est inferieur a la condition
+    protected function maxlength($field, $value, $condition) {
+        return mb_strlen($value) <= $condition;
     }
 
-    protected function email($field, $value, $satisfier) {
+    // Verifie que la valeur est un email valide
+    protected function email($field, $value, $condition) {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
-    protected function alnum($field, $value, $satisfier) {
+    // Verifie que la valeur n'est composé que de valeurs alphanumeriques
+    protected function alnum($field, $value, $condition) {
         return ctype_alnum($value);
     }
 
-    protected function maj($field, $value, $satisfier) {
-        return ctype_upper($value);
+    // Verifie que le mot de passe est composé d'une majuscule, une minuscule et un chiffre
+    protected function password($field, $value, $condition) {
+        $uppercase = preg_match('/[A-Z]/', $value);
+        $lowercase = preg_match('/[a-z]/', $value);
+        $number    = preg_match('/[0-9]/', $value);
+        
+        if(!$uppercase || !$lowercase || !$number)
+            return false;
+        return true;
+    }
+
+    // Verifie si le champ email ou login existent déjà en base
+    protected function unique($field, $value, $condition) {
+        if ($field === "email")
+            return User::emailExists($value) ? false : true;
+        if ($field === "login")
+            return User::loginExists($value) ? false : true;
     }
 }
