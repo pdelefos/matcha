@@ -88,6 +88,7 @@ $big-text: 25px;
   	color: #fff;
   	font-size: $medium-text;
   	font-family: 'Lato';
+		transition-duration: 0.5s
 	}
 
   .home-container {
@@ -131,7 +132,7 @@ $big-text: 25px;
     border-radius: 8px;
   }
 
-  .home-register__title {
+  .form__title {
   	font-size: $big-text;
   	color: #fff;
   }
@@ -150,7 +151,7 @@ $big-text: 25px;
     background: $red;
     width: 280px;
     padding: 4px;
-    box-shadow: -6px 6px 10px black;
+    box-shadow: 0px 4px 12px black;
     border-radius: 8px 8px 8px 0px;
 	}
 
@@ -182,12 +183,14 @@ $big-text: 25px;
   	text-align: center;
   	text-transform: uppercase;
 		font-family: 'LatoBold';
+		transition-duration: 0.5s;
   }
   
   .btn-hover:hover {
     background: #fff;
-    color: $purple;
+    color: $blue1;
     cursor: pointer;
+		transition-duration: 0.5s;
   }
 
 	/*------------------------------------*\

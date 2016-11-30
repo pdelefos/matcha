@@ -65,7 +65,8 @@ html, body {
   text-decoration: none;
   color: #fff;
   font-size: 20px;
-  font-family: 'Lato'; }
+  font-family: 'Lato';
+  transition-duration: 0.5s; }
 
 .home-container {
   width: 730px;
@@ -120,7 +121,7 @@ html, body {
   background: #d2545a;
   width: 280px;
   padding: 4px;
-  box-shadow: -6px 6px 10px black;
+  box-shadow: 0px 4px 12px black;
   border-radius: 8px 8px 8px 0px; }
 
 .form-register__input {
@@ -148,12 +149,14 @@ html, body {
   width: 80%;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'LatoBold'; }
+  font-family: 'LatoBold';
+  transition-duration: 0.5s; }
 
 .btn-hover:hover {
   background: #fff;
-  color: #965FF4;
-  cursor: pointer; }
+  color: #637CFE;
+  cursor: pointer;
+  transition-duration: 0.5s; }
 
 /*------------------------------------*\
 	#WAVE_TEXT

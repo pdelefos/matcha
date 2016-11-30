@@ -17,8 +17,8 @@ class AuthController extends Controller
 
     
     // Render la page d'inscription
-    public function showRegister(Request $request) {
-        return view('pages.register', ['url' => $request->url()]);
+    public function showRegister() {
+        return view('pages.register');
     }
 
     //Validation et insertion des données en base
@@ -57,7 +57,7 @@ class AuthController extends Controller
             ]
         ]);
         if ($validator->fails()) {
-            return view('pages.register', ['url' => $request->url(), 'prev_values' => $request, 'errorHandler' => $validator->errors()]);
+            return view('pages.register', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         } else {
             $user = new User();     
             $user->setLogin($request->input('login'));
@@ -70,7 +70,7 @@ class AuthController extends Controller
     }
 
     // Render la page de connexion
-    public function showConnection(Request $request) {
-        return view('pages.connection', ['url' => $request->url()]);
+    public function showConnexion() {
+        return view('pages.connexion');
     }
 }

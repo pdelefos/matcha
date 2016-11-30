@@ -9,16 +9,17 @@ class Validator {
 
     protected $errorHandler;
 
-    protected $rules = ['required', 'minlength', 'maxlength', 'email', 'alnum', 'password', 'unique'];
+    protected $rules = ['required', 'minlength', 'maxlength', 'email', 'alnum', 'password', 'uniqueEmail', 'uniqueLogin'];
 
     public $messages = [
-        'required' => 'Le champ :field est obligatoire',
+        'required' => 'Le champ :field est requis',
         'minlength' => 'Le champ :field doit faire au minimum :condition caractères',
         'maxlength' => 'Le champ :field doit faire au maximum :condition caractères',
-        'email' => 'l\'email est invalide',
+        'email' => 'Cet email est invalide',
         'alnum' => 'Le champ :field doit être composé uniquement de chiffres et de lettres',
         'password' => 'Le mot de passe doit comporter une majuscule, une minuscule et un chiffre', 
-        'unique' => 'déjà utilisé'
+        'uniqueEmail' => 'Cet email est déjà utilisé',
+        'uniqueLogin' => 'Ce login est déjà utilisé'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -104,11 +105,13 @@ class Validator {
         return true;
     }
 
-    // Verifie si le champ email ou login existent déjà en base
-    protected function unique($field, $value, $condition) {
-        if ($field === "email")
-            return User::emailExists($value) ? false : true;
-        if ($field === "login")
-            return User::loginExists($value) ? false : true;
+    // Verifie si le champ email existent déjà en base
+    protected function uniqueEmail($field, $value, $condition) {
+        return User::emailExists($value) ? false : true;
+    }
+
+    // Verifie si le champ login existent déjà en base
+    protected function uniqueLogin($field, $value, $condition) {
+        return User::loginExists($value) ? false : true;
     }
 }
