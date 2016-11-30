@@ -1,19 +1,26 @@
 /*------------------------------------*\
+  ================INDEX================
+
   #NORMALIZER =========================
 	#COLORS =============================
 	#FONTS ==============================
-	#HOME ===============================
+	#REGISTER ===========================
 	#WAVE_TEXT ==========================
+  #HOME ===============================
+
 \*------------------------------------*/
 
 /*------------------------------------*\
   #NORMALIZER
 \*------------------------------------*/
 
-  html, body {
-		height: 100%;
+  * { 
   	margin: 0;
   	padding: 0;
+  }
+
+  html, body {
+    height: 100%;
   }
 
 /*------------------------------------*\
@@ -25,14 +32,6 @@ $blue1: #637CFE;
 $green: #55FEDE;
 $blue2: #4ED0A3;
 $red: #d2545a;
-
-/*------------------------------------*\
-  #COLORS
-\*------------------------------------*/
-
-$small-text: 15px;
-$medium-text: 20px;
-$big-text: 25px;
 
 /*------------------------------------*\
   #FONTS
@@ -55,8 +54,12 @@ $big-text: 25px;
 		font-weight: bold;
   }
 
+  $small-text: 15px;
+  $medium-text: 20px;
+  $big-text: 25px;
+
 /*------------------------------------*\
-  #HOME
+  #REGISTER
 \*------------------------------------*/
 
   .home-wrap {
@@ -110,11 +113,17 @@ $big-text: 25px;
   	margin: 0;
   }
 
-  .home-pres__title {
-  	color: #fff;
+  .logo-matcha {
+    color: #fff;
   	font-family: 'Amarillo';
   	font-size: 40px;
+  }
+
+  .home-pres__title {
+  
 		float: left;
+    margin-top: 50px;
+    margin-bottom: 15px;
   }
 
   .home-pres__info {
@@ -127,19 +136,40 @@ $big-text: 25px;
   	float: right;
     width: 49%;
     height: 100%;
+  }
+
+  .form__box {
     text-align: center;
     border: 2px solid #fff;
     border-radius: 8px;
   }
 
   .form__title {
+    margin-top: 25px;
+    margin-bottom: 20px;
   	font-size: $big-text;
   	color: #fff;
   }
 
-	.home-register__error {
+	.form__error {
 		position: relative;
 	}
+
+  .form__input {
+    border-radius: 4px;
+    border: 2px solid #fff;
+    background: none;
+    padding: 5px;
+    font-size: $small-text;
+  }
+
+  .form__input::selected {
+    background: red;
+  }
+
+  .form__input::-webkit-input-placeholder {
+    color: $green;
+  }
 
 	*[data-error]::before {
     content: attr(data-error);
@@ -154,30 +184,25 @@ $big-text: 25px;
     box-shadow: 0px 4px 12px black;
     border-radius: 8px 8px 8px 0px;
 	}
-
-  .form-register__input {
-		position: relative;
-  	padding: 5px;
-  	text-align: left;
-  	width: 80%;
-  	height: 40px;
-  	margin-bottom: 15px;
-  	margin-top: 10px;
-  	border-radius: 4px;
-  	border: 2px solid #fff;
-  	background: none;
-  	font-size: $small-text;
-  	color: #fff;
+  
+  .register-input {
+    position: relative;
+    text-align: left;
+    width: 80%;
+    height: 40px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    color: #fff;
   }
 
-  .form-register__input::-webkit-input-placeholder {
-    color: $green;
+  .register-submit {
+    margin-top: 50px;
   }
 
   .btn-submit {
+    color: #fff;
 		font-size: $medium-text;
 		padding: 5px;
-  	margin-top: 50px;
   	height: 50px;
     width: 80%;
   	text-align: center;
@@ -220,3 +245,55 @@ $big-text: 25px;
 				animation-delay : -#{($count - $i) * 1 * $duration / $count }s;
 		}
 	}
+
+  /*------------------------------------*\
+    #LOGIN
+  \*------------------------------------*/
+  
+  .logo {
+    width: 208px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-login {
+    font-family: 'Lato';
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 180px;
+  }
+
+  .form__login {
+    margin-top: 55px;
+  }
+
+  .login-submit {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  /*------------------------------------*\
+    #HOME
+  \*------------------------------------*/
+
+  .navbar {
+    display: inline-block;
+    background: $purple;
+    height: 100vh;
+    width: 100px;
+    margin: 0px;
+  }
+
+  .app-wrap {
+    display: inline-block;
+    background: blue;
+    margin: 0px;
+    height: 100vh;
+    width: calc(100% - 101px);
+  }
+
+  .navbar-item {
+    text-decoration: none;
+    height: 80px;
+    display: block;
+  }

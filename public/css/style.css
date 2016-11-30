@@ -1,21 +1,24 @@
 /*------------------------------------*\
+  ================INDEX================
+
   #NORMALIZER =========================
 	#COLORS =============================
 	#FONTS ==============================
-	#HOME ===============================
+	#REGISTER ===========================
 	#WAVE_TEXT ==========================
+  #HOME ===============================
+
 \*------------------------------------*/
 /*------------------------------------*\
   #NORMALIZER
 \*------------------------------------*/
-html, body {
-  height: 100%;
+* {
   margin: 0;
   padding: 0; }
 
-/*------------------------------------*\
-  #COLORS
-\*------------------------------------*/
+html, body {
+  height: 100%; }
+
 /*------------------------------------*\
   #COLORS
 \*------------------------------------*/
@@ -34,7 +37,7 @@ html, body {
   src: url("../fonts/Lato-Bold.ttf");
   font-weight: bold; }
 /*------------------------------------*\
-  #HOME
+  #REGISTER
 \*------------------------------------*/
 .home-wrap {
   display: flex; }
@@ -85,11 +88,15 @@ html, body {
   width: 50%;
   margin: 0; }
 
-.home-pres__title {
+.logo-matcha {
   color: #fff;
   font-family: 'Amarillo';
-  font-size: 40px;
-  float: left; }
+  font-size: 40px; }
+
+.home-pres__title {
+  float: left;
+  margin-top: 50px;
+  margin-bottom: 15px; }
 
 .home-pres__info {
   color: #fff;
@@ -99,17 +106,34 @@ html, body {
 .home-register {
   float: right;
   width: 49%;
-  height: 100%;
+  height: 100%; }
+
+.form__box {
   text-align: center;
   border: 2px solid #fff;
   border-radius: 8px; }
 
-.home-register__title {
+.form__title {
+  margin-top: 25px;
+  margin-bottom: 20px;
   font-size: 25px;
   color: #fff; }
 
-.home-register__error {
+.form__error {
   position: relative; }
+
+.form__input {
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: none;
+  padding: 5px;
+  font-size: 15px; }
+
+.form__input::selected {
+  background: red; }
+
+.form__input::-webkit-input-placeholder {
+  color: #55FEDE; }
 
 *[data-error]::before {
   content: attr(data-error);
@@ -124,27 +148,22 @@ html, body {
   box-shadow: 0px 4px 12px black;
   border-radius: 8px 8px 8px 0px; }
 
-.form-register__input {
+.register-input {
   position: relative;
-  padding: 5px;
   text-align: left;
   width: 80%;
   height: 40px;
   margin-bottom: 15px;
   margin-top: 10px;
-  border-radius: 4px;
-  border: 2px solid #fff;
-  background: none;
-  font-size: 15px;
   color: #fff; }
 
-.form-register__input::-webkit-input-placeholder {
-  color: #55FEDE; }
+.register-submit {
+  margin-top: 50px; }
 
 .btn-submit {
+  color: #fff;
   font-size: 20px;
   padding: 5px;
-  margin-top: 50px;
   height: 50px;
   width: 80%;
   text-align: center;
@@ -218,3 +237,46 @@ html, body {
 
 .wavetext :nth-child(15n + 14) {
   animation-delay: -0.1s; }
+
+/*------------------------------------*\
+  #LOGIN
+\*------------------------------------*/
+.logo {
+  width: 208px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.home-login {
+  font-family: 'Lato';
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 180px; }
+
+.form__login {
+  margin-top: 55px; }
+
+.login-submit {
+  margin-top: 40px;
+  margin-bottom: 20px; }
+
+/*------------------------------------*\
+  #HOME
+\*------------------------------------*/
+.navbar {
+  display: inline-block;
+  background: #965FF4;
+  height: 100vh;
+  width: 100px;
+  margin: 0px; }
+
+.app-wrap {
+  display: inline-block;
+  background: blue;
+  margin: 0px;
+  height: 100vh;
+  width: calc(100% - 101px); }
+
+.navbar-item {
+  text-decoration: none;
+  height: 80px;
+  display: block; }

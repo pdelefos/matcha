@@ -14,7 +14,6 @@ class User {
 	}
 
 	// set
-
 	public function setLogin($login) {
 		$this->login = $login;
 	}
@@ -36,7 +35,6 @@ class User {
 	}
 
 	// get
-
 	public function getLogin() {
 		return $this->login;
 	}
@@ -54,7 +52,6 @@ class User {
 	}
 
 	//save on db
-
 	public function register() {
 		app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
 			VALUES (:login, :email, :nom, :prenom, :password)',
@@ -67,8 +64,19 @@ class User {
 			]);
 	}
 
-	// static functions
+	//login
+	public function login() {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login AND password = :password',
+			[
+				'login' => $this->login,
+				'password' => $this->password
+			]);
+		if ($ret)
+			return true;
+		return false;
+	}
 
+	// static functions
 	public static function emailExists($email) {
 		$ret = app('db')->select('SELECT id FROM user WHERE email = :email', ['email' => $email]);
 		if ($ret)

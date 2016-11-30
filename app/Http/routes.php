@@ -17,9 +17,9 @@ use Illuminate\Http\Request;
 | Home Route 															   |
 --------------------------------------------------------------------------*/
 
-// $app->get('/', function(Request $request) {
-// 	return view('pages.home', ['url' => $request->url()]);
-// });
+$app->get('/home', function(Request $request) {
+	return view('pages.home');
+});
 
 /*--------------------------------------------------------------------------
 | Authentification Routes 												   |

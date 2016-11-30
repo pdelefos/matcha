@@ -66,11 +66,40 @@ class AuthController extends Controller
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
             $user->register();
+            return view('pages.home');
         }
     }
 
     // Render la page de connexion
     public function showConnexion() {
         return view('pages.connexion');
+    }
+
+    public function submitConnexion(Request $request) {
+        $inputs = $request->all();
+        $errorHandler = new ErrorHandler;
+        $validator = new Validator($errorHandler);
+        $validator->check($inputs, [
+            'login' => [
+                'required' => true,
+                'alnum' => true,
+                'minlength' => 5,
+                'maxlength' => 150
+            ],
+            'password' => [
+                'required' => true,
+                'minlength' => 5,
+                'maxlength' => 150,
+                'password' => true
+            ]
+        ]);
+        $user = new User();
+        $user->setLogin($request->input('login'));
+        $user->setPassword(hash("whirlpool", $request->input('password')));
+        if (!$user->login())
+            $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
+        if ($validator->fails())
+            return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        return view('pages.home');
     }
 }
