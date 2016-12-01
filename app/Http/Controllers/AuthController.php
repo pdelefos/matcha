@@ -100,6 +100,8 @@ class AuthController extends Controller
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
         if ($validator->fails())
             return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        $_SESSION['loggued'] = $request->input('login');
+        print_r($_SESSION);
         return view('pages.home.home');
     }
 }
