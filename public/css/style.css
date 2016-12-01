@@ -8,6 +8,7 @@
 	#WAVE_TEXT ==========================
   #NAVBAR =============================
   #HOME ===============================
+  #PROFILE-MODAL ======================
 
 \*------------------------------------*/
 /*------------------------------------*\
@@ -275,7 +276,7 @@ html, body {
 \*------------------------------------*/
 .navbar {
   position: fixed;
-  z-index: 1000;
+  z-index: 10;
   top: 0;
   bottom: 0;
   width: 100px;
@@ -295,7 +296,8 @@ html, body {
   line-height: 100px; }
 
 .navbar-item:hover {
-  cursor: pointer; }
+  cursor: pointer;
+  border-left: 2px solid red; }
 
 .navbar__home {
   background: #637CFE; }
@@ -314,7 +316,7 @@ html, body {
 \*------------------------------------*/
 .app-wrap {
   overflow-x: hidden;
-  height: 2000px;
+  height: 100vh;
   margin-left: 100px; }
 
 .home-logo {
@@ -332,3 +334,42 @@ html, body {
 
 .chat-page {
   background: #55FEDE; }
+
+/*------------------------------------*\
+  #PROFILE-MODAL
+\*------------------------------------*/
+.profile-modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 20;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); }
+
+.profile-modal__content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 700px;
+  background: #965FF4;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px black;
+  animation-name: animatetop;
+  animation-duration: 1s; }
+
+@keyframes animatetop {
+  from {
+    top: -1000px; }
+  to {
+    top: 50%; } }

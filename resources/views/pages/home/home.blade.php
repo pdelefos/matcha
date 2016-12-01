@@ -5,7 +5,14 @@ $page_need = array(
 ?>
 @extends('layouts.default')
 @section('content')
-    <div class="app-wrap home-page">
-        
+<div id="complet-profile_modal" class="profile-modal">
+    <!-- Modal content -->
+    <div class="profile-modal__content">
+    
     </div>
+</div>
+
+<div class="app-wrap home-page">
+    
+</div>
 @stop
