@@ -13,7 +13,7 @@ if (isset($prev_values)) {
 @extends('layouts.default_noheader', $page_need)
 @section('content')
 <div class='home-wrap'>
-	<a href="{{ $page_need['url_app'] }}/" class="home-connection-link btn-connection btn-hover">s'inscrire</a>
+	<a href="{{ $page_need['url_app'] }}/" class="home-connection-link btn-connection link-hover">s'inscrire</a>
 	<div class="home-login">
 		<div class="logo">
 			<h2 class="logo-matcha">

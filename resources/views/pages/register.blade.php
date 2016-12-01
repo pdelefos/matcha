@@ -19,7 +19,7 @@ if (isset($prev_values)) {
 @extends('layouts.default_noheader', $page_need)
 @section('content')
 <div class='home-wrap'>
-	<a href="{{ $page_need['url_app'] }}/connexion" class="home-connection-link btn-connection btn-hover">se connecter</a>
+	<a href="{{ $page_need['url_app'] }}/connexion" class="home-connection-link btn-connection link-hover">se connecter</a>
 	<div class="home-container">
 		<div class="home-pres">
 			<h2 class="home-pres__title logo-matcha">

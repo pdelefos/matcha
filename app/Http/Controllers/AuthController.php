@@ -66,7 +66,7 @@ class AuthController extends Controller
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
             $user->register();
-            return view('pages.home');
+            return view('pages.home.home');
         }
     }
 
@@ -100,6 +100,6 @@ class AuthController extends Controller
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
         if ($validator->fails())
             return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
-        return view('pages.home');
+        return view('pages.home.home');
     }
 }
