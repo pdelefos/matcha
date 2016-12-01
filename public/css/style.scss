@@ -6,6 +6,7 @@
 	#FONTS ==============================
 	#REGISTER ===========================
 	#WAVE_TEXT ==========================
+  #NAVBAR =============================
   #HOME ===============================
 
 \*------------------------------------*/
@@ -116,20 +117,22 @@ $red: #d2545a;
   .logo-matcha {
     color: #fff;
   	font-family: 'Amarillo';
-  	font-size: 40px;
+  	
   }
 
   .home-pres__title {
-  
 		float: left;
     margin-top: 50px;
     margin-bottom: 15px;
+    font-size: 55px;
   }
 
   .home-pres__info {
 	  color: #fff;
     font-size: $medium-text;
 		float: left;
+    margin-top: 30px;
+    margin-left: 30px;
   }
 
   .home-register {
@@ -208,14 +211,22 @@ $red: #d2545a;
   	text-align: center;
   	text-transform: uppercase;
 		font-family: 'LatoBold';
-		transition-duration: 0.5s;
+		transition-duration: 0.2s;
+    transform: scale(1.1);
+    box-shadow: 1px 1px 3px #000;
+    background: #fff;
+    color: $blue1;
   }
   
   .btn-hover:hover {
+    cursor: pointer;
+		transition-duration: 0.2s;
+    transform: scale(1);
+  }
+
+  .link-hover:hover {
     background: #fff;
     color: $blue1;
-    cursor: pointer;
-		transition-duration: 0.5s;
   }
 
 	/*------------------------------------*\
@@ -251,6 +262,7 @@ $red: #d2545a;
   \*------------------------------------*/
   
   .logo {
+    font-size: 26px;
     width: 208px;
     margin-left: auto;
     margin-right: auto;
@@ -273,27 +285,81 @@ $red: #d2545a;
   }
 
   /*------------------------------------*\
-    #HOME
+    #NAVBAR
   \*------------------------------------*/
 
   .navbar {
-    display: inline-block;
-    background: $purple;
-    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    bottom: 0;
     width: 100px;
-    margin: 0px;
+    background: -webkit-linear-gradient(35deg, $blue1, $purple 80%);
+    background: -o-linear-gradient(35deg, $blue1, $purple 80%);
+    background: linear-gradient(125deg, $blue1, $purple 80%);
   }
 
-  .app-wrap {
-    display: inline-block;
-    background: blue;
-    margin: 0px;
-    height: 100vh;
-    width: calc(100% - 101px);
+  .navbar ul {
+    list-style: none;
+
   }
 
   .navbar-item {
     text-decoration: none;
-    height: 80px;
     display: block;
+    text-align: center;
+    height: 100px;
+    color: #fff;
+    line-height: 100px;
+  }
+
+  .navbar-item:hover {
+    cursor: pointer;
+  }
+
+  .navbar__home {
+    background: $blue1;
+  }
+
+  .navbar__profile {
+    background: #313E7E;
+  }
+
+  .navbar__notification {
+    background: $purple;
+  }
+
+  .navbar__chat {
+    background: $green;
+  }
+
+  /*------------------------------------*\
+    #HOME
+  \*------------------------------------*/
+
+  .app-wrap {
+    overflow-x: hidden;
+    height: 2000px;
+    margin-left: 100px;
+  }
+
+  .home-logo {
+  	font-family: 'Amarillo';
+    vertical-align: middle;
+  }
+
+  .home-page {
+    background: $blue1;
+  }
+
+  .profile-page {
+    background: #313E7E;
+  }
+
+  .notification-page {
+    background: $purple;
+  }
+
+  .chat-page {
+    background: $green;
   }

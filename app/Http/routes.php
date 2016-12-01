@@ -14,21 +14,25 @@
 use Illuminate\Http\Request;
 
 /*--------------------------------------------------------------------------
-| Home Route 															   |
---------------------------------------------------------------------------*/
-
-$app->get('/home', function(Request $request) {
-	return view('pages.home');
-});
-
-/*--------------------------------------------------------------------------
 | Authentification Routes 												   |
 --------------------------------------------------------------------------*/
 
 $app->get('/', ['as' => 'root', 'uses' => 'AuthController@showRegister']);
-
+ 
 $app->post('/', "AuthController@submitRegister");
 
 $app->get('/connexion', ['as' => 'connection', 'uses' => 'AuthController@showConnexion']);
 
 $app->post('/connexion', "AuthController@submitConnexion");
+
+/*--------------------------------------------------------------------------
+| Home Routes 															   |
+--------------------------------------------------------------------------*/
+
+$app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
+
+$app->get('/profile', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+
+$app->get('/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
+
+$app->get('/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);
