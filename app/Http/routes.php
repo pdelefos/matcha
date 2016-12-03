@@ -25,14 +25,18 @@ $app->get('/connexion', ['as' => 'connection', 'uses' => 'AuthController@showCon
 
 $app->post('/connexion', "AuthController@submitConnexion");
 
+$app->get('/home/deconnexion', ['as' => 'deconnexion', 'uses' => 'AuthController@logout']);
+
 /*--------------------------------------------------------------------------
 | Home Routes 															   |
 --------------------------------------------------------------------------*/
 
-$app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
+$app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function () use ($app) {
+    $app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
 
-$app->get('/profile', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+    $app->get('/home/profile', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
 
-$app->get('/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
+    $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
 
-$app->get('/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);
+    $app->get('/home/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);
+});

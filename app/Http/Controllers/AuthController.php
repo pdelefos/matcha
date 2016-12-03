@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Classes\Validator;
 use App\Classes\ErrorHandler;
+use App\Classes\Session;
 
 class AuthController extends Controller
 {
@@ -100,8 +101,15 @@ class AuthController extends Controller
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
         if ($validator->fails())
             return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
-        $_SESSION['loggued'] = $request->input('login');
-        print_r($_SESSION);
-        return view('pages.home.home');
+        $session = Session::getInstance();
+        $session->login(['login' => $request->input('login')]);
+        return redirect()->route('home');
+    }
+
+    // deconnecte l'utilisateur courant et le renvoi au register
+    public function logout() {
+        $session = Session::getInstance();
+        $session->logout();
+        return redirect()->route('root');
     }
 }

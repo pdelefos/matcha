@@ -6,11 +6,21 @@ $page_need = array(
 @extends('layouts.default')
 @section('content')
 <div id="complet-profile_modal" class="profile-modal">
-    <!-- Modal content -->
     <div class="profile-modal__content">
-        <form>
-            <input type="radio" name="gender" value="male"><label for="">Homme</label>
-            <input type="radio" name="gender" value="female"><label for="">Femme</label>
+        <h2 class="profile-modal__title">On a besoin de plus d'info !</h2>
+        <form class="profile-form">
+            <ul>
+                <li>
+                    <input type="radio" name="gender" id="m-option">
+                    <label for="m-option">Homme</label>
+                    <div class="check"></div>
+                </li>
+                <li>
+                    <input type="radio" name="gender" id="f-option">
+                    <label for="f-option">Femme</label>
+                    <div class="check"></div>
+                </li>
+            </ul>
             </br>
             <select>
                 <option value="0">recherche un homme</option>
@@ -32,6 +42,5 @@ $page_need = array(
 </div>
 
 <div class="app-wrap home-page">
-    
 </div>
 @stop

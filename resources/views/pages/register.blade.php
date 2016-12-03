@@ -26,7 +26,7 @@ if (isset($prev_values)) {
 				<div class="wavetext"></div>
 			</h2>
 			<div class="home-pres__info">
-				Site de rencontre à la cool.
+				Site de rencontre à la cool
 			</div>
 		</div>
 		<div class="home-register form__box">
