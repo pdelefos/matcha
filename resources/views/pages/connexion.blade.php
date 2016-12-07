@@ -12,11 +12,11 @@ if (isset($prev_values)) {
 ?>
 @extends('layouts.default_noheader', $page_need)
 @section('content')
-<div class='home-wrap'>
-	<a href="{{ $page_need['url_app'] }}/" class="home-connection-link btn-connection link-hover">s'inscrire</a>
+<div class='flex-container'>
+	<a href="{{ $page_need['url_app'] }}/" class="connection-link link-btn">s'inscrire</a>
 	<div class="home-login">
-		<div class="logo">
-			<h2 class="logo-matcha">
+		<div class="logo-login">
+			<h2 class="logo">
 				<div class="wavetext"></div>
 			</h2>
 		</div>
@@ -37,7 +37,7 @@ if (isset($prev_values)) {
 			@endif
 				<input class="form__input register-input" type="text" name="password" placeholder="MOT DE PASSE">
 			</div>
-			<input class="form__input btn-submit btn-hover login-submit" type="submit" name="submit" value="C'est parti">
+			<input class="form__input btn-submit" type="submit" name="submit" value="C'est parti">
 		</form>
 		</div>
 	</div>

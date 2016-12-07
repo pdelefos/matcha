@@ -9,6 +9,7 @@
   #NAVBAR =============================
   #HOME ===============================
   #PROFILE-MODAL ======================
+  #PROFILE-FORM =======================
 
 \*------------------------------------*/
 
@@ -64,11 +65,11 @@ $red: #d2545a;
   #REGISTER
 \*------------------------------------*/
 
-  .home-wrap {
+  .flex-container {
   	display: flex;
   }
 
-	.home-background {
+	.register-background {
 		background: $blue1; /* For browsers that do not support gradients */
   	background: -webkit-linear-gradient(125deg, $blue1, $purple 80%); /* For Safari 5.1 to 6.0 */
   	background: -o-linear-gradient(125deg, $blue1, $purple 80%); /*For Opera 11.1 to 12.0 */
@@ -77,13 +78,13 @@ $red: #d2545a;
 		background-attachment: fixed;
 	}
 
-  .home-connection-link {
+  .connection-link {
   	position: absolute;
   	top: 2em;
   	right: 2em;
   }
 
-	.btn-connection {
+	.link-btn {
 		border: 2px solid #fff;
   	border-radius: 8px;
   	padding: 5px 8px 8px 8px;
@@ -94,18 +95,22 @@ $red: #d2545a;
 		transition-duration: 0.5s
 	}
 
-  .home-container {
+  .link-btn:hover {
+    background: #fff;
+    color: $blue1;
+  }
+
+  .welcome-container {
   	width: 730px;
   	height: 600px;
   	margin-left: auto;
   	margin-right: auto;
   	margin-top: 130px;
-		margin-bottom: 130px;
   	padding: 20px;
   	font-family: 'Lato';
   }
 
-  .home-pres {
+  .welcome-pres {
   	float: left;
   	text-align: center;
   	height: 100%;
@@ -113,20 +118,20 @@ $red: #d2545a;
   	margin: 0;
   }
 
-  .logo-matcha {
+  .logo {
     color: #fff;
   	font-family: 'Amarillo';
   	
   }
 
-  .home-pres__title {
+  .welcome-pres__title {
 		float: left;
     margin-top: 50px;
     margin-bottom: 15px;
     font-size: 55px;
   }
 
-  .home-pres__info {
+  .welcome-pres__info {
 	  color: #fff;
     font-size: $medium-text;
 		float: left;
@@ -134,10 +139,10 @@ $red: #d2545a;
     margin-left: 30px;
   }
 
-  .home-register {
+  .welcome-register {
   	float: right;
     width: 49%;
-    height: 100%;
+    height: 97%;
   }
 
   .form__box {
@@ -163,6 +168,13 @@ $red: #d2545a;
     background: none;
     padding: 5px;
     font-size: $small-text;
+    position: relative;
+    text-align: left;
+    width: 80%;
+    height: 40px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    color: #fff;
   }
 
   .form__input::selected {
@@ -186,20 +198,6 @@ $red: #d2545a;
     box-shadow: 0px 4px 12px black;
     border-radius: 8px 8px 8px 0px;
 	}
-  
-  .register-input {
-    position: relative;
-    text-align: left;
-    width: 80%;
-    height: 40px;
-    margin-bottom: 15px;
-    margin-top: 10px;
-    color: #fff;
-  }
-
-  .register-submit {
-    margin-top: 50px;
-  }
 
   .btn-submit {
     color: #fff;
@@ -207,6 +205,8 @@ $red: #d2545a;
 		padding: 5px;
   	height: 50px;
     width: 80%;
+    margin-top: 40px;
+    margin-bottom: 20px;
   	text-align: center;
   	text-transform: uppercase;
 		font-family: 'LatoBold';
@@ -217,15 +217,10 @@ $red: #d2545a;
     color: $blue1;
   }
   
-  .btn-hover:hover {
+  .btn-submit:hover {
     cursor: pointer;
 		transition-duration: 0.2s;
     transform: scale(1);
-  }
-
-  .link-hover:hover {
-    background: #fff;
-    color: $blue1;
   }
 
 	/*------------------------------------*\
@@ -260,7 +255,7 @@ $red: #d2545a;
     #LOGIN
   \*------------------------------------*/
   
-  .logo {
+  .logo-login {
     font-size: 26px;
     width: 208px;
     margin-left: auto;
@@ -278,14 +273,14 @@ $red: #d2545a;
     margin-top: 55px;
   }
 
-  .login-submit {
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-
   /*------------------------------------*\
     #NAVBAR
   \*------------------------------------*/
+
+  $color1: #34BFBF;
+  $color2: #1894C9;
+  $color3: #466FBA;
+  $color4: #565BBF;
 
   .navbar {
     position: fixed;
@@ -317,17 +312,9 @@ $red: #d2545a;
     border-left: 2px solid red;
   }
 
-  // $color1: #4BC2DA;
-  $color2: #1894C9;
-  $color3: #466FBA;
-  // $color4: #534B87;
-  $color1: #34BFBF;
-  // $color2: #3999BF;
-  // $color3: #4B71BF;
-  $color4: #565BBF;
-
   .navbar__home {
     background: $color1;
+    line-height: 90px;
   }
 
   .navbar__profile {
@@ -414,7 +401,7 @@ $red: #d2545a;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 700px;
+    height: 600px;
     background: linear-gradient(125deg, $blue1, $purple 80%);
     border-radius: 8px;
     box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.4);
@@ -432,6 +419,10 @@ $red: #d2545a;
         top: 50%;
       }
   }
+
+  /*------------------------------------*\
+    #PROFILE-FORM
+  \*------------------------------------*/
 
   .form-label {
     float: left;

@@ -3,7 +3,7 @@
 <head>
 	@include('includes.head', array('url_app', $page_need['url_app']))
 </head>
-<body class="home-background">
+<body class="register-background">
 	<div class="container">
 		@yield('content')
 	</div>

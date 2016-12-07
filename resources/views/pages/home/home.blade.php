@@ -10,7 +10,7 @@ $page_need = array(
         <h2 class="profile-modal__title">On a besoin de plus d'info !</h2>
         <form class="profile-form">
             <div class="custom-radio sexe-radio">
-                <label class="custom-radio__label form-label">Sexe :</label>
+                <label class="custom-radio__label form-label">Je suis :</label>
                 <ul class="select-choice">
                     <li>
                         <input type="radio" name="gender" id="m-option">
@@ -26,12 +26,12 @@ $page_need = array(
             </div>
             <div class="custom-select">
                 <label class="custom-select__title form-label">Orientation :</label>
-                <a href="#" class="item">je recherche ...</a>
+                <!--<a href="#" class="item">je recherche ...</a>
                 <span class="accent"></span>
                 <ul class="drop-down">
                     <li class=""><input type="radio" name="orientation" value="homme">homme</li>
                     <li><input type="radio" name="orientation" value="femme">femme</li>
-                </ul>
+                </ul>-->
             </div>
             <!--<div>
                 <label for="">bio</label><textarea rows="3" cols="20"></textarea>
