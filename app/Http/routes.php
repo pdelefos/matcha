@@ -34,6 +34,8 @@ $app->get('/home/deconnexion', ['as' => 'deconnexion', 'uses' => 'AuthController
 $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function () use ($app) {
     $app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
 
+    $app->post('/home', ['as' => 'home', 'uses' => 'HomeController@submitProfile']);
+
     $app->get('/home/profile', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
 
     $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);

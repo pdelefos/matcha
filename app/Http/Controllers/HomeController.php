@@ -16,6 +16,10 @@ class HomeController extends Controller
         return view('pages.home.home');
     }
 
+    public function submitProfile(Request $request) {
+        var_dump($request->all());
+    }
+
     public function showProfile() {
         return view('pages.home.profile');
     }

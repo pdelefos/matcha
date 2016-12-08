@@ -389,11 +389,10 @@ $red: #d2545a;
     text-align: center;
     color: #fff;
     text-transform: uppercase;
-    margin-top: 10px;
   }
 
   .profile-form {
-    margin-top: 45px;
+    margin-top: 25px;
   }
 
   .profile-modal__content {
@@ -430,10 +429,11 @@ $red: #d2545a;
     font-size: $small-text;
     color: #fff;
     display: block;
+    margin-bottom: 5px;
   }
 
   .form-row {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   /*------------------------------------*\
@@ -442,16 +442,32 @@ $red: #d2545a;
 
   .custom-radio ul {
     list-style: none;
-    height: 25px;
   }
 
   .custom-radio ul li:first-child {
-    margin-right: 30px;
+    margin-right: -2px;
+    border-right: 1px solid #fff;
+    border-radius: 8px 0px 0px 8px;
+  }
+
+  .custom-radio ul li:last-child {
+    margin-left: -2px;
+    border-left: 1px solid #fff;
+    border-radius: 0px 8px 8px 0px;
   }
 
   .custom-radio ul li {
     display: inline-block;
-    color: #FFF;
+    color: #fff;
+    border: 2px solid #fff;
+    height: 100%;
+    cursor: pointer;
+    width: 197px;
+  }
+
+  .custom-radio ul li:hover {
+    background-color: #fff;
+    color: $blue1;
   }
 
   .custom-radio ul li input[type=radio] {
@@ -460,64 +476,47 @@ $red: #d2545a;
   }
 
   .custom-radio ul li label {
-    position: relative;
-    font-weight: 200;
     font-size: $medium-text;
-    padding: 5px 0px 5px 25px;
-    margin: 10px auto;
-    z-index: 9;
+    line-height: 36px;
+    width: 100%;
+    display: block;
     cursor: pointer;
-    transition: all 0.25s linear;
-  }
-
-  .custom-radio ul li .check {
-    display: block;
-    position: relative;
-    border: 3px solid #FFF;
-    border-radius: 100%;
-    height: 12px;
-    width: 12px;
-    top: -20px;
-    z-index: 5;
-    transition: border .25s linear;
-  }
-
-
-  .custom-radio ul li .check::before {
-    display: block;
-    position: absolute;
-    content: '';
-    border-radius: 100%;
-    height: 8px;
-    width: 8px;
-    top: 2px;
-    left: 2px;
-    margin: auto;
-    transition: background 0.25s linear;
   }
 
   input[type=radio]:checked ~ .check {
-    border: 3px solid $green;
-  }
-
-  input[type=radio]:checked ~ .check::before {
-    background: $green;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    top: -36px;
+    z-index: -1;
+    position: relative;
   }
 
   input[type=radio]:checked ~ label {
+    background-color: #fff;
+    color: $blue1;
+  }
+
+  .test[selected] {
+    background-color: #fff;
     color: $green;
+  }
+
+  .custom-select {
+    height: 40px;
   }
 
   .custom-select select {
     background-color: transparent;
-    text-align-last:center;
-    color: $green;
+    text-align-last: center;
+    color: #fff;
     border: 2px solid #fff;
-    font-size: $medium-text;
+    font-size: 20px;
     padding: 2px 10px;
-    width: 400px;
+    width: 100%;
     -webkit-appearance: none;
     border-radius: 8px;
+    height: 100%;
   }
 
   .custom-select select::-webkit-input-placeholder {
@@ -526,7 +525,7 @@ $red: #d2545a;
 
   .accent{
     position: relative;
-    top: 25px;
+    bottom: 30px;
     color: white;
     left: 180px;
     transform: rotateX(50deg);
@@ -534,18 +533,18 @@ $red: #d2545a;
   }
 
   .date-select {
-    margin-top: 10px;
+    height: 40px;
   }
 
   .date-input {
     background-color: transparent;
-    margin-left: 26px;
     border: 2px solid #fff;
     border-radius: 8px;
-    height: 26px;
+    height: 36px;
     font-size: $small-text;
-    width: 60px;
-    color: $green;
+    width: 90px;
+    text-align: center;
+    color: #fff;
     font-weight: bold;
     padding: 0px 0px 0px 10px;
   }
@@ -556,20 +555,47 @@ $red: #d2545a;
     font-weight: normal;
   }
 
+  .date-input__day {
+    float: left;
+  }
+
+  .date-input__month {
+
+  }
+
   .date-input__year {
-    width: 80px;
+    float: right;
   }
 
   .form-textarea {
     margin: 0px;
-    width: 389px;
+    width: 386px;
     height: 54px;
-    color: $green;
+    color: #fff;
     background-color: transparent;
     font-size: 15px;
     border: 2px solid #fff;
     border-radius: 8px;
-    margin-top: 10px;
     resize: none;
     padding: 5px;
+  }
+
+  .tags-input {
+    border: 2px solid #fff !important;
+    border-radius: 8px !important;
+    height: 66px !important;
+    background: transparent !important;
+  }
+
+  .ui-widget-content {
+    
+  }
+
+  .tagit-label {
+    color: $blue1;
+  }
+
+  .profile-submit {
+    width: 91%;
+    margin-top: 31px;
   }
