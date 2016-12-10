@@ -7,11 +7,13 @@
 if (isset($errorHandler)) {
     $error_sexe = $errorHandler->first('sexe');
     $error_search = $errorHandler->first('recherche');
+    $error_date = $errorHandler->first('anniversaire');
 	$error_desc = $errorHandler->first('description');
 }
 if (isset($prev_values)) {
 	$prev_sexe = $prev_values->input('sexe');
     $prev_search = $prev_values->input('recherche');
+    $prev_date = $prev_values->input('anniversaire');
     $prev_desc = $prev_values->input('description');
 }
 ?>
@@ -94,23 +96,50 @@ if (isset($prev_values)) {
             </div>
             <div class="form-row">
                 <label class="form-label">Ma date de naissance</label>
-                <div class="custom-select">
-                    <select class="date-input date-input__day" name="anniversaire[jour]">
-                        @for ($i = 1; $i <= 31; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                    <select class="date-input date-input__month" name="anniversaire[mois]">
-                        @for ($i = 1; $i <= 12; $i++)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                    <select class="date-input date-input__year" name="anniversaire[annee]">
-                        @for ($i = 1998; $i >= 1940; $i--)
-                            <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                </div>
+                @if (isset($error_date) && $error_date != "")
+                    <div class="form__error" data-error="{{ $error_date }}" >
+                @else
+                    <div>
+                @endif
+                        <div class="custom-select">
+                            <select class="date-input date-input__day" name="anniversaire[jour]">
+                                <option selected hidden style="color: #fff" value="{{$prev_date['jour'] or ''}}">
+                                    @if (isset($prev_date) && $prev_date['jour'] != "")
+                                        {{ $prev_date['jour'] }}
+                                    @else
+                                        jour
+                                    @endif
+                                </option>
+                                @for ($i = 1; $i <= 31; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <select class="date-input date-input__month" name="anniversaire[mois]">
+                                <option selected hidden style="color: #fff" value="{{$prev_date['mois'] or ''}}">
+                                    @if (isset($prev_date) && $prev_date['mois'] != "")
+                                        {{ $prev_date['mois'] }}
+                                    @else
+                                        mois
+                                    @endif
+                                </option>
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <select class="date-input date-input__year" name="anniversaire[annee]">
+                                <option selected hidden style="color: #fff" value="{{$prev_date['annee'] or ''}}">
+                                    @if (isset($prev_date) && $prev_date['annee'] != "")
+                                        {{ $prev_date['annee'] }}
+                                    @else
+                                        annee
+                                    @endif
+                                </option>
+                                @for ($i = 1998; $i >= 1940; $i--)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
             </div>
             <div class="form-row">
                 <label class="form-label">Ma présentation</label>

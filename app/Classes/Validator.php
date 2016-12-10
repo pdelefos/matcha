@@ -9,7 +9,17 @@ class Validator {
 
     protected $errorHandler;
 
-    protected $rules = ['required', 'minlength', 'maxlength', 'email', 'alnum', 'password', 'uniqueEmail', 'uniqueLogin'];
+    protected $rules = [
+        'required',
+        'minlength',
+        'maxlength',
+        'email',
+        'alnum',
+        'password',
+        'uniqueEmail',
+        'uniqueLogin',
+        'requiredDate'
+    ];
 
     public $messages = [
         'required' => 'Le champ :field est requis',
@@ -19,7 +29,8 @@ class Validator {
         'alnum' => 'Le champ :field doit être composé uniquement de chiffres et de lettres',
         'password' => 'Le mot de passe doit comporter une majuscule, une minuscule et un chiffre', 
         'uniqueEmail' => 'Cet email est déjà utilisé',
-        'uniqueLogin' => 'Ce login est déjà utilisé'
+        'uniqueLogin' => 'Ce login est déjà utilisé',
+        'requiredDate' => 'La date est requise'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -113,5 +124,15 @@ class Validator {
     // Verifie si le champ login existent déjà en base
     protected function uniqueLogin($field, $value, $condition) {
         return User::loginExists($value) ? false : true;
+    }
+
+    // Verifie que la date n'est pas vide
+    protected function requiredDate($field, $value, $condition) {
+        $jour = $value['jour'];
+        $mois = $value['mois'];
+        $annee = $value['annee'];
+        if (empty($jour) || empty($mois) || empty($annee))
+            return false;
+        return true;
     }
 }

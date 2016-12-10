@@ -21,8 +21,6 @@ class HomeController extends Controller
 
     public function submitProfile(Request $request) {
         $inputs = $request->all();
-        // var_dump($inputs);
-        // die();
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $validator->check($inputs, [
@@ -32,6 +30,9 @@ class HomeController extends Controller
             'recherche' => [
                 'required' => true
             ],
+            'anniversaire' => [
+                'requiredDate' => true
+            ],
             'description' => [
                 'required' => true
             ]
@@ -39,7 +40,8 @@ class HomeController extends Controller
         if ($validator->fails()) {
             return view('pages.home.home', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         } else {
-
+            var_dump($inputs);
+            die();
         }
     }
 
