@@ -192,7 +192,8 @@ $red: #d2545a;
     display: block;
     position: absolute;
     top: 13%;
-    left: 97%;
+    // left: 97%;
+    right: -293px;
     background: $red;
     width: 280px;
     padding: 4px;
@@ -523,6 +524,10 @@ $red: #d2545a;
     color: #fff;
   }
 
+  .custom-select select option{
+    max-width: 200px;
+  }
+
   .accent{
     position: relative;
     bottom: 30px;
@@ -537,16 +542,9 @@ $red: #d2545a;
   }
 
   .date-input {
-    background-color: transparent;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    height: 36px;
-    font-size: $small-text;
-    width: 90px;
+    width: 105px !important;
     text-align: center;
     color: #fff;
-    font-weight: bold;
-    padding: 0px 0px 0px 10px;
   }
 
   .date-input::-webkit-input-placeholder {
@@ -557,10 +555,6 @@ $red: #d2545a;
 
   .date-input__day {
     float: left;
-  }
-
-  .date-input__month {
-
   }
 
   .date-input__year {

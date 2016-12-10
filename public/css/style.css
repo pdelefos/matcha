@@ -156,7 +156,7 @@ html, body {
   display: block;
   position: absolute;
   top: 13%;
-  left: 97%;
+  right: -293px;
   background: #d2545a;
   width: 280px;
   padding: 4px;
@@ -463,6 +463,9 @@ input[type=radio]:checked ~ label {
 .custom-select select::-webkit-input-placeholder {
   color: #fff; }
 
+.custom-select select option {
+  max-width: 200px; }
+
 .accent {
   position: relative;
   bottom: 30px;
@@ -475,16 +478,9 @@ input[type=radio]:checked ~ label {
   height: 40px; }
 
 .date-input {
-  background-color: transparent;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  height: 36px;
-  font-size: 15px;
-  width: 90px;
+  width: 105px !important;
   text-align: center;
-  color: #fff;
-  font-weight: bold;
-  padding: 0px 0px 0px 10px; }
+  color: #fff; }
 
 .date-input::-webkit-input-placeholder {
   color: #fff;
