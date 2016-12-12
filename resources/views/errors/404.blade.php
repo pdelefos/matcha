@@ -1,9 +1,11 @@
 <?php
 $page_need = array(
-	'url', $url
+	'url_app' => route('root')
 );
 ?>
 @extends('layouts.default_noheader', $page_need)
 @section('content')
-404 !!!
+<div>
+	404
+</div>
 @stop

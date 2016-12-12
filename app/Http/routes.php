@@ -42,3 +42,11 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->get('/home/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);
 });
+
+/*--------------------------------------------------------------------------
+| Error Routes 															   |
+--------------------------------------------------------------------------*/
+
+$app->get('/404', ['as' => '404', function () {
+    return view('errors.404');
+}]);
