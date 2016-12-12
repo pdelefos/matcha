@@ -18,7 +18,8 @@ class Validator {
         'password',
         'uniqueEmail',
         'uniqueLogin',
-        'requiredDate'
+        'requiredDate',
+        'requiredTags'
     ];
 
     public $messages = [
@@ -30,7 +31,8 @@ class Validator {
         'password' => 'Le mot de passe doit comporter une majuscule, une minuscule et un chiffre', 
         'uniqueEmail' => 'Cet email est déjà utilisé',
         'uniqueLogin' => 'Ce login est déjà utilisé',
-        'requiredDate' => 'La date est requise'
+        'requiredDate' => 'La date est requise',
+        'requiredTags' => 'il faut au moins 3 interets'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -134,5 +136,12 @@ class Validator {
         if (empty($jour) || empty($mois) || empty($annee))
             return false;
         return true;
+    }
+
+    // Verifie qu'il y ai au moins 3 interets
+    protected function requiredTags($field, $value, $condition) {
+        // var_dump($value);
+        // die();
+        return count($value) < 3 ? false : true;
     }
 }

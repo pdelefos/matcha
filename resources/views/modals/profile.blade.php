@@ -9,13 +9,19 @@ if (isset($errorHandler)) {
     $error_search = $errorHandler->first('recherche');
     $error_date = $errorHandler->first('anniversaire');
 	$error_desc = $errorHandler->first('description');
+    $error_tags = $errorHandler->first('interets');
+    $error_adresse = $errorHandler->first('adresse');
 }
 if (isset($prev_values)) {
 	$prev_sexe = $prev_values->input('sexe');
     $prev_search = $prev_values->input('recherche');
     $prev_date = $prev_values->input('anniversaire');
     $prev_desc = $prev_values->input('description');
+    $prev_tags = $prev_values->input('interets');
+    $prev_adresse = $prev_values->input('adresse');
 }
+// google api key
+// AIzaSyCiwhivWRC5isZuX7Oc5bxBIIn2h3pzPOs
 ?>
 <div id="complet-profile_modal" class="profile-modal">
     <div class="profile-modal__content">
@@ -24,7 +30,7 @@ if (isset($prev_values)) {
             <div class="form-row">
                 <label class="form-label">Je suis</label>
                 @if (isset($error_sexe) && $error_sexe != "")
-                    <div class="form__error" data-error="{{ $error_sexe }}" >
+                    <div class="form__error form_error-profile" data-error="{{ $error_sexe }}" >
                 @else
                     <div>
                 @endif
@@ -63,7 +69,7 @@ if (isset($prev_values)) {
             <div class="form-row">
                 <label class="form-label">Je cherche</label>
                 @if (isset($error_search) && $error_search != "")
-                    <div class="form__error" data-error="{{ $error_search }}" >
+                    <div class="form__error form_error-profile" data-error="{{ $error_search }}" >
                 @else
                     <div>
                 @endif
@@ -97,7 +103,7 @@ if (isset($prev_values)) {
             <div class="form-row">
                 <label class="form-label">Ma date de naissance</label>
                 @if (isset($error_date) && $error_date != "")
-                    <div class="form__error" data-error="{{ $error_date }}" >
+                    <div class="form__error form_error-profile" data-error="{{ $error_date }}" >
                 @else
                     <div>
                 @endif
@@ -142,9 +148,19 @@ if (isset($prev_values)) {
                     </div>
             </div>
             <div class="form-row">
+                <label class="form-label">Mon adresse <a href="#" class="form-localise-link">me localiser</a></label>
+                @if (isset($error_adresse) && $error_adresse != "")
+                    <div class="form__error form_error-profile" data-error="{{ $error_adresse }}" >
+                @else
+                    <div>
+                @endif
+                        <input type="text" name="adresse" class="form__input form-input__profile" value="{{ $prev_adresse or ''}}">
+                    </div>
+            </div>
+            <div class="form-row">
                 <label class="form-label">Ma présentation</label>
                 @if (isset($error_desc) && $error_desc != "")
-                    <div class="form__error" data-error="{{ $error_desc }}" >
+                    <div class="form__error form_error-profile" data-error="{{ $error_desc }}" >
                 @else
                     <div>
                 @endif
@@ -153,9 +169,21 @@ if (isset($prev_values)) {
             </div>
             <div class="form-row">
                 <label class="form-label">Mes interêts</label>
-                <ul id="myTags" class="tags-input">
-                    <li>chaise roulante</li>
-                </ul>
+                @if (isset($error_tags) && $error_tags != "")
+                    <div class="form__error form_error-profile" data-error="{{ $error_tags }}" >
+                @else
+                    <div>
+                @endif
+                        <ul id="myTags" class="tags-input">
+                            @if (isset($prev_tags))
+                                @foreach ($prev_tags as $tags)
+                                    <li>{{ $tags }}</li>
+                                @endforeach
+                            @else
+                                <li>cinéma</li>
+                            @endif
+                        </ul>
+                    </div>
             </div>
             <input class="form__input btn-submit profile-submit" type="submit" name="submit" value="Je suis pret">
         </form>
@@ -165,7 +193,7 @@ if (isset($prev_values)) {
     $(document).ready(function() {
         $("#myTags").tagit({
             itemName: 'item',
-            fieldName: 'tags[]',
+            fieldName: 'interets[]',
             availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"]
         })
     });

@@ -164,7 +164,7 @@ $red: #d2545a;
 	}
 
   .form__input {
-    border-radius: 4px;
+    border-radius: 8px;
     border: 2px solid #fff;
     background: none;
     padding: 5px;
@@ -192,8 +192,7 @@ $red: #d2545a;
     display: block;
     position: absolute;
     top: 13%;
-    // left: 97%;
-    right: -293px;
+    left: 97%;
     background: $red;
     width: 280px;
     padding: 4px;
@@ -386,6 +385,12 @@ $red: #d2545a;
     font-family: 'Lato';
   }
 
+  .form-input__profile {
+    margin: 0;
+    width: 385px;
+    height: 26px;
+  }
+
   .profile-modal__title {
     text-align: center;
     color: #fff;
@@ -393,7 +398,17 @@ $red: #d2545a;
   }
 
   .profile-form {
-    margin-top: 25px;
+    margin-top: 20px;
+  }
+
+  .form-localise-link {
+    float: right;
+    color: #fff;
+  }
+
+  .profile-submit {
+    width: 91%;
+    margin-top: 15px;
   }
 
   .profile-modal__content {
@@ -408,7 +423,7 @@ $red: #d2545a;
     box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.4);
     animation-name: animatetop;
     animation-duration: 1s;
-    padding: 40px 60px 40px 60px;
+    padding: 35px 60px 35px 60px;
     text-align: center;
   }
 
@@ -421,20 +436,24 @@ $red: #d2545a;
       }
   }
 
+  .form_error-profile::before {
+    left: 420px !important;
+  }
+
   /*------------------------------------*\
     #PROFILE-FORM
   \*------------------------------------*/
 
   .form-label {
     text-align: left;
-    font-size: $small-text;
+    font-size: 12px;
     color: #fff;
     display: block;
     margin-bottom: 5px;
   }
 
   .form-row {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   /*------------------------------------*\
@@ -589,7 +608,3 @@ $red: #d2545a;
     color: $blue1;
   }
 
-  .profile-submit {
-    width: 91%;
-    margin-top: 31px;
-  }

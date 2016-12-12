@@ -35,6 +35,12 @@ class HomeController extends Controller
             ],
             'description' => [
                 'required' => true
+            ],
+            'interets' => [
+                'requiredTags' => true
+            ],
+            'adresse' => [
+                'required' => true
             ]
         ]);
         if ($validator->fails()) {
