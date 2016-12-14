@@ -5,7 +5,7 @@ $page_need = array(
 ?>
 @extends('layouts.default_noheader', $page_need)
 @section('content')
-<div>
+<div class="notfound-container">
 	404
 </div>
 @stop
