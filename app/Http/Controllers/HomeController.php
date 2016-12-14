@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Classes\Validator;
 use App\Classes\ErrorHandler;
+use App\Classes\Session;
 
 class HomeController extends Controller
 {
@@ -47,8 +48,13 @@ class HomeController extends Controller
         if ($validator->fails()) {
             return view('pages.home.home', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         } else {
-            var_dump($inputs);
-            die();
+            $session = Session::getInstance();
+            $user = new User();
+            $user->setId($session->getValue('id'));
+            $user->setSexe($inputs['sexe']);
+            $user->setOrientation($inputs['orientation']);
+            $user->setPresentation($inputs['presentation']);
+            $user->completeProfile();
         }
     }
 

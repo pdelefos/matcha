@@ -66,7 +66,7 @@ class AuthController extends Controller
             $user->setNom($request->input('nom'));
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
-            $user->register();
+            echo $user->register();
             return view('pages.home.home');
         }
     }
@@ -97,12 +97,12 @@ class AuthController extends Controller
         $user = new User();
         $user->setLogin($request->input('login'));
         $user->setPassword(hash("whirlpool", $request->input('password')));
-        if (!$user->login())
+        if (!$user_id = $user->login())
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
         if ($validator->fails())
             return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         $session = Session::getInstance();
-        $session->login(['login' => $request->input('login')]);
+        $session->login(['id' => $user_id, 'login' => $request->input('login')]);
         return redirect()->route('home');
     }
 
