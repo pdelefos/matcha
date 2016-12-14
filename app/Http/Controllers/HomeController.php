@@ -31,13 +31,14 @@ class HomeController extends Controller
                 'required' => true
             ],
             'anniversaire' => [
-                'requiredDate' => true
+                'requiredDate' => true,
+                'validDate' => true
             ],
             'description' => [
                 'required' => true
             ],
             'interets' => [
-                'requiredTags' => true
+                'requiredTags' => 4
             ],
             'adresse' => [
                 'required' => true

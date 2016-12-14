@@ -11,6 +11,8 @@
   #PROFILE-MODAL ======================
   #PROFILE-FORM =======================
   #CUSTOM-RADIO =======================
+  #CUSTOM-SELECT ======================
+  #404 ================================
 
 \*------------------------------------*/
 /*------------------------------------*\
@@ -406,6 +408,46 @@ html, body {
 .form-row {
   margin-bottom: 10px; }
 
+.date-select {
+  height: 40px; }
+
+.date-input {
+  width: 115px !important;
+  text-align: center;
+  color: #fff; }
+
+.date-input::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 20px;
+  font-weight: normal; }
+
+.date-input__day {
+  float: left; }
+
+.date-input__year {
+  float: right; }
+
+.form-textarea {
+  margin: 0px;
+  width: 386px;
+  height: 54px;
+  color: #fff;
+  background-color: transparent;
+  font-size: 15px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  resize: none;
+  padding: 5px; }
+
+.tags-input {
+  border: 2px solid #fff !important;
+  border-radius: 8px !important;
+  height: 66px !important;
+  background: transparent !important; }
+
+.tagit-label {
+  color: #637CFE; }
+
 /*------------------------------------*\
   #CUSTOM-RADIO
 \*------------------------------------*/
@@ -457,10 +499,9 @@ input[type=radio]:checked ~ label {
   background-color: #fff;
   color: #637CFE; }
 
-.test[selected] {
-  background-color: #fff;
-  color: #55FEDE; }
-
+/*------------------------------------*\
+  #CUSTOM-SELECT
+\*------------------------------------*/
 .custom-select {
   height: 40px; }
 
@@ -490,42 +531,14 @@ input[type=radio]:checked ~ label {
   transform: rotateX(50deg);
   display: inline-block; }
 
-.date-select {
-  height: 40px; }
-
-.date-input {
-  width: 105px !important;
-  text-align: center;
-  color: #fff; }
-
-.date-input::-webkit-input-placeholder {
+/*------------------------------------*\
+  #404
+\*------------------------------------*/
+.notfound-container {
+  font-size: 150px;
   color: #fff;
-  font-size: 20px;
-  font-weight: normal; }
-
-.date-input__day {
-  float: left; }
-
-.date-input__year {
-  float: right; }
-
-.form-textarea {
-  margin: 0px;
-  width: 386px;
-  height: 54px;
-  color: #fff;
-  background-color: transparent;
-  font-size: 15px;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  resize: none;
-  padding: 5px; }
-
-.tags-input {
-  border: 2px solid #fff !important;
-  border-radius: 8px !important;
-  height: 66px !important;
-  background: transparent !important; }
-
-.tagit-label {
-  color: #637CFE; }
+  font-family: 'Lato';
+  width: 261px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px; }

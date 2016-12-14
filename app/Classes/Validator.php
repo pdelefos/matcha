@@ -19,7 +19,8 @@ class Validator {
         'uniqueEmail',
         'uniqueLogin',
         'requiredDate',
-        'requiredTags'
+        'requiredTags',
+        'validDate'
     ];
 
     public $messages = [
@@ -32,7 +33,8 @@ class Validator {
         'uniqueEmail' => 'Cet email est déjà utilisé',
         'uniqueLogin' => 'Ce login est déjà utilisé',
         'requiredDate' => 'La date est requise',
-        'requiredTags' => 'il faut au moins 3 interets'
+        'requiredTags' => 'il faut au moins :condition interets',
+        'validDate' => 'la date n\'est pas valide'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -138,10 +140,18 @@ class Validator {
         return true;
     }
 
-    // Verifie qu'il y ai au moins 3 interets
+    // Verifie qu'il y ai autant de tags que la condition
     protected function requiredTags($field, $value, $condition) {
-        // var_dump($value);
-        // die();
-        return count($value) < 3 ? false : true;
+        return count($value) < $condition ? false : true;
+    }
+
+    // Verifie la validité de la date
+    protected function validDate($field, $value, $condition) {
+        $jour = $value['jour'];
+        $mois = $value['mois'];
+        $annee = $value['annee'];
+        if (empty($jour) || empty($mois) || empty($annee))
+            return false;
+        return checkdate($mois, $jour, $annee);
     }
 }
