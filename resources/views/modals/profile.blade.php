@@ -81,19 +81,19 @@ if (isset($prev_values)) {
                                     <option hidden style="color: #fff" value="">choisir</option>
                                 @endif
                                 @if (isset($prev_search) && $prev_search == "homme")
-                                    <option selected class="test" value="homme">un homme</option>
+                                    <option selected value="homme">un homme</option>
                                 @else
-                                    <option class="test" value="homme">un homme</option>
+                                    <option value="homme">un homme</option>
                                 @endif
                                 @if (isset($prev_search) && $prev_search == "femme")
-                                    <option selected class="test" value="femme">une femme</option>
+                                    <option selected value="femme">une femme</option>
                                 @else
-                                    <option class="test" value="femme">une femme</option>
+                                    <option value="femme">une femme</option>
                                 @endif
                                 @if (isset($prev_search) && $prev_search == "indifferent")
-                                    <option selected class="test" value="indifferent">indifférent</option>
+                                    <option selected value="indifferent">indifférent</option>
                                 @else
-                                    <option class="test" value="indifferent">indifférent</option>
+                                    <option value="indifferent">indifférent</option>
                                 @endif
                             </select>
                             <span class="accent">V</span>
@@ -148,13 +148,13 @@ if (isset($prev_values)) {
                     </div>
             </div>
             <div class="form-row">
-                <label class="form-label">Mon adresse <a href="#" class="form-localise-link">me localiser</a></label>
+                <label class="form-label">Mon adresse <a href="#" class="form-localise-link" id="localize-me">me localiser</a></label>
                 @if (isset($error_adresse) && $error_adresse != "")
                     <div class="form__error form_error-profile" data-error="{{ $error_adresse }}" >
                 @else
                     <div>
                 @endif
-                        <input type="text" name="adresse" class="form__input form-input__profile" value="{{ $prev_adresse or ''}}">
+                        <input type="text" name="adresse" id="adresse-input" class="form__input form-input__profile" value="{{ $prev_adresse or ''}}">
                     </div>
             </div>
             <div class="form-row">
@@ -189,12 +189,5 @@ if (isset($prev_values)) {
         </form>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $("#myTags").tagit({
-            itemName: 'item',
-            fieldName: 'interets[]',
-            availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"]
-        })
-    });
-</script>
+<script type="text/javascript" src="js/tags-settings.js"></script>
+<script type="text/javascript" src="js/geolocalisation.js"></script>
