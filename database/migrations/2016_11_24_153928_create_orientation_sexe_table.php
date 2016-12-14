@@ -17,6 +17,10 @@ class CreateOrientationSexeTable extends Migration
             $table->string('description', 50);
             $table->timestamps();
         });
+
+        DB::table('orientation_sexe')->insert(['description' => 'homme']);
+        DB::table('orientation_sexe')->insert(['description' => 'femme']);
+        DB::table('orientation_sexe')->insert(['description' => 'indifferent']);
     }
 
     /**

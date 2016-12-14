@@ -17,6 +17,9 @@ class CreateSexeTable extends Migration
             $table->string('description', 50);
             $table->timestamps();
         });
+
+        DB::table('sexe')->insert(['description' => 'homme']);
+        DB::table('sexe')->insert(['description' => 'femme']);
     }
 
     /**
