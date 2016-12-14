@@ -4,6 +4,7 @@
 <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
 <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 <?php
+
 if (isset($errorHandler)) {
     $error_sexe = $errorHandler->first('sexe');
     $error_search = $errorHandler->first('recherche');
@@ -20,8 +21,7 @@ if (isset($prev_values)) {
     $prev_tags = $prev_values->input('interets');
     $prev_adresse = $prev_values->input('adresse');
 }
-// google api key
-// AIzaSyCiwhivWRC5isZuX7Oc5bxBIIn2h3pzPOs
+
 ?>
 <div id="complet-profile_modal" class="profile-modal">
     <div class="profile-modal__content">
@@ -74,7 +74,7 @@ if (isset($prev_values)) {
                     <div>
                 @endif
                         <div class="custom-select">
-                            <select name="recherche">
+                            <select name="orientation">
                                 @if (isset($prev_search) && $prev_search == "")
                                     <option selected hidden style="color: #fff" value="">choisir</option>
                                 @else
@@ -164,7 +164,7 @@ if (isset($prev_values)) {
                 @else
                     <div>
                 @endif
-                        <textarea rows="2" cols="3" class="form-textarea" name="description">{{ $prev_desc or '' }}</textarea>
+                        <textarea rows="2" cols="3" class="form-textarea" name="presentation">{{ $prev_desc or '' }}</textarea>
                     </div>
             </div>
             <div class="form-row">
