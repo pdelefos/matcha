@@ -144,14 +144,16 @@ $red: #d2545a;
 
   .welcome-register {
   	float: right;
-    width: 49%;
-    height: 97%;
+    width: 310px;
+    height: 87%;
   }
 
   .form__box {
     text-align: center;
     border: 2px solid #fff;
     border-radius: 8px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   .form__title {
@@ -173,10 +175,8 @@ $red: #d2545a;
     font-size: $small-text;
     position: relative;
     text-align: left;
-    width: 80%;
-    height: 40px;
-    margin-bottom: 15px;
-    margin-top: 10px;
+    width: 96%;
+    height: 26px;
     color: #fff;
   }
 
@@ -194,7 +194,7 @@ $red: #d2545a;
     display: block;
     position: absolute;
     top: 13%;
-    left: 97%;
+    left: 104%;
     background: $red;
     width: 280px;
     padding: 4px;
@@ -207,8 +207,8 @@ $red: #d2545a;
 		font-size: $medium-text;
 		padding: 5px;
   	height: 50px;
-    width: 80%;
-    margin-top: 40px;
+    width: 90%;
+    margin-top: 25px;
     margin-bottom: 20px;
   	text-align: center;
   	text-transform: uppercase;
@@ -332,6 +332,10 @@ $red: #d2545a;
     background: $color4;
   }
 
+  .ei-position {
+    margin-top: 20px;
+  }
+
   /*------------------------------------*\
     #HOME
   \*------------------------------------*/
@@ -442,6 +446,11 @@ $red: #d2545a;
     left: 420px !important;
   }
 
+  .profile-location-icon {
+    margin: -7px;
+    margin-right: 0px;
+  }
+
   /*------------------------------------*\
     #PROFILE-FORM
   \*------------------------------------*/
@@ -449,7 +458,7 @@ $red: #d2545a;
   .form-label {
     text-align: left;
     font-size: 12px;
-    color: #fff;
+    color: $green;
     display: block;
     margin-bottom: 5px;
   }

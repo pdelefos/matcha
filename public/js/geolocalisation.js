@@ -14,8 +14,8 @@ function getAdresse(latitude, longitude) {
 }
 
 function getLatLng() {
-    $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
-        const adresse = data.city + ", " + data.region_name + ", " + data.country_name
+    $.getJSON('//ip-api.com/json', function(data) {
+        const adresse = data.zip + ", " + data.city + " " + data.country
         setAdresse(adresse)
     });
 }

@@ -53,6 +53,10 @@ class User {
 		$this->orientation = $orientation;
 	}
 
+	public function setAnniversaire($anniversaire) {
+		$this->anniversaire = $anniversaire;
+	}
+
 	public function setAdresse($adresse) {
 		$this->adresse = $adresse;
 	}
@@ -93,6 +97,7 @@ class User {
 				'prenom' => $this->prenom,
 				'password' => $this->password
 			]);
+		return $ret;
 	}
 
 	//login
@@ -111,28 +116,27 @@ class User {
 		$ret = app('db')->update('UPDATE user SET 
 			sexe_id = :sexe_id,
 			orientation_sexe_id = :orientation_sexe_id,
+			anniversaire = :anniversaire,
 			presentation = :presentation
-			WHERE id = :id', //ajouter date de naissance en base
+			WHERE id = :id',
 			[
 				'sexe_id' => Sexe::getId($this->sexe),
 				'orientation_sexe_id' => Orientation::getId($this->orientation),
+				'anniversaire' => $this->anniversaire,
 				'presentation' => $this->presentation,
 				'id' => $this->id
 			]);
+		return $ret;
 	}
 
 	// static functions
 	public static function emailExists($email) {
 		$ret = app('db')->select('SELECT id FROM user WHERE email = :email', ['email' => $email]);
-		if ($ret)
-			return true;
-		return false;
+		return $ret;
 	}
 
 	public static function loginExists($login) {
 		$ret = app('db')->select('SELECT id FROM user WHERE login = :login', ['login' => $login]);
-		if ($ret)
-			return true;
-		return false;
+		return $ret;
 	}
 }

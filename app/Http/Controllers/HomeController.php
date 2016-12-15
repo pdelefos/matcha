@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Classes\Validator;
 use App\Classes\ErrorHandler;
 use App\Classes\Session;
+use App\Models\Interest;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,7 @@ class HomeController extends Controller
     }
 
     public function showHome() {
-        return view('pages.home.home');
+        return view('pages.home.home', ['interests' => Interest::getInterests()]);
     }
 
     public function submitProfile(Request $request) {
@@ -35,7 +36,7 @@ class HomeController extends Controller
                 'requiredDate' => true,
                 'validDate' => true
             ],
-            'description' => [
+            'presentation' => [
                 'required' => true
             ],
             'interets' => [
@@ -45,17 +46,23 @@ class HomeController extends Controller
                 'required' => true
             ]
         ]);
-        if ($validator->fails()) {
-            return view('pages.home.home', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
-        } else {
-            $session = Session::getInstance();
-            $user = new User();
-            $user->setId($session->getValue('id'));
-            $user->setSexe($inputs['sexe']);
-            $user->setOrientation($inputs['orientation']);
-            $user->setPresentation($inputs['presentation']);
-            $user->completeProfile();
-        }
+        // if ($validator->fails()) {
+        //     return view('pages.home.home', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        // } else {
+            // $jour = $inputs['anniversaire']['jour'];
+            // $mois = $inputs['anniversaire']['mois'];
+            // $annee = $inputs['anniversaire']['annee'];
+            // $date = $mois . "/" . $jour . "/" . $annee;
+            // $session = Session::getInstance();
+            // $user = new User();
+            // $user->setId($session->getValue('id'));
+            // $user->setSexe($inputs['sexe']);
+            // $user->setOrientation($inputs['recherche']);
+            // $user->setAnniversaire($date);
+            // $user->setPresentation($inputs['presentation']);
+            // $user->completeProfile();
+            // Interest::saveInterests(1, $inputs['interets']);
+        // }
     }
 
     public function showProfile() {
