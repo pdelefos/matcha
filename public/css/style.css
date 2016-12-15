@@ -455,8 +455,8 @@ html, body {
   list-style: none; }
 
 .custom-radio ul li:first-child {
-  margin-right: -2px;
-  border-right: 1px solid #fff;
+  margin-right: -3px;
+  border-right: 2px solid #fff;
   border-radius: 8px 0px 0px 8px; }
 
 .custom-radio ul li:last-child {
@@ -530,6 +530,16 @@ input[type=radio]:checked ~ label {
   left: 180px;
   transform: rotateX(50deg);
   display: inline-block; }
+
+.check-option__3 {
+  width: 128px !important; }
+
+.check-option__middle {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  margin-left: -2px;
+  margin-right: -2px;
+  width: 135px !important; }
 
 /*------------------------------------*\
   #404

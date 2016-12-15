@@ -38,28 +38,28 @@ if (isset($prev_values)) {
                             <ul>
                                 <li>
                                     @if (isset($prev_sexe) && $prev_sexe == "homme")
-                                        <input type="radio" name="sexe" id="m-option" value="homme" checked>
+                                        <input type="radio" name="sexe" id="m-sexe" value="homme" checked>
                                     @else
-                                        <input type="radio" name="sexe" id="m-option" value="homme">
+                                        <input type="radio" name="sexe" id="m-sexe" value="homme">
                                     @endif
-                                    <label for="m-option">homme</label>
+                                    <label for="m-sexe">homme</label>
                                     <div class="check"></div>
                                 </li>
                                 <li style="display: none;">
                                     @if (isset($prev_sexe) && ($prev_sexe == "homme" || $prev_sexe == "femme"))
-                                        <input type="radio" name="sexe" id="d-option" value="">
+                                        <input type="radio" name="sexe" id="d-sexe" value="">
                                     @else
-                                        <input type="radio" name="sexe" id="d-option" value="" checked>
+                                        <input type="radio" name="sexe" id="d-sexe" value="" checked>
                                     @endif
                                     <div class="check"></div>
                                 </li>
                                 <li>
                                     @if (isset($prev_sexe) && $prev_sexe == "femme")
-                                        <input type="radio" name="sexe" id="f-option" value="femme" checked>
+                                        <input type="radio" name="sexe" id="f-sexe" value="femme" checked>
                                     @else
-                                        <input type="radio" name="sexe" id="f-option" value="femme">
+                                        <input type="radio" name="sexe" id="f-sexe" value="femme">
                                     @endif
-                                    <label for="f-option">femme</label>
+                                    <label for="f-sexe">femme</label>
                                     <div class="check"></div>
                                 </li>
                             </ul>
@@ -73,7 +73,7 @@ if (isset($prev_values)) {
                 @else
                     <div>
                 @endif
-                        <div class="custom-select">
+                        <!--<div class="custom-select">
                             <select name="orientation">
                                 @if (isset($prev_search) && $prev_search == "")
                                     <option selected hidden style="color: #fff" value="">choisir</option>
@@ -97,6 +97,45 @@ if (isset($prev_values)) {
                                 @endif
                             </select>
                             <span class="accent">V</span>
+                        </div>-->
+                        <div class="custom-radio">
+                            <ul>
+                                <li class="check-option__3">
+                                    @if (isset($prev_search) && $prev_search == "homme")
+                                        <input type="radio" name="orientation" id="m-orient" value="homme" checked>
+                                    @else
+                                        <input type="radio" name="orientation" id="m-orient" value="homme">
+                                    @endif
+                                    <label for="m-orient">homme</label>
+                                    <div class="check"></div>
+                                </li>
+                                <li style="display: none;">
+                                    @if (isset($prev_search) && ($prev_search == "homme" || $prev_search == "femme"))
+                                        <input type="radio" name="orientation" id="d-orient" value="">
+                                    @else
+                                        <input type="radio" name="orientation" id="d-orient" value="" checked>
+                                    @endif
+                                    <div class="check"></div>
+                                </li>
+                                <li class="check-option__3 check-option__middle">
+                                    @if (isset($prev_search) && $prev_search == "indifferent")
+                                        <input type="radio" name="orientation" id="i-orient" value="indifferent" checked>
+                                    @else
+                                        <input type="radio" name="orientation" id="i-orient" value="indifferent">
+                                    @endif
+                                    <label for="i-orient">indifférent</label>
+                                    <div class="check"></div>
+                                </li>
+                                <li class="check-option__3">
+                                    @if (isset($prev_search) && $prev_search == "femme")
+                                        <input type="radio" name="orientation" id="f-orient" value="femme" checked>
+                                    @else
+                                        <input type="radio" name="orientation" id="f-orient" value="femme">
+                                    @endif
+                                    <label for="f-orient">femme</label>
+                                    <div class="check"></div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
             </div>
