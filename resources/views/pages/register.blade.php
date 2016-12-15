@@ -32,41 +32,56 @@ if (isset($prev_values)) {
 		<div class="welcome-register form__box">
 			<h2 class="form__title">INSCRIPTION</h2>
 			<form action="#" method="post" class="form-register">
-			@if (isset($error_nom) && $error_nom != "")
-				<div class="form__error" data-error="{{ $error_nom }}" >
-			@else
-				<div>
-			@endif
-				<input class="form__input" type="text" name="nom" placeholder="NOM" value="{{ $prev_nom or '' }}">
-			</div>
-			@if (isset($error_prenom) && $error_prenom != "")
-				<div class="form__error" data-error="{{ $error_prenom }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input" type="text" name="prenom" placeholder="PRENOM" value="{{ $prev_prenom or '' }}">
-			</div>
-			@if (isset($error_email) && $error_email != "")
-				<div class="form__error" data-error="{{ $error_email }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input" type="text" name="email" placeholder="EMAIL" value="{{ $prev_email or '' }}">
-			</div>
-			@if (isset($error_login) && $error_login != "")
-				<div class="form__error" data-error="{{ $error_login }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input" type="text" name="login" placeholder="PSEUDO" value="{{ $prev_login or '' }}">
-			</div>
-			@if (isset($error_password) && $error_password != "")
-				<div class="form__error" data-error="{{ $error_password }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input" type="text" name="password" placeholder="MOT DE PASSE">
-			</div>
+				<div class="form-row">
+					<label class="form-label">Mon nom</label>
+					@if (isset($error_nom) && $error_nom != "")
+						<div class="form__error" data-error="{{ $error_nom }}" >
+					@else
+						<div>
+					@endif
+							<input class="form__input" type="text" name="nom" value="{{ $prev_nom or '' }}">
+						</div>
+				</div>
+				<div class="form-row">
+					<label class="form-label">Mon prénom</label>
+					@if (isset($error_prenom) && $error_prenom != "")
+						<div class="form__error" data-error="{{ $error_prenom }}">
+					@else
+						<div>
+					@endif
+							<input class="form__input" type="text" name="prenom" value="{{ $prev_prenom or '' }}">
+						</div>
+				</div>
+				<div class="form-row">
+					<label class="form-label">Mon email</label>
+					@if (isset($error_email) && $error_email != "")
+						<div class="form__error" data-error="{{ $error_email }}">
+					@else
+						<div>
+					@endif
+							<input class="form__input" type="text" name="email" value="{{ $prev_email or '' }}">
+						</div>
+				</div>
+				<div class="form-row">
+					<label class="form-label">Mon login</label>
+					@if (isset($error_login) && $error_login != "")
+						<div class="form__error" data-error="{{ $error_login }}">
+					@else
+						<div>
+					@endif
+							<input class="form__input" type="text" name="login" value="{{ $prev_login or '' }}">
+						</div>
+				</div>
+				<div class="form-row">
+					<label class="form-label">Mon mot de passe</label>
+				@if (isset($error_password) && $error_password != "")
+					<div class="form__error" data-error="{{ $error_password }}">
+				@else
+					<div>
+				@endif
+						<input class="form__input" type="text" name="password">
+					</div>
+				</div>
 			<input class="form__input btn-submit" type="submit" name="submit" value="Je m'inscris">
 		</form>
 		</div>

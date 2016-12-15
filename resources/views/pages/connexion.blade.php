@@ -23,19 +23,25 @@ if (isset($prev_values)) {
 		<div class="form__login form__box">
 		<h2 class="form__title">CONNEXION</h2>
 		<form action="#" method="post" class="form-login">
-			@if (isset($error_login) && $error_login != "")
-				<div class="form__error" data-error="{{ $error_login }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input register-input" type="text" name="login" placeholder="PSEUDO" value="{{ $prev_login or '' }}">
+			<div class="form-row">
+				<label class="form-label">Mon login</label>
+				@if (isset($error_login) && $error_login != "")
+					<div class="form__error" data-error="{{ $error_login }}">
+				@else
+					<div>
+				@endif
+						<input class="form__input register-input" type="text" name="login" alue="{{ $prev_login or '' }}">
+					</div>
 			</div>
-			@if (isset($error_password) && $error_password != "")
-				<div class="form__error" data-error="{{ $error_password }}">
-			@else
-				<div>
-			@endif
-				<input class="form__input register-input" type="text" name="password" placeholder="MOT DE PASSE">
+			<div class="form-row">
+				<label class="form-label">Mon mot de passe</label>
+				@if (isset($error_password) && $error_password != "")
+					<div class="form__error" data-error="{{ $error_password }}">
+				@else
+					<div>
+				@endif
+						<input class="form__input register-input" type="text" name="password">
+					</div>
 			</div>
 			<input class="form__input btn-submit" type="submit" name="submit" value="C'est parti">
 		</form>
