@@ -21,11 +21,13 @@ class HomeController extends Controller
         $session = Session::getInstance();
         $user_id = $session->getValue('id');
         $user_completed = User::getCompleted($user_id);
+        $interests = Interest::getInterests();
         return view('pages.home.home',
         [
-            'interests' => Interest::getInterests(), 
+            'interests' => $interests, 
             'user_completed' => $user_completed
         ]);
+        // return view('pages.home.home');
     }
 
     public function submitProfile(Request $request) {

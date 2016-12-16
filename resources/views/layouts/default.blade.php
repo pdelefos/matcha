@@ -2,6 +2,7 @@
 <html>
 <head>
 	@include('includes.head')
+		@yield('script')
 </head>
 <body>
 	<div class="container">

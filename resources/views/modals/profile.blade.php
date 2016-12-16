@@ -207,17 +207,3 @@ if (isset($prev_values)) {
         </form>
     </div>
 </div>
-<?php if (!isset($interests)) $interests = ""; ?>
-<script>
-    const str_interets = "<?= $interests ?>"
-    const array_interets = str_interets.split(",")
-    $(document).ready(function() {
-        $("#myTags").tagit({
-            itemName: 'item',
-            fieldName: 'interets[]',
-            availableTags: array_interets
-        })
-    });
-</script>
-<script type="text/javascript" src="js/loca-autocomplete.js"></script>
-<script type="text/javascript" src="js/geolocalisation.js"></script>
