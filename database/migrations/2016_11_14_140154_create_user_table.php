@@ -19,11 +19,13 @@ class CreateUserTable extends Migration
             $table->string('nom', 50);
             $table->string('prenom', 50);
             $table->string('password', 250);
+            $table->boolean('completed')->default(false);
             $table->integer('sexe_id')->unsigned()->nullable();
             $table->foreign('sexe_id')->references('id')->on('sexe');
             $table->integer('orientation_sexe_id')->unsigned()->nullable();
             $table->foreign('orientation_sexe_id')->references('id')->on('orientation_sexe');
             $table->dateTime('anniversaire')->nullable();
+            $table->string('localisation', 250)->nullable();
             $table->longText('presentation', 500)->nullable();
             $table->integer('interets')->unsigned()->nullable();
             $table->foreign('interets')->references('id')->on('user_interets');
