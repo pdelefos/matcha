@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Interest;
+
 class User {
 
 	private $id;
@@ -13,7 +15,7 @@ class User {
 	private $sexe;
 	private $orientation;
 	private $anniversaire;
-	private $adresse;
+	private $localisation;
 	private $presentation;
 	private $interests = array();
 
@@ -57,8 +59,8 @@ class User {
 		$this->anniversaire = $anniversaire;
 	}
 
-	public function setAdresse($adresse) {
-		$this->adresse = $adresse;
+	public function setLocalisation($localisation) {
+		$this->localisation = $localisation;
 	}
 
 	public function setPresentation($presentation) {
@@ -97,7 +99,9 @@ class User {
 				'prenom' => $this->prenom,
 				'password' => $this->password
 			]);
-		return $ret;
+		if ($ret)
+			return Self::getId($this->login);
+		return false;
 	}
 
 	//login
@@ -117,26 +121,54 @@ class User {
 			sexe_id = :sexe_id,
 			orientation_sexe_id = :orientation_sexe_id,
 			anniversaire = :anniversaire,
-			presentation = :presentation
+			localisation = :localisation,
+			presentation = :presentation,
+			completed = :completed
 			WHERE id = :id',
 			[
 				'sexe_id' => Sexe::getId($this->sexe),
 				'orientation_sexe_id' => Orientation::getId($this->orientation),
 				'anniversaire' => $this->anniversaire,
+				'localisation' => $this->localisation,
 				'presentation' => $this->presentation,
-				'id' => $this->id
+				'id' => $this->id,
+				'completed' => true
 			]);
+		if ($ret)
+			Self::saveInterests();
 		return $ret;
+	}
+
+	static function getId($login) {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
+		['login' => $login]);
+		if ($ret)
+			return $ret[0]->{'id'};
+		return false;
+	}
+
+	private function saveInterests() {
+		Interest::saveInterests($this->id, $this->interests);
+	}
+
+	static function getCompleted($id) {
+		$ret = app('db')->select('SELECT completed FROM user WHERE id = :id',
+		['id' => $id]);
+		if ($ret)
+			return $ret[0]->{'completed'};
+		return false;
 	}
 
 	// static functions
 	public static function emailExists($email) {
-		$ret = app('db')->select('SELECT id FROM user WHERE email = :email', ['email' => $email]);
+		$ret = app('db')->select('SELECT id FROM user WHERE email = :email',
+		['email' => $email]);
 		return $ret;
 	}
 
 	public static function loginExists($login) {
-		$ret = app('db')->select('SELECT id FROM user WHERE login = :login', ['login' => $login]);
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
+		['login' => $login]);
 		return $ret;
 	}
 }

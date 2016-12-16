@@ -23,10 +23,14 @@ if (isset($prev_values)) {
     $prev_adresse = $prev_values->input('adresse');
 }
 ?>
+@if (isset($user_completed) && $user_completed)
+<div id="complet-profile_modal" class="profile-modal profile-modal__hidden">
+@else
 <div id="complet-profile_modal" class="profile-modal">
+@endif
     <div class="profile-modal__content">
         <h2 class="profile-modal__title">On a besoin de plus d'info !</h2>
-        <form class="profile-form" action="#" method="post">
+        <form class="profile-form" action="" method="post">
             <div class="form-row">
                 <label class="form-label">Je suis</label>
                 @if (isset($error_sexe) && $error_sexe != "")
@@ -203,24 +207,17 @@ if (isset($prev_values)) {
         </form>
     </div>
 </div>
+<?php if (!isset($interests)) $interests = ""; ?>
 <script>
-    function locationComplete () {
-        var address_input = document.getElementById("adresse-input")
-        var autocomplete = new google.maps.places.Autocomplete(address_input)
-    }
-    google.maps.event.addDomListener(window, 'load', locationComplete)
-</script>
-<script>
-    const interets = "<?= $interests ?>"
-    // var result = JSON.parse(interets)
-    console.log(interets)
+    const str_interets = "<?= $interests ?>"
+    const array_interets = str_interets.split(",")
     $(document).ready(function() {
         $("#myTags").tagit({
             itemName: 'item',
             fieldName: 'interets[]',
-            availableTags: ["voyage", "tunning"]
+            availableTags: array_interets
         })
     });
 </script>
-<!--<script type="text/javascript" src="js/tags-settings.js"></script>-->
+<script type="text/javascript" src="js/loca-autocomplete.js"></script>
 <script type="text/javascript" src="js/geolocalisation.js"></script>

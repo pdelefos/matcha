@@ -354,6 +354,9 @@ html, body {
   background-color: rgba(0, 0, 0, 0.8);
   font-family: 'Lato'; }
 
+.profile-modal__hidden {
+  display: none; }
+
 .form-input__profile {
   margin: 0;
   width: 385px;

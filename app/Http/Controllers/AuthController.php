@@ -66,8 +66,10 @@ class AuthController extends Controller
             $user->setNom($request->input('nom'));
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
-            echo $user->register();
-            return view('pages.home.home');
+            $user_id = $user->register();
+            $session = Session::getInstance();
+            $session->login(['id' => $user_id, 'login' => $request->input('login')]);
+            return redirect()->route('home');
         }
     }
 

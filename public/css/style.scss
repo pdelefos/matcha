@@ -379,7 +379,6 @@ $red: #d2545a;
   \*------------------------------------*/
 
   .profile-modal {
-    // display: none;
     position: fixed;
     z-index: 20;
     left: 0;
@@ -389,6 +388,10 @@ $red: #d2545a;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.8);
     font-family: 'Lato';
+  }
+
+  .profile-modal__hidden {
+    display: none;
   }
 
   .form-input__profile {
