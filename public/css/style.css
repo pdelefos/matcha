@@ -292,7 +292,7 @@ html, body {
 
 .navbar-item:hover {
   cursor: pointer;
-  border-left: 2px solid red; }
+  border-left: 4px solid #55FEDE; }
 
 .navbar__home {
   background: #34BFBF;
@@ -561,4 +561,31 @@ input[type=radio]:checked ~ label {
   width: 261px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 200px; }
+  padding-top: 220px; }
+
+.profile-box {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 8px;
+  top: 30px;
+  right: 30px;
+  bottom: 30px;
+  left: 130px; }
+
+.profile-box-header {
+  height: 170px;
+  border-bottom: 2px solid #1894C9; }
+
+.profile-box-header__pic {
+  height: 140px;
+  width: 140px;
+  background-color: red;
+  border-radius: 50%;
+  top: 15px;
+  left: 60px;
+  position: relative;
+  display: inline-block; }
+
+.profile-box-header__infos {
+  font-family: 'Lato';
+  font-size: 20px; }

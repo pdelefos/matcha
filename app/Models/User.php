@@ -88,6 +88,10 @@ class User {
 		return $this->prenom;
 	}
 
+	public function getSexe() {
+		return $this->sexe;
+	}
+
 	//save on db
 	public function register() {
 		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
@@ -170,5 +174,21 @@ class User {
 		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
 		['login' => $login]);
 		return $ret;
+	}
+
+	public static function getUser($user_id) {
+		$ret = app('db')->select('SELECT * FROM user WHERE id = :id',
+		['id' => $user_id]);
+		$user = new User();
+		$user->setId($ret[0]->{'id'});
+		$user->setLogin($ret[0]->{'login'});
+		$user->setEmail($ret[0]->{'email'});
+		$user->setNom($ret[0]->{'nom'});
+		$user->setPrenom($ret[0]->{'prenom'});
+		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
+		$user->setAnniversaire($ret[0]->{'anniversaire'});
+		if ($ret)
+			return $user;
+		return false;
 	}
 }

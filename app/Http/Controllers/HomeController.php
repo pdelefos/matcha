@@ -31,6 +31,7 @@ class HomeController extends Controller
     }
 
     public function submitProfile(Request $request) {
+        $session = Session::getInstance();
         $inputs = $request->all();
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
@@ -56,18 +57,20 @@ class HomeController extends Controller
             ]
         ]);
         if ($validator->fails()) {
+            $user_completed = User::getCompleted($session->getValue('id'));
+            $interests = Interest::getInterests();
             return view('pages.home.home',
             [
                 'prev_values' => $request,
                 'errorHandler' => $validator->errors(),
-                'interests' => Interest::getInterests()
+                'interests' => $interests,
+                'user_completed' => $user_completed
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
             $mois = $inputs['anniversaire']['mois'];
             $annee = $inputs['anniversaire']['annee'];
             $date = $mois . "/" . $jour . "/" . $annee;
-            $session = Session::getInstance();
             $user = new User();
             $user->setId($session->getValue('id'));
             $user->setSexe($inputs['sexe']);
@@ -82,7 +85,12 @@ class HomeController extends Controller
     }
 
     public function showProfile() {
-        return view('pages.home.profile');
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        return view('pages.home.profile',
+        [
+            'user' => $user
+        ]);
     }
 
     public function showNotif() {

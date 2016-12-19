@@ -35,6 +35,7 @@ class Interest {
     // Ajoute un tableau d'interets en base seulement si l'interet n'existe pas
     // Ajoute ensuite les interets a un utilisateur
     static function saveInterests($user_id, array $interests) {
+        Self::deleteInterests($user_id);
         foreach ($interests as $interest) {
             $id_interest = Self::getId($interest);
             if (!$id_interest)
@@ -50,5 +51,12 @@ class Interest {
         foreach ($ret as $value)
             $interests[] = $value->{'description'};
         return implode(",", $interests);
+    }
+
+    // Supprime tout les interets d'un utilisateur
+    static function deleteInterests($user_id) {
+        $ret = app('db')->delete('DELETE FROM user_interets WHERE user_id = :user_id',
+        ['user_id' => $user_id]);
+        return $ret;
     }
 }

@@ -280,10 +280,10 @@ $red: #d2545a;
     #NAVBAR
   \*------------------------------------*/
 
-  $color1: #34BFBF;
-  $color2: #1894C9;
-  $color3: #466FBA;
-  $color4: #565BBF;
+  $color-home: #34BFBF;
+  $color-profile: #1894C9;
+  $color-notif: #466FBA;
+  $color-chat: #565BBF;
 
   .navbar {
     position: fixed;
@@ -312,24 +312,24 @@ $red: #d2545a;
 
   .navbar-item:hover {
     cursor: pointer;
-    border-left: 2px solid red;
+    border-left: 4px solid $green;
   }
 
   .navbar__home {
-    background: $color1;
+    background: $color-home;
     line-height: 90px;
   }
 
   .navbar__profile {
-    background: $color2;
+    background: $color-profile;
   }
 
   .navbar__notification {
-    background: $color3;
+    background: $color-notif;
   }
 
   .navbar__chat {
-    background: $color4;
+    background: $color-chat;
   }
 
   .ei-position {
@@ -353,19 +353,19 @@ $red: #d2545a;
   }
 
   .home-page {
-    background: $color1;
+    background: $color-home;
   }
 
   .profile-page {
-    background: $color2;
+    background: $color-profile;
   }
 
   .notification-page {
-    background: $color3;
+    background: $color-notif;
   }
 
   .chat-page {
-    background: $color4;
+    background: $color-chat;
   }
 
   .navbar__logout {
@@ -640,5 +640,36 @@ $red: #d2545a;
     width: 261px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 200px;
+    padding-top: 220px;
+  }
+
+  .profile-box {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 8px;
+    top: 30px;
+    right: 30px;
+    bottom: 30px;
+    left: 130px;
+  }
+
+  .profile-box-header {
+    height: 170px;
+    border-bottom: 2px solid $color-profile;
+  }
+
+  .profile-box-header__pic {
+    height: 140px;
+    width: 140px;
+    background-color: red;
+    border-radius: 50%;
+    top: 15px;
+    left: 60px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .profile-box-header__infos {
+    font-family: 'Lato';
+    font-size: $medium-text;
   }

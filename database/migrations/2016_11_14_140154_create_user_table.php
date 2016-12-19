@@ -27,10 +27,6 @@ class CreateUserTable extends Migration
             $table->dateTime('anniversaire')->nullable();
             $table->string('localisation', 250)->nullable();
             $table->longText('presentation', 500)->nullable();
-            $table->integer('interets')->unsigned()->nullable();
-            $table->foreign('interets')->references('id')->on('user_interets');
-            $table->integer('photos')->unsigned()->nullable();
-            $table->foreign('photos')->references('id')->on('user_photos');
             $table->timestamps();
         });
     }
