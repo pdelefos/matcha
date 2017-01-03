@@ -79,7 +79,7 @@ if (isset($prev_values)) {
 				@else
 					<div>
 				@endif
-						<input class="form__input" type="text" name="password">
+						<input class="form__input" type="password" name="password">
 					</div>
 				</div>
 			<input class="form__input btn-submit" type="submit" name="submit" value="Je m'inscris">

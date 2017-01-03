@@ -25,6 +25,10 @@ $app->get('/connexion', ['as' => 'connection', 'uses' => 'AuthController@showCon
 
 $app->post('/connexion', "AuthController@submitConnexion");
 
+$app->get('/recover', ['as' => 'recover', 'uses' => 'AuthController@showRecover']);
+
+$app->post('/recover', "AuthController@submitRecover");
+
 $app->get('/home/deconnexion', ['as' => 'deconnexion', 'uses' => 'AuthController@logout']);
 
 /*--------------------------------------------------------------------------
@@ -36,7 +40,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->post('/home', ['as' => 'home', 'uses' => 'HomeController@submitProfile']);
 
-    $app->get('/home/profile', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+    $app->get('/home/profil', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
 
     $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
 

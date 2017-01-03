@@ -108,6 +108,26 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
+    public function submitRecover(Request $request) {
+        $inputs = $request->all();
+        $errorHandler = new ErrorHandler;
+        $validator = new Validator($errorHandler);
+        $validator->check($inputs, [
+            'email' => [
+                'required' => true,
+                'email' => true,
+                'emailExist' => true
+            ]
+        ]);
+        if ($validator->fails())
+            return view('pages.recover', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+    }
+
+    // Render la page de récupération de mot de passe
+    public function showRecover() {
+        return view('pages.recover');
+    }
+
     // deconnecte l'utilisateur courant et le renvoi au register
     public function logout() {
         $session = Session::getInstance();

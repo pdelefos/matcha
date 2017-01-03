@@ -13,6 +13,7 @@
   #CUSTOM-RADIO =======================
   #CUSTOM-SELECT ======================
   #404 ================================
+  #PROFIL-PAGE ========================
 
 \*------------------------------------*/
 /*------------------------------------*\
@@ -65,6 +66,10 @@ html, body {
   position: absolute;
   top: 2em;
   right: 2em; }
+
+.forget-link {
+  display: block;
+  margin-bottom: 20px; }
 
 .link-btn {
   border: 2px solid #fff;
@@ -288,7 +293,7 @@ html, body {
   text-align: center;
   height: 100px;
   color: #fff;
-  line-height: 100px; }
+  line-height: 6.2; }
 
 .navbar-item:hover {
   cursor: pointer;
@@ -555,37 +560,61 @@ input[type=radio]:checked ~ label {
   #404
 \*------------------------------------*/
 .notfound-container {
-  font-size: 150px;
   color: #fff;
-  font-family: 'Lato';
   width: 261px;
+  padding-top: 220px;
+  font-family: 'Lato';
+  font-size: 150px;
   margin-left: auto;
-  margin-right: auto;
-  padding-top: 220px; }
+  margin-right: auto; }
 
-.profile-box {
-  position: absolute;
-  background-color: #fff;
-  border-radius: 8px;
-  top: 30px;
-  right: 30px;
-  bottom: 30px;
-  left: 130px; }
+/*------------------------------------*\
+  #PROFIL-PAGE
+\*------------------------------------*/
+.profil-box {
+  box-shadow: 0px 0px 15px black; }
 
-.profile-box-header {
-  height: 170px;
-  border-bottom: 2px solid #1894C9; }
+.profil-bar {
+  background-color: #565BBF;
+  height: 12.5em; }
 
-.profile-box-header__pic {
-  height: 140px;
-  width: 140px;
-  background-color: red;
-  border-radius: 50%;
-  top: 15px;
-  left: 60px;
-  position: relative;
+.profil-bar-pic {
+  height: 100%;
+  width: 17em;
+  overflow: hidden;
   display: inline-block; }
 
-.profile-box-header__infos {
+.profil-bar-picture {
+  max-width: 100%; }
+
+.profil-bar-center {
+  background-color: #466FBA;
+  transform: skewX(-25deg);
+  display: inline-block;
+  height: 100%;
+  min-width: calc(100% - 28.3em);
+  margin-left: -50px;
+  margin-right: -50px; }
+
+.profil-bar-score {
+  width: 12em;
+  display: inline-block;
+  top: 20px;
+  position: absolute;
+  text-align: center;
+  margin-top: 2em;
+  margin-left: 4em; }
+
+.profil-bar-center__info {
+  position: absolute;
+  line-height: 4.2;
+  margin-left: 70px;
+  color: #fff;
+  font-family: 'LatoBold';
+  font-size: 3em;
+  text-transform: uppercase; }
+
+.score {
+  color: #fff;
   font-family: 'Lato';
-  font-size: 20px; }
+  font-size: 5em; }

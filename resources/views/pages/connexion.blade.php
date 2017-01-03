@@ -40,10 +40,11 @@ if (isset($prev_values)) {
 				@else
 					<div>
 				@endif
-						<input class="form__input register-input" type="text" name="password">
+						<input class="form__input register-input" type="password" name="password">
 					</div>
 			</div>
 			<input class="form__input btn-submit" type="submit" name="submit" value="C'est parti">
+			</br><a href="{{ route('recover') }}" class="forget-link">j'ai perdu mon mot de passe</a>
 		</form>
 		</div>
 	</div>

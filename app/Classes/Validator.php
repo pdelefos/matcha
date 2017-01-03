@@ -19,8 +19,10 @@ class Validator {
         'uniqueEmail',
         'uniqueLogin',
         'requiredDate',
-        'requiredTags',
-        'validDate'
+        'requiredTagsMin',
+        'requiredTagsMax',
+        'validDate',
+        'emailExist'
     ];
 
     public $messages = [
@@ -33,8 +35,10 @@ class Validator {
         'uniqueEmail' => 'Cet email est déjà utilisé',
         'uniqueLogin' => 'Ce login est déjà utilisé',
         'requiredDate' => 'La date est requise',
-        'requiredTags' => 'il faut au moins :condition interets',
-        'validDate' => 'la date n\'est pas valide'
+        'requiredTagsMin' => 'Il faut au moins :condition interets',
+        'requiredTagsMax' => 'Il faut :condition interets maximum',
+        'validDate' => 'La date n\'est pas valide',
+        'emailExist' => 'Cet email n\'existe pas'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -141,8 +145,13 @@ class Validator {
     }
 
     // Verifie qu'il y ai autant de tags que la condition
-    protected function requiredTags($field, $value, $condition) {
+    protected function requiredTagsMin($field, $value, $condition) {
         return count($value) < $condition ? false : true;
+    }
+
+    // Verifie qu'il y ai autant de tags que la condition
+    protected function requiredTagsMax($field, $value, $condition) {
+        return count($value) > $condition ? false : true;
     }
 
     // Verifie la validité de la date
@@ -153,5 +162,9 @@ class Validator {
         if (empty($jour) || empty($mois) || empty($annee))
             return false;
         return checkdate($mois, $jour, $annee);
+    }
+
+    protected function emailExist($field, $value, $condition) {
+        return User::emailExists($value) ? true : false;
     }
 }

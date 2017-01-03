@@ -11,7 +11,6 @@ $page_need = array(
     @if (isset($user_completed) && !$user_completed)
         @include('modals.profile')
     @endif
-
     <div class="app-wrap home-page">
 
     </div>

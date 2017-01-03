@@ -50,7 +50,8 @@ class HomeController extends Controller
                 'required' => true
             ],
             'interets' => [
-                'requiredTags' => 4
+                'requiredTagsMin' => 2,
+                'requiredTagsMax' => 5
             ],
             'adresse' => [
                 'required' => true
