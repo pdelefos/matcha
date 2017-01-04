@@ -92,6 +92,10 @@ class User {
 		return $this->sexe;
 	}
 
+	public function getAnniversaire() {
+		return $this->anniversaire;
+	}
+
 	//save on db
 	public function register() {
 		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
@@ -186,9 +190,13 @@ class User {
 		$user->setNom($ret[0]->{'nom'});
 		$user->setPrenom($ret[0]->{'prenom'});
 		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
-		$user->setAnniversaire($ret[0]->{'anniversaire'});
+		$user->setAnniversaire(Self::calcAge($ret[0]->{'anniversaire'}));
 		if ($ret)
 			return $user;
 		return false;
+	}
+
+	private static function calcAge($birthday) {
+		return (int) ((time() - strtotime($birthday)) / 3600 / 24 / 365);
 	}
 }

@@ -17,7 +17,7 @@ class HomeController extends Controller
         //
     }
 
-    public function showHome() {
+    public function showHome(Request $request) {
         $session = Session::getInstance();
         $user_id = $session->getValue('id');
         $user_completed = User::getCompleted($user_id);
@@ -25,7 +25,8 @@ class HomeController extends Controller
         return view('pages.home.home',
         [
             'interests' => $interests, 
-            'user_completed' => $user_completed
+            'user_completed' => $user_completed,
+            'request' => $request
         ]);
         // return view('pages.home.home');
     }
@@ -65,7 +66,8 @@ class HomeController extends Controller
                 'prev_values' => $request,
                 'errorHandler' => $validator->errors(),
                 'interests' => $interests,
-                'user_completed' => $user_completed
+                'user_completed' => $user_completed,
+                'request' => $request
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
@@ -85,20 +87,27 @@ class HomeController extends Controller
         }
     }
 
-    public function showProfile() {
+    public function showProfile(Request $request) {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
         return view('pages.home.profile',
         [
-            'user' => $user
+            'user' => $user,
+            'request' => $request
         ]);
     }
 
-    public function showNotif() {
-        return view('pages.home.notification');
+    public function showNotif(Request $request) {
+        return view('pages.home.notification',
+        [
+            'request' => $request
+        ]);
     }
 
-    public function showChat() {
-        return view('pages.home.chat');
+    public function showChat(Request $request) {
+        return view('pages.home.chat',
+        [
+            'request' => $request
+        ]);
     }
 }

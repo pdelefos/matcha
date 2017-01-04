@@ -61,6 +61,12 @@
 		font-weight: bold;
   }
 
+  @font-face {
+    font-family: 'Latolight';
+    src: url('../fonts/Lato-Light.ttf');
+    font-weight: lighter;
+  }
+
   $small-text: 15px;
   $medium-text: 20px;
   $big-text: 25px;
@@ -313,6 +319,11 @@
     height: 100px;
     color: #fff;
     line-height: 6.2;
+  }
+
+  .navbar-item__selected {
+    cursor: pointer;
+    border-left: 4px solid $green;
   }
 
   .navbar-item:hover {
@@ -653,57 +664,69 @@
   \*------------------------------------*/
 
   .profil-box {
-    box-shadow: 0px 0px 15px black;
+    font-family: 'Lato';
+    color: #fff;
   }
 
   .profil-bar {
-    background-color: $color-chat;
-    height: 12.5em;
+    height: 18.77em;
+    overflow: auto;
   }
 
-  .profil-bar-pic {
-    height: 100%;
-    width: 17em;
+  .profil-bar-picplace {
+    border-radius: 50%;
     overflow: hidden;
-    display: inline-block;
+    height: 70%;
+    width: 13em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5em;
+    border: 5px solid #FFF;
   }
 
-  .profil-bar-picture {
-    max-width: 100%;
-  }
-
-  .profil-bar-center {
-    background-color: $color-notif;
-    transform: skewX(-25deg);
-    display: inline-block;
-    height: 100%;
-    min-width: calc(100% - 28.3em);
-    margin-left: -50px;
-    margin-right: -50px;
-  }
-
-  .profil-bar-score {
-    width: 12em;
-    display: inline-block;
-    top: 20px;
+  .profil-bar-login {
     position: absolute;
-    text-align: center;
-    margin-top: 2em;
-    margin-left: 4em;
-  }
-
-  .profil-bar-center__info {
-    position: absolute;
-    line-height: 4.2;
-    margin-left: 70px;
-    color: #fff;
-    font-family: 'LatoBold';
-    font-size: 3em;
+    left: 3em;
+    top: 2.6em;
     text-transform: uppercase;
+    font-size: 3em;
   }
 
-  .score {
-    color: #fff;
-    font-family: 'Lato';
-    font-size: 5em;
+  .profil-bar__picture {
+    width: 100%;
+    height: 100%;
+  }
+
+  .profil-bar-status {
+    position: absolute;
+    top: 2em;
+    right: 3em;
+    background-color: #00E676;
+    border-radius: 13px;
+    padding: 0.5em;
+  }
+
+  .profil-infobar {
+    background-color: $blue1;
+    width: 100%;
+    overflow: auto;
+    height: 6.2em;
+  }
+
+  .profil-infobar-wrap {
+    text-align: center;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .profil-infobar__item {
+    display: inline-block;
+    width: 24%;
+    height: inherit;
+    font-size: 2.2em;
+    font-family: 'LatoBold';
+  }
+
+  .item-value {
+    margin-top: 0.2em;
   }
