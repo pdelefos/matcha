@@ -8,14 +8,25 @@ $page_need = array(
     <div class="app-wrap profile-page">
         <div class="profil-box">
             <div class="profil-bar">
-                <div class="profil-bar-login">
-                    {{ $user->getLogin() }}
-                </div>
                 <div class="profil-bar-picplace">
                     <img src="../images/mona.jpg" alt="" class="profil-bar__picture">
                 </div>
-                <div class="profil-bar-status">
-                    connecté
+                <div class="profil-bar-login">
+                    {{ $user->getLogin() }} 
+                    <span class="sexe-symbol">
+                        @if ($user->getSexe() == "homme")
+                            ♂
+                        @else
+                            ♀
+                        @endif
+                    </span>
+                </div>
+                <div class="profil-bar-interests">
+                    @foreach ($user->getInterests() as $value)
+                        <div class="profil-bar-interests__item">
+                            #{{ $value }}
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="profil-infobar">
@@ -29,7 +40,7 @@ $page_need = array(
                         <div data-icon="ei-calendar" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__orientation">
-                        <div class="item-value">homme</div>
+                        <div class="item-value">{{ $user->getOrientation() }}</div>
                         <div data-icon="ei-cart" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__localisation">
@@ -39,7 +50,21 @@ $page_need = array(
                 </div>
             </div>
             <div class="profil-bio">
-                
+                {{ $user->getPresentation() }}
+            </div>
+            <div class="profil-photo-wrap">
+                <div class="profil-photo_item">
+                    
+                </div>
+                <div class="profil-photo_item">
+                    
+                </div>
+                <div class="profil-photo_item">
+                    
+                </div>
+                <div class="profil-photo_item">
+                    
+                </div>
             </div>
         </div>
     </div>

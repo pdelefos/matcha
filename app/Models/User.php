@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interest;
+use App\Models\Orientation;
 
 class User {
 
@@ -94,6 +95,18 @@ class User {
 
 	public function getAnniversaire() {
 		return $this->anniversaire;
+	}
+
+	public function getPresentation() {
+		return $this->presentation;
+	}
+
+	public function getInterests() {
+		return $this->interests;
+	}
+
+	public function getOrientation() {
+		return $this->orientation;
 	}
 
 	//save on db
@@ -191,6 +204,9 @@ class User {
 		$user->setPrenom($ret[0]->{'prenom'});
 		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
 		$user->setAnniversaire(Self::calcAge($ret[0]->{'anniversaire'}));
+		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
+		$user->setInterests(Interest::getUserInterest($user_id));
+		$user->setPresentation($ret[0]->{'presentation'});
 		if ($ret)
 			return $user;
 		return false;

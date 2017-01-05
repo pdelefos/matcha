@@ -32,6 +32,19 @@ class Interest {
         return $ret;
     }
 
+    static function getUserInterest($user_id) {
+        $ret = app('db')->select("SELECT description 
+        FROM interets AS i, user AS u, user_interets AS ui 
+        WHERE u.id = ui.user_id AND i.id = ui.interets_id AND u.id = :id",
+        [
+            'id' => $user_id
+        ]);
+        $interests = array();
+        foreach ($ret as $value)
+            $interests[] = $value->{'description'};
+        return $interests;
+    }
+
     // Ajoute un tableau d'interets en base seulement si l'interet n'existe pas
     // Ajoute ensuite les interets a un utilisateur
     static function saveInterests($user_id, array $interests) {
