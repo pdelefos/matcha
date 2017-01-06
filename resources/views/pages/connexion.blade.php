@@ -44,7 +44,7 @@ if (isset($prev_values)) {
 					</div>
 			</div>
 			<input class="form__input btn-submit" type="submit" name="submit" value="C'est parti">
-			</br><a href="{{ route('recover') }}" class="forget-link">j'ai perdu mon mot de passe</a>
+			</br><a href="{{ route('recover') }}" class="forget-link white-link">j'ai perdu mon mot de passe</a>
 		</form>
 		</div>
 	</div>

@@ -40,7 +40,11 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->post('/home', ['as' => 'home', 'uses' => 'HomeController@submitProfile']);
 
-    $app->get('/home/profil', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+    $app->get('/home/profil/{login}', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+
+    $app->get('/home/modification', ['as' => 'modification', 'uses' => 'HomeController@modificationProfile']);
+
+    $app->post('/home/modification', ['as' => 'modification', 'uses' => 'HomeController@submitModificationProfile']);
 
     $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
 

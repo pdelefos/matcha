@@ -12,7 +12,8 @@ $page_need = array(
                     <img src="../images/mona.jpg" alt="" class="profil-bar__picture">
                 </div>
                 <div class="profil-bar-login">
-                    {{ $user->getLogin() }} 
+                    {{ $user->getLogin() }}
+                    <span class="profil-bar-fullname">({{ $user->getFuscNames() }})</span>
                     <span class="sexe-symbol">
                         @if ($user->getSexe() == "homme")
                             ♂
@@ -32,11 +33,11 @@ $page_need = array(
             <div class="profil-infobar">
                 <div class="profil-infobar-wrap">
                     <div class="profil-infobar__item profil-infobar__score">
-                        <div class="item-value">99.0</div>
+                        <div class="item-value">0</div>
                         <div data-icon="ei-trophy" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__age">
-                        <div class="item-value">{{ $user->getAnniversaire() }} ans</div>
+                        <div class="item-value">{{ $user->getAge() }} ans</div>
                         <div data-icon="ei-calendar" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__orientation">

@@ -367,6 +367,17 @@ html, body {
   background-color: rgba(0, 0, 0, 0.8);
   font-family: 'Lato'; }
 
+.modal-close {
+  position: absolute;
+  display: inline-block;
+  top: 0.2em;
+  right: 0.2em;
+  color: #fff;
+  cursor: pointer; }
+
+.modal-close:hover {
+  color: #55FEDE; }
+
 .profile-modal__hidden {
   display: none; }
 
@@ -405,6 +416,9 @@ html, body {
   animation-duration: 1s;
   padding: 35px 60px 35px 60px;
   text-align: center; }
+
+.profile-modal__content__modif {
+  height: 810px; }
 
 @keyframes animatetop {
   from {
@@ -479,7 +493,7 @@ html, body {
 
 .custom-radio ul li:first-child {
   margin-right: -3px;
-  border-right: 2px solid #fff;
+  border-right: 1px solid #fff;
   border-radius: 8px 0px 0px 8px; }
 
 .custom-radio ul li:last-child {
@@ -579,6 +593,18 @@ input[type=radio]:checked ~ label {
 /*------------------------------------*\
   #PROFIL-PAGE
 \*------------------------------------*/
+.profil-error {
+  font-family: 'LatoLight';
+  font-size: 2em;
+  color: #fff;
+  position: relative;
+  top: 6em;
+  text-align: center; }
+
+.profil-error__login {
+  font-family: 'Lato';
+  text-decoration: underline; }
+
 .profil-box {
   font-family: 'Lato';
   color: #fff; }
@@ -609,6 +635,10 @@ input[type=radio]:checked ~ label {
   left: 2em;
   font-size: 3em;
   font-family: 'Lato'; }
+
+.profil-bar-fullname {
+  font-size: 0.5em;
+  font-family: 'LatoLight'; }
 
 .sexe-symbol {
   color: #55FEDE;
@@ -651,7 +681,7 @@ input[type=radio]:checked ~ label {
 
 .profil-bio {
   width: 90%;
-  height: 7em;
+  height: auto;
   background-color: #637CFE;
   margin-top: 2em;
   margin-left: auto;
@@ -660,17 +690,36 @@ input[type=radio]:checked ~ label {
   border-radius: 8px;
   box-sizing: border-box;
   font-family: 'LatoLight';
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  word-wrap: break-word; }
 
 .profil-photo-wrap {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-top: 3em;
   width: 90%;
+  height: 40em;
+  margin-bottom: 4em;
   background-color: red; }
 
 .profil-photo_item {
-  width: 40%;
+  width: 45%;
   height: 4em;
   background-color: grey; }
+
+.profil-mod {
+  position: relative;
+  right: 2.5em;
+  bottom: 6.5em;
+  float: right; }
+
+.profil-mod:hover {
+  color: #55FEDE;
+  cursor: pointer; }
+
+.white-link {
+  color: #fff; }

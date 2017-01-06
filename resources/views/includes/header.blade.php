@@ -5,9 +5,9 @@
         <li><a href="{{ route('home') }}" class="navbar-item navbar__home"><span class="home-logo">M</span></a></li>
     @endif
     @if ($request->path() == "home/profil")
-        <li><a href="{{ route('profile') }}" class="navbar-item navbar__profile navbar-item__selected"><div data-icon="ei-user" data-size="m" class="ei-position"></div></a></li>
+        <li><a href="{{ route('profile') }}/me" class="navbar-item navbar__profile navbar-item__selected"><div data-icon="ei-user" data-size="m" class="ei-position"></div></a></li>
     @else
-        <li><a href="{{ route('profile') }}" class="navbar-item navbar__profile"><div data-icon="ei-user" data-size="m" class="ei-position"></div></a></li>
+        <li><a href="{{ route('root') }}/home/profil/me" class="navbar-item navbar__profile"><div data-icon="ei-user" data-size="m" class="ei-position"></div></a></li>
     @endif
     @if ($request->path() == "home/notifications")
         <li><a href="{{ route('notif') }}" class="navbar-item navbar__notification navbar-item__selected"><div data-icon="ei-heart" data-size="m" class="ei-position"></div></a></li>

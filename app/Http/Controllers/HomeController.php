@@ -87,14 +87,35 @@ class HomeController extends Controller
         }
     }
 
-    public function showProfile(Request $request) {
+    public function showProfile(Request $request, $login) {
+        $login = htmlentities($login);
+        if ($login == 'me') {
+            $session = Session::getInstance();
+            $user = User::getUser($session->getValue('id'));
+            return view('pages.home.myprofil', ['user' => $user, 'request' => $request, 'modification' => false]);
+        } elseif (User::loginExists($login)) {
+            $user = User::getUser(User::getId($login));
+            return view('pages.home.profil', ['user' => $user, 'request' => $request]);
+        } else {
+            return view('errors.profil', ['login' => $login, 'request' => $request]);
+        }
+    }
+
+    public function modificationProfile(Request $request) {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
-        return view('pages.home.profile',
+        $interests = Interest::getInterests();
+        return view('pages.home.myprofil',
         [
             'user' => $user,
-            'request' => $request
+            'request' => $request,
+            'interests' => $interests, 
+            'modification' => true
         ]);
+    }
+
+    public function submitModificationProfile(Request $request) {
+        
     }
 
     public function showNotif(Request $request) {

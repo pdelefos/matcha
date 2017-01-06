@@ -1,33 +1,57 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css" href="{{ route('root') }}/css/jquery-ui.css">
-<link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">
-<script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+<link href="{{ route('root') }}/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+<script src="{{ route('root') }}/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwhivWRC5isZuX7Oc5bxBIIn2h3pzPOs&libraries=places"></script>
 <?php
 
-if (isset($errorHandler)) {
-    $error_sexe = $errorHandler->first('sexe');
-    $error_search = $errorHandler->first('recherche');
-    $error_date = $errorHandler->first('anniversaire');
-	$error_desc = $errorHandler->first('presentation');
-    $error_tags = $errorHandler->first('interets');
-    $error_adresse = $errorHandler->first('adresse');
-}
-if (isset($prev_values)) {
-	$prev_sexe = $prev_values->input('sexe');
-    $prev_search = $prev_values->input('recherche');
-    $prev_date = $prev_values->input('anniversaire');
-    $prev_desc = $prev_values->input('presentation');
-    $prev_tags = $prev_values->input('interets');
-    $prev_adresse = $prev_values->input('adresse');
-}
+    $prev_nom = $user->getNom();
+    $prev_prenom = $user->getPrenom();
+    $prev_email = $user->getEmail();
+    $prev_sexe = $user->getSexe();
+    $prev_search = $user->getOrientation();
+    $prev_adresse = $user->getLocalisation();
+    $prev_desc = $user->getPresentation();
+    $prev_interests = $user->getInterests();
+    $prev_date = $user->getAnniversaireArray();
 ?>
 
 <div id="complet-profile_modal" class="profile-modal">
-    <div class="profile-modal__content">
-        <h2 class="profile-modal__title">On a besoin de plus d'info !</h2>
+    <div class="profile-modal__content profile-modal__content__modif">
+        <a href="{{ route('root') }}/home/profil/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
+        <h2 class="profile-modal__title">modifications</h2>
         <form class="profile-form" action="" method="post">
+            <div class="form-row">
+                <label class="form-label">Mon nom</label>
+                @if (isset($error_nom) && $error_nom != "")
+                    <div class="form__error" data-error="{{ $error_nom }}" >
+                @else
+                    <div>
+                @endif
+                        <input class="form__input" type="text" name="nom" value="{{ $prev_nom or '' }}">
+                    </div>
+            </div>
+            <div class="form-row">
+                <label class="form-label">Mon prénom</label>
+                @if (isset($error_prenom) && $error_prenom != "")
+                    <div class="form__error" data-error="{{ $error_prenom }}">
+                @else
+                    <div>
+                @endif
+                        <input class="form__input" type="text" name="prenom" value="{{ $prev_prenom or '' }}">
+                    </div>
+            </div>
+            <div class="form-row">
+                <label class="form-label">Mon email</label>
+                @if (isset($error_email) && $error_email != "")
+                    <div class="form__error" data-error="{{ $error_email }}">
+                @else
+                    <div>
+                @endif
+                        <input class="form__input" type="text" name="email" value="{{ $prev_email or '' }}">
+                    </div>
+            </div>
             <div class="form-row">
                 <label class="form-label">Je suis</label>
                 @if (isset($error_sexe) && $error_sexe != "")
@@ -170,8 +194,6 @@ if (isset($prev_values)) {
                     <div>
                 @endif
                         <input size="50" type="text" name="adresse" id="adresse-input" class="form__input form-input__profile" value="{{ $prev_adresse or ''}}">
-                        <input type="number" step="any" name="adresseLat" value="" id="adresse-latitude" hidden>
-                        <input type="number" step="any" name="adresseLng" value="" id="adresse-longitude" hidden>
                     </div>
             </div>
             <div class="form-row">
@@ -197,80 +219,19 @@ if (isset($prev_values)) {
                                     <li>{{ $tags }}</li>
                                 @endforeach
                             @else
-                                <li>cinéma</li>
+                                @foreach ($prev_interests as $value)
+                                    <li>{{ $value }}</li>
+                                @endforeach
                             @endif
                         </ul>
                     </div>
             </div>
-            <input class="form__input btn-submit profile-submit" type="submit" name="submit" value="Je suis pret">
+            <input class="form__input btn-submit profile-submit" type="submit" name="submit" value="modifier">
         </form>
     </div>
 </div>
-<script type="text/javascript" src="js/loca-autocomplete.js"></script>
-<!--<script type="text/javascript" src="js/geolocalisation.js"></script>-->
-
-<script>
-    const geo = navigator.geolocation
-
-function setAdresse(adresse) {
-    document.getElementById("adresse-input").value = adresse
-}
-
-function setLatLng(latitude, longitude) {
-    document.getElementById("adresse-latitude").value = latitude
-    document.getElementById("adresse-longitude").value = longitude
-}
-
-function getAdresse(latitude, longitude) {
-    latlng = latitude + "," + longitude
-    setLatLng(latitude, longitude)
-    const googleapi = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng
-    $.getJSON(googleapi, function(data, textStatus) {
-        const adresse = data['results'][0].formatted_address
-        setAdresse(adresse)
-    })
-}
-
-function getLatLng() {
-    $.getJSON('//ip-api.com/json', function(data) {
-        const adresse = data.zip + ", " + data.city + " " + data.country
-        setAdresse(adresse)
-    });
-}
-
-function success(objPosition) {
-    const lat = objPosition.coords.latitude
-    const lng = objPosition.coords.longitude
-    getAdresse(lat, lng)
-}
-
-function error(objErreur) {
-    var strErreur = ''
-    switch(objErreur.code) {
-        case objErreur.PERMISSION_DENIED:
-            getLatLng()
-            break
-        case objErreur.TIMEOUT:
-        case objErreur.POSITION_UNAVAILABLE:
-            strErreur = "Votre position n'a pas pu être déterminé."
-            break
-        default:
-            strErreur = "Erreur inconnue."
-            break
-    }
-    console.log(strErreur)
-}
-
-var options = {
-    timeout: 5000,
-    enableHighAccuracy: true,
-    maximumAge: 0
-}
-
-$('#localize-me').click(function () {
-    geo.getCurrentPosition(success, error, options)   
-})
-</script>
+<script type="text/javascript" src="{{ route('root') }}/js/loca-autocomplete.js"></script>
+<script type="text/javascript" src="{{ route('root') }}/js/geolocalisation.js"></script>
 
 <?php if (!isset($interests)) $interests = ""; ?>
 <script>

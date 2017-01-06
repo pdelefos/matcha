@@ -16,6 +16,7 @@ class User {
 	private $sexe;
 	private $orientation;
 	private $anniversaire;
+	private $age;
 	private $localisation;
 	private $presentation;
 	private $interests = array();
@@ -60,6 +61,10 @@ class User {
 		$this->anniversaire = $anniversaire;
 	}
 
+	public function setAge($age) {
+		$this->age = $age;
+	}
+
 	public function setLocalisation($localisation) {
 		$this->localisation = $localisation;
 	}
@@ -97,6 +102,18 @@ class User {
 		return $this->anniversaire;
 	}
 
+	public function getAnniversaireArray() {
+		$newDate = str_replace("/", "-", $this->anniversaire);
+		$array['jour'] = date("d", strtotime($newDate));
+		$array['mois'] = date("m", strtotime($newDate));
+		$array['annee'] = date("Y", strtotime($newDate));
+		return $array;
+	}
+
+	public function getAge() {
+		return $this->age;
+	}
+
 	public function getPresentation() {
 		return $this->presentation;
 	}
@@ -107,6 +124,18 @@ class User {
 
 	public function getOrientation() {
 		return $this->orientation;
+	}
+
+	public function getFuscNames() {
+		return $this->prenom . " " . strtoupper($this->nom[0]) . ".";
+	}
+
+	public function getFullNames() {
+		return $this->prenom . " " . $this->nom;
+	}
+
+	public function getLocalisation() {
+		return $this->localisation;
 	}
 
 	//save on db
@@ -203,8 +232,10 @@ class User {
 		$user->setNom($ret[0]->{'nom'});
 		$user->setPrenom($ret[0]->{'prenom'});
 		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
-		$user->setAnniversaire(Self::calcAge($ret[0]->{'anniversaire'}));
+		$user->setAnniversaire($ret[0]->{'anniversaire'});
+		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));
 		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
+		$user->setLocalisation($ret[0]->{'localisation'});
 		$user->setInterests(Interest::getUserInterest($user_id));
 		$user->setPresentation($ret[0]->{'presentation'});
 		if ($ret)
