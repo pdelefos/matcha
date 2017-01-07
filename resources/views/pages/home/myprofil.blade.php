@@ -50,7 +50,7 @@ $page_need = array(
                         <div data-icon="ei-cart" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__localisation">
-                        <div class="item-value">New York</div>
+                        <div class="item-value">{{ $user->getCity() }}</div>
                         <div data-icon="ei-location" data-size="m"></div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ $page_need = array(
             <div class="profil-bio">
                 {{ $user->getPresentation() }}
             </div>
-            <div class="profil-photo-wrap">
+            <!--<div class="profil-photo-wrap">
                 <div class="profil-photo_item">
                     
                 </div>
@@ -71,7 +71,7 @@ $page_need = array(
                 <div class="profil-photo_item">
                     
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 @stop

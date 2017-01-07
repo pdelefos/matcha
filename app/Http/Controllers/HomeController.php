@@ -8,6 +8,7 @@ use App\Classes\Validator;
 use App\Classes\ErrorHandler;
 use App\Classes\Session;
 use App\Models\Interest;
+use App\Models\Geolocalisation;
 
 class HomeController extends Controller
 {
@@ -55,7 +56,8 @@ class HomeController extends Controller
                 'requiredTagsMax' => 5
             ],
             'adresse' => [
-                'required' => true
+                'required' => true,
+                'isValidAddress' => true
             ]
         ]);
         if ($validator->fails()) {
@@ -80,6 +82,13 @@ class HomeController extends Controller
             $user->setOrientation($inputs['recherche']);
             $user->setAnniversaire($date);
             $user->setLocalisation($inputs['adresse']);
+            if (empty($inputs['adresseLat']) || empty($inputs['adresseLng'])) {
+                $ret = Geolocalisation::getLatLngFromAddress($inputs['adresse']);
+                $inputs['adresseLat'] = $ret['lat'];
+                $inputs['adresseLng'] = $ret['lng'];
+            }
+            $user->setLatitude($inputs['adresseLat']);
+            $user->setLongitude($inputs['adresseLng']);
             $user->setPresentation($inputs['presentation']);
             $user->setInterests($inputs['interets']);
             $user->completeProfile();
@@ -104,18 +113,94 @@ class HomeController extends Controller
     public function modificationProfile(Request $request) {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
-        $interests = Interest::getInterests();
         return view('pages.home.myprofil',
         [
             'user' => $user,
             'request' => $request,
-            'interests' => $interests, 
             'modification' => true
         ]);
     }
 
     public function submitModificationProfile(Request $request) {
-        
+        $session = Session::getInstance();
+        $inputs = $request->all();
+        $errorHandler = new ErrorHandler;
+        $validator = new Validator($errorHandler);
+        $validator->check($inputs, [
+            'nom' => [
+                'required' => true,
+                'alnum' => true,
+                'maxlength' => 150
+            ],
+            'prenom' => [
+                'required' => true,
+                'alnum' => true,
+                'maxlength' => 150
+            ],
+            'email' => [
+                'required' => true,
+                'email' => true,
+                'updateEmail' => true
+            ],
+            'sexe' => [
+                'required' => true
+            ],
+            'recherche' => [
+                'required' => true
+            ],
+            'anniversaire' => [
+                'requiredDate' => true,
+                'validDate' => true
+            ],
+            'presentation' => [
+                'required' => true
+            ],
+            'interets' => [
+                'requiredTagsMin' => 2,
+                'requiredTagsMax' => 5
+            ],
+            'adresse' => [
+                'required' => true,
+                'isValidAddress' => true
+            ]
+        ]);
+        if ($validator->fails()) {
+            $user = User::getUser($session->getValue('id'));
+            return view('pages.home.myprofil',
+            [
+                'user' => $user,
+                'errorHandler' => $validator->errors(),
+                'request' => $request,
+                'modification' => true
+            ]);
+        } else {
+            $jour = $inputs['anniversaire']['jour'];
+            $mois = $inputs['anniversaire']['mois'];
+            $annee = $inputs['anniversaire']['annee'];
+            $date = $mois . "/" . $jour . "/" . $annee;
+            $user = new User();
+            $user->setId($session->getValue('id'));
+            $user->setNom($inputs['nom']);
+            $user->setPrenom($inputs['prenom']);
+            $user->setEmail($inputs['email']);
+            $user->setSexe($inputs['sexe']);
+            $user->setOrientation($inputs['recherche']);
+            $user->setAnniversaire($date);
+            $user->setLocalisation($inputs['adresse']);
+            if (empty($inputs['adresseLat']) || empty($inputs['adresseLng'])) {
+                $ret = Geolocalisation::getLatLngFromAddress($inputs['adresse']);
+                $inputs['adresseLat'] = $ret['lat'];
+                $inputs['adresseLng'] = $ret['lng'];
+            }
+            $user->setLatitude($inputs['adresseLat']);
+            $user->setLongitude($inputs['adresseLng']);
+            $user->setPresentation($inputs['presentation']);
+            $user->setInterests($inputs['interets']);
+            $user->updateProfile();
+            $session = Session::getInstance();
+            $user = User::getUser($session->getValue('id'));
+            return view('pages.home.myprofil', ['user' => $user, 'request' => $request, 'modification' => false]);
+        }
     }
 
     public function showNotif(Request $request) {

@@ -4,6 +4,8 @@ namespace App\Classes;
 
 use App\Classes\ErrorHandler;
 use App\Models\User;
+use App\Models\Geolocalisation;
+use App\Classes\Session;
 
 class Validator {
 
@@ -17,12 +19,14 @@ class Validator {
         'alnum',
         'password',
         'uniqueEmail',
+        'updateEmail',
         'uniqueLogin',
         'requiredDate',
         'requiredTagsMin',
         'requiredTagsMax',
         'validDate',
-        'emailExist'
+        'emailExist',
+        'isValidAddress'
     ];
 
     public $messages = [
@@ -33,12 +37,14 @@ class Validator {
         'alnum' => 'Le champ :field doit être composé uniquement de chiffres et de lettres',
         'password' => 'Le mot de passe doit comporter une majuscule, une minuscule et un chiffre', 
         'uniqueEmail' => 'Cet email est déjà utilisé',
+        'updateEmail' => 'Cet email est déjà utilisé',
         'uniqueLogin' => 'Ce login est déjà utilisé',
         'requiredDate' => 'La date est requise',
         'requiredTagsMin' => 'Il faut au moins :condition interets',
         'requiredTagsMax' => 'Il faut :condition interets maximum',
         'validDate' => 'La date n\'est pas valide',
-        'emailExist' => 'Cet email n\'existe pas'
+        'emailExist' => 'Cet email n\'existe pas',
+        'isValidAddress' => 'Cette adresse n\'est pas valide'
     ];
 
     public function __construct(ErrorHandler $errorHandler) {
@@ -129,6 +135,14 @@ class Validator {
         return User::emailExists($value) ? false : true;
     }
 
+    protected function updateEmail($field, $value, $condition) {
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        if ($value == $user->getEmail())
+            return true;
+        return User::emailExists($value) ? false : true;
+    }
+
     // Verifie si le champ login existent déjà en base
     protected function uniqueLogin($field, $value, $condition) {
         return User::loginExists($value) ? false : true;
@@ -166,5 +180,9 @@ class Validator {
 
     protected function emailExist($field, $value, $condition) {
         return User::emailExists($value) ? true : false;
+    }
+
+    protected function isValidAddress($field, $value, $condition) {
+        return Geolocalisation::getLatLngFromAddress($value);
     }
 }

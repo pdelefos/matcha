@@ -5,7 +5,17 @@
 <script src="{{ route('root') }}/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiwhivWRC5isZuX7Oc5bxBIIn2h3pzPOs&libraries=places"></script>
 <?php
-
+    if (isset($errorHandler)) {
+        $error_nom = $errorHandler->first('nom');
+	    $error_prenom = $errorHandler->first('prenom');
+        $error_email = $errorHandler->first('email');
+        $error_sexe = $errorHandler->first('sexe');
+        $error_search = $errorHandler->first('recherche');
+        $error_date = $errorHandler->first('anniversaire');
+        $error_adresse = $errorHandler->first('adresse');
+        $error_desc = $errorHandler->first('presentation');
+        $error_tags = $errorHandler->first('interets');
+    }
     $prev_nom = $user->getNom();
     $prev_prenom = $user->getPrenom();
     $prev_email = $user->getEmail();
@@ -194,6 +204,8 @@
                     <div>
                 @endif
                         <input size="50" type="text" name="adresse" id="adresse-input" class="form__input form-input__profile" value="{{ $prev_adresse or ''}}">
+                        <input type="number" step="any" name="adresseLat" value="" id="adresse-latitude" hidden>
+                        <input type="number" step="any" name="adresseLng" value="" id="adresse-longitude" hidden>
                     </div>
             </div>
             <div class="form-row">

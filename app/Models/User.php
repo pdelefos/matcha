@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Interest;
 use App\Models\Orientation;
+use App\Models\Geolocalisation;
 
 class User {
 
@@ -18,6 +19,8 @@ class User {
 	private $anniversaire;
 	private $age;
 	private $localisation;
+	private $latitude;
+	private $longitude;
 	private $presentation;
 	private $interests = array();
 
@@ -67,6 +70,14 @@ class User {
 
 	public function setLocalisation($localisation) {
 		$this->localisation = $localisation;
+	}
+
+	public function setLatitude($latitude) {
+		$this->latitude = $latitude;
+	}
+
+	public function setLongitude($longitude) {
+		$this->longitude = $longitude;
 	}
 
 	public function setPresentation($presentation) {
@@ -138,6 +149,18 @@ class User {
 		return $this->localisation;
 	}
 
+	public function getLatitude() {
+		return $this->latitude;
+	}
+
+	public function getLongitude() {
+		return $this->longitude;
+	}
+
+	public function getCity() {
+		return Geolocalisation::getCityFromLatLng($this->getLatitude(), $this->getLongitude());
+	}
+
 	//save on db
 	public function register() {
 		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
@@ -172,6 +195,8 @@ class User {
 			orientation_sexe_id = :orientation_sexe_id,
 			anniversaire = :anniversaire,
 			localisation = :localisation,
+			latitude = :latitude,
+			longitude = :longitude,
 			presentation = :presentation,
 			completed = :completed
 			WHERE id = :id',
@@ -180,6 +205,41 @@ class User {
 				'orientation_sexe_id' => Orientation::getId($this->orientation),
 				'anniversaire' => $this->anniversaire,
 				'localisation' => $this->localisation,
+				'latitude' => $this->latitude,
+				'longitude' => $this->longitude,
+				'presentation' => $this->presentation,
+				'id' => $this->id,
+				'completed' => true
+			]);
+		if ($ret)
+			Self::saveInterests();
+		return $ret;
+	}
+
+	public function updateProfile() {
+		$ret = app('db')->update('UPDATE user SET 
+			nom = :nom,
+			prenom = :prenom,
+			email = :email,
+			sexe_id = :sexe_id,
+			orientation_sexe_id = :orientation_sexe_id,
+			anniversaire = :anniversaire,
+			localisation = :localisation,
+			latitude = :latitude,
+			longitude = :longitude,
+			presentation = :presentation,
+			completed = :completed
+			WHERE id = :id',
+			[
+				'nom' => $this->nom,
+				'prenom' => $this->prenom,
+				'email' => $this->email,
+				'sexe_id' => Sexe::getId($this->sexe),
+				'orientation_sexe_id' => Orientation::getId($this->orientation),
+				'anniversaire' => $this->anniversaire,
+				'localisation' => $this->localisation,
+				'latitude' => $this->latitude,
+				'longitude' => $this->longitude,
 				'presentation' => $this->presentation,
 				'id' => $this->id,
 				'completed' => true
@@ -236,6 +296,8 @@ class User {
 		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));
 		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
 		$user->setLocalisation($ret[0]->{'localisation'});
+		$user->setLatitude($ret[0]->{'latitude'});
+		$user->setLongitude($ret[0]->{'longitude'});
 		$user->setInterests(Interest::getUserInterest($user_id));
 		$user->setPresentation($ret[0]->{'presentation'});
 		if ($ret)

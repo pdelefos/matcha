@@ -4,8 +4,14 @@ function setAdresse(adresse) {
     document.getElementById("adresse-input").value = adresse
 }
 
+function setLatLng(latitude, longitude) {
+    document.getElementById("adresse-latitude").value = latitude
+    document.getElementById("adresse-longitude").value = longitude
+}
+
 function getAdresse(latitude, longitude) {
     latlng = latitude + "," + longitude
+    setLatLng(latitude, longitude)
     const googleapi = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng
     $.getJSON(googleapi, function(data, textStatus) {
         const adresse = data['results'][0].formatted_address
