@@ -101,7 +101,12 @@ class HomeController extends Controller
         if ($login == 'me') {
             $session = Session::getInstance();
             $user = User::getUser($session->getValue('id'));
-            return view('pages.home.myprofil', ['user' => $user, 'request' => $request, 'modification' => false]);
+            return view('pages.home.myprofil', [
+                'user' => $user,
+                'request' => $request,
+                'modification' => false,
+                'modPicture' => false
+            ]);
         } elseif (User::loginExists($login)) {
             $user = User::getUser(User::getId($login));
             return view('pages.home.profil', ['user' => $user, 'request' => $request]);
@@ -117,7 +122,8 @@ class HomeController extends Controller
         [
             'user' => $user,
             'request' => $request,
-            'modification' => true
+            'modification' => true,
+            'modPicture' => false
         ]);
     }
 
@@ -171,7 +177,8 @@ class HomeController extends Controller
                 'user' => $user,
                 'errorHandler' => $validator->errors(),
                 'request' => $request,
-                'modification' => true
+                'modification' => true,
+                'modPicture' => false
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
@@ -199,8 +206,45 @@ class HomeController extends Controller
             $user->updateProfile();
             $session = Session::getInstance();
             $user = User::getUser($session->getValue('id'));
-            return view('pages.home.myprofil', ['user' => $user, 'request' => $request, 'modification' => false]);
+            return view('pages.home.myprofil', [
+                'user' => $user,
+                'request' => $request,
+                'modification' => false,
+                'modPicture' => false
+            ]);
         }
+    }
+
+    public function showProfilPic(Request $request) {
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        return view('pages.home.myprofil',
+        [
+            'user' => $user,
+            'request' => $request,
+            'modification' => false,
+            'modPicture' => true
+        ]);
+    }
+
+    public function submitProfilPic(Request $request) {
+        if ($request->file('picture')->isValid()){
+            $file = $request->file('picture');
+            $file->move("pictures", "pic.jpg");
+            $ret = false;
+        } else {
+            echo $request->file('picture')->getErrorMessage();
+            $ret = true;
+        }
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        return view('pages.home.myprofil',
+        [
+            'user' => $user,
+            'request' => $request,
+            'modification' => false,
+            'modPicture' => $ret
+        ]);
     }
 
     public function showNotif(Request $request) {

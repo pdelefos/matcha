@@ -9,11 +9,16 @@ $page_need = array(
     @if($modification)
         @include('modals.modification')
     @endif
+    @if($modPicture)
+        @include('modals.upload')
+    @endif
     <div class="app-wrap profile-page">
         <div class="profil-box">
             <div class="profil-bar">
                 <div class="profil-bar-picplace">
-                    <img src="{{ route('root') }}/images/mona.jpg" alt="" class="profil-bar__picture">
+                    <a href="{{ route('profilpic') }}">
+                            <div class="profil-bar__picture" style="background-image:url('../../pictures/pic.jpg')"></div>
+                    </a>
                 </div>
                 <div class="profil-bar-login">
                     {{ $user->getLogin() }}
@@ -58,9 +63,9 @@ $page_need = array(
             <div class="profil-bio">
                 {{ $user->getPresentation() }}
             </div>
-            <!--<div class="profil-photo-wrap">
+            <div class="profil-photo-wrap">
                 <div class="profil-photo_item">
-                    
+
                 </div>
                 <div class="profil-photo_item">
                     
@@ -71,7 +76,7 @@ $page_need = array(
                 <div class="profil-photo_item">
                     
                 </div>
-            </div>-->
+            </div>
         </div>
     </div>
 @stop
