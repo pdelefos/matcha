@@ -3,6 +3,8 @@
 namespace App\Models;
 
 class Photo {
+
+    // Insere en base le chemin de l'avatar
    static function setUserAvatar($user_id, $path) {
         $ret = app('db')->update('UPDATE user SET avatar = :avatar WHERE id = :id',
         [
@@ -12,6 +14,7 @@ class Photo {
         return $ret;
    }
 
+   // Renvoi le chemin de l'avatar d'un utilisateur
    static function getUserAvatar($user_id) {
         $ret = app('db')->select('SELECT avatar FROM user WHERE id = :id',
         ['id' => $user_id]);

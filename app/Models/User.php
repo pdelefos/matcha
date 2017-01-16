@@ -28,7 +28,171 @@ class User {
 	public function __construct() {
 	}
 
-	// set
+	// Enregistre un nouvel utilisateur en base
+	public function register() {
+		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
+			VALUES (:login, :email, :nom, :prenom, :password)',
+			[
+				'login' => $this->login,
+				'email' => $this->email,
+				'nom' => $this->nom,
+				'prenom' => $this->prenom,
+				'password' => $this->password
+			]);
+		if ($ret)
+			return Self::getId($this->login);
+		return false;
+	}
+
+	// Connecte un utilisateur et renvoi son ID
+	public function login() {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login AND password = :password',
+			[
+				'login' => $this->login,
+				'password' => $this->password
+			]);
+		if ($ret)
+			return $ret[0]->{'id'};
+		return false;
+	}
+
+	// Enregistre les informations complementaires d'un utilisateur
+	public function completeProfile() {
+		$ret = app('db')->update('UPDATE user SET 
+			sexe_id = :sexe_id,
+			orientation_sexe_id = :orientation_sexe_id,
+			anniversaire = :anniversaire,
+			localisation = :localisation,
+			latitude = :latitude,
+			longitude = :longitude,
+			presentation = :presentation,
+			completed = :completed
+			WHERE id = :id',
+			[
+				'sexe_id' => Sexe::getId($this->sexe),
+				'orientation_sexe_id' => Orientation::getId($this->orientation),
+				'anniversaire' => $this->anniversaire,
+				'localisation' => $this->localisation,
+				'latitude' => $this->latitude,
+				'longitude' => $this->longitude,
+				'presentation' => $this->presentation,
+				'id' => $this->id,
+				'completed' => true
+			]);
+		if ($ret)
+			Self::saveInterests();
+		return $ret;
+	}
+
+	// Enregistre les modifications du profil de l'utilisateur
+	public function updateProfile() {
+		$ret = app('db')->update('UPDATE user SET 
+			nom = :nom,
+			prenom = :prenom,
+			email = :email,
+			sexe_id = :sexe_id,
+			orientation_sexe_id = :orientation_sexe_id,
+			anniversaire = :anniversaire,
+			localisation = :localisation,
+			latitude = :latitude,
+			longitude = :longitude,
+			presentation = :presentation,
+			completed = :completed
+			WHERE id = :id',
+			[
+				'nom' => $this->nom,
+				'prenom' => $this->prenom,
+				'email' => $this->email,
+				'sexe_id' => Sexe::getId($this->sexe),
+				'orientation_sexe_id' => Orientation::getId($this->orientation),
+				'anniversaire' => $this->anniversaire,
+				'localisation' => $this->localisation,
+				'latitude' => $this->latitude,
+				'longitude' => $this->longitude,
+				'presentation' => $this->presentation,
+				'id' => $this->id,
+				'completed' => true
+			]);
+		if ($ret)
+			Self::saveInterests();
+		return $ret;
+	}
+
+	// Enregistre le tableau d'interets de l'utilisateur en base
+	private function saveInterests() {
+		Interest::saveInterests($this->id, $this->interests);
+	}
+
+	//---------------------------------------------------------//
+	// STATIC FUNCTIONS
+	//---------------------------------------------------------//
+
+	// Renvoi l'ID correspondant au login de l'utilisateur
+	static function getId($login) {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
+		['login' => $login]);
+		if ($ret)
+			return $ret[0]->{'id'};
+		return false;
+	}
+
+	// Renvoi true si l'utilisateur a un profil complet
+	static function getCompleted($id) {
+		$ret = app('db')->select('SELECT completed FROM user WHERE id = :id',
+		['id' => $id]);
+		if ($ret)
+			return $ret[0]->{'completed'};
+		return false;
+	}
+
+	// Renvoi true si l'email existe
+	public static function emailExists($email) {
+		$ret = app('db')->select('SELECT id FROM user WHERE email = :email',
+		['email' => $email]);
+		return $ret;
+	}
+
+	// Renvoi true si le login existe
+	public static function loginExists($login) {
+		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
+		['login' => $login]);
+		return $ret;
+	}
+
+	// Renvoi un objet User correspondant a l'ID
+	public static function getUser($user_id) {
+		$ret = app('db')->select('SELECT * FROM user WHERE id = :id',
+		['id' => $user_id]);
+		$user = new User();
+		$user->setId($ret[0]->{'id'});
+		$user->setLogin($ret[0]->{'login'});
+		$user->setEmail($ret[0]->{'email'});
+		$user->setNom($ret[0]->{'nom'});
+		$user->setPrenom($ret[0]->{'prenom'});
+		$user->setAvatar($ret[0]->{'avatar'});
+		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
+		$user->setAnniversaire($ret[0]->{'anniversaire'});
+		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));
+		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
+		$user->setLocalisation($ret[0]->{'localisation'});
+		$user->setLatitude($ret[0]->{'latitude'});
+		$user->setLongitude($ret[0]->{'longitude'});
+		$user->setInterests(Interest::getUserInterest($user_id));
+		$user->setPresentation($ret[0]->{'presentation'});
+		if ($ret)
+			return $user;
+		return false;
+	}
+
+	// Calcule l'age a partir de la date de naissance jj/mm/aaaa
+	private static function calcAge($birthday) {
+		return (int) ((time() - strtotime($birthday)) / 3600 / 24 / 365);
+	}
+
+	//---------------------------------------------------------//
+	// SET
+	//---------------------------------------------------------//
+	
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -93,7 +257,10 @@ class User {
 		$this->interests = $interests;
 	}
 
-	// get
+	//---------------------------------------------------------//
+	// GET
+	//---------------------------------------------------------//
+
 	public function getLogin() {
 		return $this->login;
 	}
@@ -168,154 +335,5 @@ class User {
 
 	public function getCity() {
 		return Geolocalisation::getCityFromLatLng($this->getLatitude(), $this->getLongitude());
-	}
-
-	//save on db
-	public function register() {
-		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
-			VALUES (:login, :email, :nom, :prenom, :password)',
-			[
-				'login' => $this->login,
-				'email' => $this->email,
-				'nom' => $this->nom,
-				'prenom' => $this->prenom,
-				'password' => $this->password
-			]);
-		if ($ret)
-			return Self::getId($this->login);
-		return false;
-	}
-
-	//login
-	public function login() {
-		$ret = app('db')->select('SELECT id FROM user WHERE login = :login AND password = :password',
-			[
-				'login' => $this->login,
-				'password' => $this->password
-			]);
-		if ($ret)
-			return $ret[0]->{'id'};
-		return false;
-	}
-
-	public function completeProfile() {
-		$ret = app('db')->update('UPDATE user SET 
-			sexe_id = :sexe_id,
-			orientation_sexe_id = :orientation_sexe_id,
-			anniversaire = :anniversaire,
-			localisation = :localisation,
-			latitude = :latitude,
-			longitude = :longitude,
-			presentation = :presentation,
-			completed = :completed
-			WHERE id = :id',
-			[
-				'sexe_id' => Sexe::getId($this->sexe),
-				'orientation_sexe_id' => Orientation::getId($this->orientation),
-				'anniversaire' => $this->anniversaire,
-				'localisation' => $this->localisation,
-				'latitude' => $this->latitude,
-				'longitude' => $this->longitude,
-				'presentation' => $this->presentation,
-				'id' => $this->id,
-				'completed' => true
-			]);
-		if ($ret)
-			Self::saveInterests();
-		return $ret;
-	}
-
-	public function updateProfile() {
-		$ret = app('db')->update('UPDATE user SET 
-			nom = :nom,
-			prenom = :prenom,
-			email = :email,
-			sexe_id = :sexe_id,
-			orientation_sexe_id = :orientation_sexe_id,
-			anniversaire = :anniversaire,
-			localisation = :localisation,
-			latitude = :latitude,
-			longitude = :longitude,
-			presentation = :presentation,
-			completed = :completed
-			WHERE id = :id',
-			[
-				'nom' => $this->nom,
-				'prenom' => $this->prenom,
-				'email' => $this->email,
-				'sexe_id' => Sexe::getId($this->sexe),
-				'orientation_sexe_id' => Orientation::getId($this->orientation),
-				'anniversaire' => $this->anniversaire,
-				'localisation' => $this->localisation,
-				'latitude' => $this->latitude,
-				'longitude' => $this->longitude,
-				'presentation' => $this->presentation,
-				'id' => $this->id,
-				'completed' => true
-			]);
-		if ($ret)
-			Self::saveInterests();
-		return $ret;
-	}
-
-	static function getId($login) {
-		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
-		['login' => $login]);
-		if ($ret)
-			return $ret[0]->{'id'};
-		return false;
-	}
-
-	private function saveInterests() {
-		Interest::saveInterests($this->id, $this->interests);
-	}
-
-	static function getCompleted($id) {
-		$ret = app('db')->select('SELECT completed FROM user WHERE id = :id',
-		['id' => $id]);
-		if ($ret)
-			return $ret[0]->{'completed'};
-		return false;
-	}
-
-	// static functions
-	public static function emailExists($email) {
-		$ret = app('db')->select('SELECT id FROM user WHERE email = :email',
-		['email' => $email]);
-		return $ret;
-	}
-
-	public static function loginExists($login) {
-		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
-		['login' => $login]);
-		return $ret;
-	}
-
-	public static function getUser($user_id) {
-		$ret = app('db')->select('SELECT * FROM user WHERE id = :id',
-		['id' => $user_id]);
-		$user = new User();
-		$user->setId($ret[0]->{'id'});
-		$user->setLogin($ret[0]->{'login'});
-		$user->setEmail($ret[0]->{'email'});
-		$user->setNom($ret[0]->{'nom'});
-		$user->setPrenom($ret[0]->{'prenom'});
-		$user->setAvatar($ret[0]->{'avatar'});
-		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
-		$user->setAnniversaire($ret[0]->{'anniversaire'});
-		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));
-		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
-		$user->setLocalisation($ret[0]->{'localisation'});
-		$user->setLatitude($ret[0]->{'latitude'});
-		$user->setLongitude($ret[0]->{'longitude'});
-		$user->setInterests(Interest::getUserInterest($user_id));
-		$user->setPresentation($ret[0]->{'presentation'});
-		if ($ret)
-			return $user;
-		return false;
-	}
-
-	private static function calcAge($birthday) {
-		return (int) ((time() - strtotime($birthday)) / 3600 / 24 / 365);
 	}
 }

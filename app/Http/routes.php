@@ -17,17 +17,25 @@ use Illuminate\Http\Request;
 | Authentification Routes 												   |
 --------------------------------------------------------------------------*/
 
+// Inscription
+
 $app->get('/', ['as' => 'root', 'uses' => 'AuthController@showRegister']);
  
 $app->post('/', "AuthController@submitRegister");
+
+// Connexion
 
 $app->get('/connexion', ['as' => 'connection', 'uses' => 'AuthController@showConnexion']);
 
 $app->post('/connexion', "AuthController@submitConnexion");
 
+// Recuperation de mot de passe
+
 $app->get('/recover', ['as' => 'recover', 'uses' => 'AuthController@showRecover']);
 
 $app->post('/recover', "AuthController@submitRecover");
+
+// Déconnexion
 
 $app->get('/home/deconnexion', ['as' => 'deconnexion', 'uses' => 'AuthController@logout']);
 
@@ -36,27 +44,36 @@ $app->get('/home/deconnexion', ['as' => 'deconnexion', 'uses' => 'AuthController
 --------------------------------------------------------------------------*/
 
 $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function () use ($app) {
+
+    // Route de suggestion et de recherche d'utilisateurs
+
     $app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
 
     $app->post('/home', ['as' => 'home', 'uses' => 'HomeController@submitProfile']);
 
-    $app->get('/home/profil/{login}', ['as' => 'profile', 'uses' => 'HomeController@showProfile']);
+    // Route du profil de l'utilisateur
 
-    $app->get('/home/modification', ['as' => 'modification', 'uses' => 'HomeController@modificationProfile']);
+    $app->get('/home/profil/{login}', ['as' => 'profile', 'uses' => 'UserController@showProfile']);
 
-    $app->post('/home/modification', ['as' => 'modification', 'uses' => 'HomeController@submitModificationProfile']);
+    $app->get('/home/modification', ['as' => 'modification', 'uses' => 'UserController@modificationProfile']);
 
-    $app->get('/home/profilpic', ['as' => 'profilpic', 'uses' => 'HomeController@showProfilPic']);
+    $app->post('/home/modification', ['as' => 'modification', 'uses' => 'UserController@submitModificationProfile']);
 
-    $app->post('/home/profilpic', ['as' => 'profilpic', 'uses' => 'HomeController@submitProfilPic']);
+    $app->get('/home/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@showProfilPic']);
 
-    $app->get('/home/photo/{no}', ['as' => 'photo', 'uses' => 'HomeController@showPhotos']);
+    $app->post('/home/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@submitProfilPic']);
 
-    $app->post('/home/photo', ['as' => 'photo', 'uses' => 'HomeController@submitPhotos']);
+    $app->get('/home/photo/{no}', ['as' => 'photo', 'uses' => 'UserController@showPhotos']);
 
-    $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
+    $app->post('/home/photo', ['as' => 'photo', 'uses' => 'UserController@submitPhotos']);
 
-    $app->get('/home/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);
+    // Route des notifications
+
+    $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'NotifController@showNotif']);
+
+    // Route du chat
+
+    $app->get('/home/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
 });
 
 /*--------------------------------------------------------------------------
