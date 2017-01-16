@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Interest;
 use App\Models\Orientation;
 use App\Models\Geolocalisation;
+use App\Models\Photo;
 
 class User {
 
@@ -24,6 +25,7 @@ class User {
 	private $longitude;
 	private $presentation;
 	private $interests = array();
+	private $photos = array();
 
 	public function __construct() {
 	}
@@ -163,6 +165,8 @@ class User {
 	public static function getUser($user_id) {
 		$ret = app('db')->select('SELECT * FROM user WHERE id = :id',
 		['id' => $user_id]);
+		if (!$ret)
+			return false;
 		$user = new User();
 		$user->setId($ret[0]->{'id'});
 		$user->setLogin($ret[0]->{'login'});
@@ -179,14 +183,14 @@ class User {
 		$user->setLongitude($ret[0]->{'longitude'});
 		$user->setInterests(Interest::getUserInterest($user_id));
 		$user->setPresentation($ret[0]->{'presentation'});
-		if ($ret)
-			return $user;
-		return false;
+		$user->setPhotos(Photo::getUserPhotos($user_id));
+		return $user;
 	}
 
 	// Calcule l'age a partir de la date de naissance jj/mm/aaaa
 	private static function calcAge($birthday) {
-		return (int) ((time() - strtotime($birthday)) / 3600 / 24 / 365);
+		date_default_timezone_set('Europe/Paris');
+		return (int) ((time() - strtotime(str_replace("/", "-", $birthday))) / 3600 / 24 / 365);
 	}
 
 	//---------------------------------------------------------//
@@ -255,6 +259,10 @@ class User {
 
 	public function setInterests(array $interests) {
 		$this->interests = $interests;
+	}
+
+	public function setPhotos(array $photos) {
+		$this->photos = $photos;
 	}
 
 	//---------------------------------------------------------//
@@ -335,5 +343,9 @@ class User {
 
 	public function getCity() {
 		return Geolocalisation::getCityFromLatLng($this->getLatitude(), $this->getLongitude());
+	}
+
+	public function getPhotos() {
+		return $this->photos;
 	}
 }

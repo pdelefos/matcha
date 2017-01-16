@@ -20,9 +20,9 @@ function getAdresse(latitude, longitude) {
 }
 
 function getLatLng() {
-    $.getJSON('//ip-api.com/json', function(data) {
-        const adresse = data.zip + ", " + data.city + " " + data.country
-        setAdresse(adresse)
+    const ipApi = 'http://ip-api.com/json'
+    $.getJSON(ipApi, function(data) {
+        getAdresse(data.lat, data.lon)
     });
 }
 

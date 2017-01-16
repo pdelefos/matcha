@@ -17,6 +17,7 @@ class CreatePhotoTable extends Migration
             $table->string('src', 500);
             $table->timestamps();
         });
+        self::down();
     }
 
     /**

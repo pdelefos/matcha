@@ -16,8 +16,8 @@ class CreateUserPhotosTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user');
-            $table->integer('photo_id')->unsigned();
-            $table->foreign('photo_id')->references('id')->on('photo');
+            $table->string('src', 500);
+            $table->integer('num')->unsigned();
             $table->timestamps();
         });
     }

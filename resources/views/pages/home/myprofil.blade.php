@@ -2,6 +2,9 @@
 $page_need = array(
     'url_app' => route('root')
 );
+// foreach($user->getPhotos() as $photo)
+//     var_dump($photo['src']);
+// die();
 ?>
 @extends('layouts.default')
 @section('content')
@@ -67,22 +70,17 @@ $page_need = array(
                 {{ $user->getPresentation() }}
             </div>
             <div class="profil-photo-wrap">
-             
+                <?php $ind = 1; ?>
+                @foreach($user->getPhotos() as $photo)
                     <div class="profil-photo_item">
-                        <a href="{{route('root')}}/home/photo/1"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
+                    @if(!empty($photo['src']))
+                            <a href="{{route('root')}}/home/photo/{{$ind}}"><img class="profil-photos" src="{{route('root') . '/' . $photo['src']}}"></a>
+                    @else
+                            <a href="{{route('root')}}/home/photo/{{$ind}}"><img src="{{route('root') . '/images/arrow-down.png'}}"></a>
+                    @endif
+                    <?php $ind++; ?>
                     </div>
-             
-                    <div class="profil-photo_item">
-                        <a href="{{route('root')}}/home/photo/2"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
-                    </div>
-             
-                    <div class="profil-photo_item">
-                        <a href="{{route('root')}}/home/photo/3"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
-                    </div>
-             
-                    <div class="profil-photo_item">
-                        <a href="{{route('root')}}/home/photo/4"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
-                    </div>
+                @endforeach
             </div>
         </div>
     </div>

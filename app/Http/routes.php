@@ -49,7 +49,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
 
-    $app->post('/home', ['as' => 'home', 'uses' => 'HomeController@submitProfile']);
+    $app->post('/home', ['as' => 'home', 'uses' => 'UserController@submitProfile']);
 
     // Route du profil de l'utilisateur
 

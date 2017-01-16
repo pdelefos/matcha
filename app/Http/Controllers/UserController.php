@@ -83,7 +83,7 @@ class UserController extends Controller {
             $jour = $inputs['anniversaire']['jour'];
             $mois = $inputs['anniversaire']['mois'];
             $annee = $inputs['anniversaire']['annee'];
-            $date = $mois . "/" . $jour . "/" . $annee;
+            $date = $jour . "/" . $mois . "/" . $annee;
             $user = new User();
             $user->setId($session->getValue('id'));
             $user->setSexe($inputs['sexe']);
@@ -181,7 +181,7 @@ class UserController extends Controller {
             $jour = $inputs['anniversaire']['jour'];
             $mois = $inputs['anniversaire']['mois'];
             $annee = $inputs['anniversaire']['annee'];
-            $date = $mois . "/" . $jour . "/" . $annee;
+            $date = $jour . "/" . $mois . "/" . $annee;
             $user = new User();
             $user->setId($session->getValue('id'));
             $user->setNom($inputs['nom']);
@@ -308,14 +308,23 @@ class UserController extends Controller {
                   $file->guessExtension() == "png" ||
                   $file->guessExtension() == "gif"){
             $path = "pictures/" . $user->getLogin();
-            $filename = $inputs['photoNo'] . $file->guessExtension();
+            $filename = $inputs['photoNo'] . "." . $file->guessExtension();
             $fullPath = $path . "/" . $filename;
+            Photo::setUserPhoto($session->getValue('id'), $fullPath, $inputs['photoNo']);
             $file->move($path, $filename);
-            Photo::setUserAvatar($session->getValue('id'), $fullPath);
             $ret = false;
         } else {
             $errorHandler->addError("extension invalide", "fichier");
             $ret = true;
         }
+        return view('pages.home.myprofil',
+        [
+            'user' => $user,
+            'request' => $request,
+            'modification' => false,
+            'errorHandler' => $errorHandler,
+            'modPicture' => false,
+            'modPhotos' => $ret
+        ]);
     }
 }

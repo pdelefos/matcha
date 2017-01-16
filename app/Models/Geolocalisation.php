@@ -12,7 +12,8 @@ class Geolocalisation {
       
         $obj = self::getJsonCurl($url);
 
-        if ($obj->{'status'} == "ZERO_RESULTS")
+        $status = $obj->{'status'};
+        if ($status == "ZERO_RESULTS" || $status == "INVALID_REQUEST")
             return false;
         return $obj->{'results'}[0]->{'address_components'}[2]->{'long_name'};        
     }
@@ -23,7 +24,8 @@ class Geolocalisation {
 
         $obj = self::getJsonCurl($url);
 
-        if ($obj->{'status'} == "ZERO_RESULTS")
+        $status = $obj->{'status'};
+        if ($status == "ZERO_RESULTS" || $status == "INVALID_REQUEST")
             return false;
         $ret['lat'] = $obj->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
         $ret['lng'] = $obj->{'results'}[0]->{'geometry'}->{'location'}->{'lng'}; 
