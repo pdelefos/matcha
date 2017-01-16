@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="150px" height="150px" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="14" y="31" width="122" height="89" rx="8"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="122" height="89" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" stroke="#979797">
+            <use id="Rectangle" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            <polyline id="Triangle" points="14.5212793 102.053378 54 52 107.296151 119.571906"></polyline>
+            <polyline id="Triangle-2" points="91.9024285 100.027326 112.5 83 112.5 83 135.528068 102.036536"></polyline>
+            <circle id="Oval" cx="103" cy="50" r="14"></circle>
+        </g>
+    </g>
+</svg>

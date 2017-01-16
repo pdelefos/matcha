@@ -26,6 +26,7 @@ class CreateUserTable extends Migration
             $table->foreign('orientation_sexe_id')->references('id')->on('orientation_sexe');
             $table->dateTime('anniversaire')->nullable();
             $table->string('localisation', 250)->nullable();
+            $table->string('avatar', 250)->nullable();
             $table->integer('latitude')->unsigned()->nullable();
             $table->integer('longitude')->unsigned()->nullable();
             $table->longText('presentation', 500)->nullable();

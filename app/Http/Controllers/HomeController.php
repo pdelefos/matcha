@@ -9,6 +9,7 @@ use App\Classes\ErrorHandler;
 use App\Classes\Session;
 use App\Models\Interest;
 use App\Models\Geolocalisation;
+use App\Models\Photo;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,6 @@ class HomeController extends Controller
             'user_completed' => $user_completed,
             'request' => $request
         ]);
-        // return view('pages.home.home');
     }
 
     public function submitProfile(Request $request) {
@@ -105,7 +105,8 @@ class HomeController extends Controller
                 'user' => $user,
                 'request' => $request,
                 'modification' => false,
-                'modPicture' => false
+                'modPicture' => false,
+                'modPhotos' => false
             ]);
         } elseif (User::loginExists($login)) {
             $user = User::getUser(User::getId($login));
@@ -118,12 +119,15 @@ class HomeController extends Controller
     public function modificationProfile(Request $request) {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
+        $interests = Interest::getInterests();
         return view('pages.home.myprofil',
         [
             'user' => $user,
             'request' => $request,
+            'interests' => $interests,
             'modification' => true,
-            'modPicture' => false
+            'modPicture' => false,
+            'modPhotos' => false
         ]);
     }
 
@@ -132,6 +136,7 @@ class HomeController extends Controller
         $inputs = $request->all();
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
+        $interests = Interest::getInterests();
         $validator->check($inputs, [
             'nom' => [
                 'required' => true,
@@ -177,8 +182,10 @@ class HomeController extends Controller
                 'user' => $user,
                 'errorHandler' => $validator->errors(),
                 'request' => $request,
+                'interests' => $interests,
                 'modification' => true,
-                'modPicture' => false
+                'modPicture' => false,
+                'modPhotos' => false
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
@@ -209,8 +216,10 @@ class HomeController extends Controller
             return view('pages.home.myprofil', [
                 'user' => $user,
                 'request' => $request,
+                'interests' => $interests,
                 'modification' => false,
-                'modPicture' => false
+                'modPicture' => false,
+                'modPhotos' => false
             ]);
         }
     }
@@ -223,28 +232,97 @@ class HomeController extends Controller
             'user' => $user,
             'request' => $request,
             'modification' => false,
-            'modPicture' => true
+            'modPicture' => true,
+            'modPhotos' => false
         ]);
     }
 
     public function submitProfilPic(Request $request) {
-        if ($request->file('picture')->isValid()){
-            $file = $request->file('picture');
-            $file->move("pictures", "pic.jpg");
-            $ret = false;
-        } else {
-            echo $request->file('picture')->getErrorMessage();
-            $ret = true;
-        }
+        $errorHandler = new ErrorHandler;
+        $file = $request->file('picture');
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
+        if ($file == null) {
+            $errorHandler->addError("fichier invalid", "fichier");
+            $ret = true;
+        } elseif ($file == null || !$file->isValid()) {
+            $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
+            $ret = true;
+        } elseif ($file->guessExtension() == "jpeg" ||
+                  $file->guessExtension() == "png" ||
+                  $file->guessExtension() == "gif"){
+            $path = "pictures/" . $user->getLogin();
+            $filename = "avatar." . $file->guessExtension();
+            $fullPath = $path . "/" . $filename;
+            $file->move($path, $filename);
+            Photo::setUserAvatar($session->getValue('id'), $fullPath);
+            $ret = false;
+        } else {
+            $errorHandler->addError("extension invalide", "fichier");
+            $ret = true;
+        }
         return view('pages.home.myprofil',
         [
             'user' => $user,
             'request' => $request,
             'modification' => false,
-            'modPicture' => $ret
+            'errorHandler' => $errorHandler,
+            'modPicture' => $ret,
+            'modPhotos' => false
         ]);
+    }
+
+    public function showPhotos(Request $request, $no) {
+        $errorHandler = new ErrorHandler;
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        if ($no != '1' && $no != '2' && $no != '3' && $no != '4')
+            return view('pages.home.myprofil',
+            [
+                'user' => $user,
+                'request' => $request,
+                'modification' => false,
+                'errorHandler' => $errorHandler,
+                'modPicture' => false,
+                'modPhotos' => false
+            ]);
+        return view('pages.home.myprofil',
+        [
+            'user' => $user,
+            'request' => $request,
+            'modification' => false,
+            'errorHandler' => $errorHandler,
+            'modPicture' => false,
+            'modPhotos' => true,
+            'photoNo' => $no
+        ]);
+    }
+
+    public function submitPhotos(Request $request) {
+        $errorHandler = new ErrorHandler;
+        $inputs = $request->all();
+        $file = $request->file('picture');
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        if ($file == null) {
+            $errorHandler->addError("fichier invalid", "fichier");
+            $ret = true;
+        } elseif ($file == null || !$file->isValid()) {
+            $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
+            $ret = true;
+        } elseif ($file->guessExtension() == "jpeg" ||
+                  $file->guessExtension() == "png" ||
+                  $file->guessExtension() == "gif"){
+            $path = "pictures/" . $user->getLogin();
+            $filename = $inputs['photoNo'] . $file->guessExtension();
+            $fullPath = $path . "/" . $filename;
+            $file->move($path, $filename);
+            Photo::setUserAvatar($session->getValue('id'), $fullPath);
+            $ret = false;
+        } else {
+            $errorHandler->addError("extension invalide", "fichier");
+            $ret = true;
+        }
     }
 
     public function showNotif(Request $request) {

@@ -12,13 +12,16 @@ $page_need = array(
     @if($modPicture)
         @include('modals.upload')
     @endif
+    @if($modPhotos)
+        @include('modals.uploadPhotos')
+    @endif
     <div class="app-wrap profile-page">
         <div class="profil-box">
             <div class="profil-bar">
                 <div class="profil-bar-picplace">
                     <a href="{{ route('profilpic') }}">
-                            <div class="profil-bar__picture" style="background-image:url('../../pictures/pic.jpg')"></div>
-                    </a>
+                        <div class="profil-bar__picture" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
+                    </a><tab>
                 </div>
                 <div class="profil-bar-login">
                     {{ $user->getLogin() }}
@@ -64,18 +67,22 @@ $page_need = array(
                 {{ $user->getPresentation() }}
             </div>
             <div class="profil-photo-wrap">
-                <div class="profil-photo_item">
-
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
+             
+                    <div class="profil-photo_item">
+                        <a href="{{route('root')}}/home/photo/1"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
+                    </div>
+             
+                    <div class="profil-photo_item">
+                        <a href="{{route('root')}}/home/photo/2"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
+                    </div>
+             
+                    <div class="profil-photo_item">
+                        <a href="{{route('root')}}/home/photo/3"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
+                    </div>
+             
+                    <div class="profil-photo_item">
+                        <a href="{{route('root')}}/home/photo/4"><img class="profil-photos" src="{{route('root')}}/pictures/pdelefos/avatar.jpeg"></a>
+                    </div>
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@ class User {
 	private $nom;
 	private $prenom;
 	private $password;
+	private $avatar;
 	private $sexe;
 	private $orientation;
 	private $anniversaire;
@@ -50,6 +51,10 @@ class User {
 
 	public function setPassword($password) {
 		$this->password = $password;
+	}
+
+	public function setAvatar($avatar) {
+		$this->avatar = $avatar;
 	}
 
 	public function setSexe($sexe) {
@@ -107,6 +112,10 @@ class User {
 
 	public function getSexe() {
 		return $this->sexe;
+	}
+
+	public function getAvatar() {
+		return $this->avatar;
 	}
 
 	public function getAnniversaire() {
@@ -291,6 +300,7 @@ class User {
 		$user->setEmail($ret[0]->{'email'});
 		$user->setNom($ret[0]->{'nom'});
 		$user->setPrenom($ret[0]->{'prenom'});
+		$user->setAvatar($ret[0]->{'avatar'});
 		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
 		$user->setAnniversaire($ret[0]->{'anniversaire'});
 		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));

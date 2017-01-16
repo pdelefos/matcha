@@ -50,6 +50,10 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->post('/home/profilpic', ['as' => 'profilpic', 'uses' => 'HomeController@submitProfilPic']);
 
+    $app->get('/home/photo/{no}', ['as' => 'photo', 'uses' => 'HomeController@showPhotos']);
+
+    $app->post('/home/photo', ['as' => 'photo', 'uses' => 'HomeController@submitPhotos']);
+
     $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'HomeController@showNotif']);
 
     $app->get('/home/chat', ['as' => 'chat', 'uses' => 'HomeController@showChat']);

@@ -8,24 +8,26 @@
                 <div class="file-error">{{$error_fichier}}</div>
             @endif
         <a href="{{ route('root') }}/home/profil/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
-        <h2 class="profile-modal__title">photo de profil</h2>
-        <form action="{{ route('profilpic') }}" method="post" enctype="multipart/form-data">
-        <div class="hublot" style=""></div>
+        <h2 class="profile-modal__title">Upload de photo</h2>
+        <form action="{{ route('photo') }}" method="post" enctype="multipart/form-data">
+        <div class="photo-frame">
+            <img src="" class="photo"></img>
+        </div>
+        <input type="number" value="{{$photoNo}}" name="photoNo" hidden>
         <input id="my-pic" type="file" name="picture" onchange="previewFile()" class="inputfile">
         <label for="my-pic" class="btn-submit pic-upload">choisir un fichier</label>
-        <!--<a href="{{ route('profilpic') }}" class="btn-submit submit-picture">envoyer</a>-->
         <input class="form__input btn-submit submit-picture" type="submit" name="submit" value="envoyer">
         </form>
     </div>
 </div>
 <script type="text/javascript">
     function previewFile() {
-        const preview = document.querySelector('.hublot')
+        const preview = document.querySelector('.photo')
         const file = document.querySelector('input[type=file]').files[0]
         const reader = new FileReader()
 
         reader.onloadend = function () {
-            preview.style = "background-image:url(" + reader.result + ")"
+            preview.src = reader.result
         }
 
         if (file)
