@@ -10,6 +10,7 @@ use App\Classes\Session;
 use App\Models\Interest;
 use App\Models\Geolocalisation;
 use App\Models\Photo;
+use App\Models\Tool;
 
 class UserController extends Controller {
 
@@ -43,6 +44,14 @@ class UserController extends Controller {
     public function submitProfile(Request $request) {
         $session = Session::getInstance();
         $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, [
+            'sexe',
+            'recherche',
+            'anniversaire',
+            'presentation',
+            'interets',
+            'adresse'
+        ]);
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $validator->check($inputs, [
@@ -68,7 +77,7 @@ class UserController extends Controller {
                 'isValidAddress' => true
             ]
         ]);
-        if ($validator->fails()) {
+        if ($validator->fails() || !$checkInputs) {
             $user_completed = User::getCompleted($session->getValue('id'));
             $interests = Interest::getInterests();
             return view('pages.home.home',
@@ -124,6 +133,19 @@ class UserController extends Controller {
     public function submitModificationProfile(Request $request) {
         $session = Session::getInstance();
         $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, [
+            'nom',
+            'prenom',
+            'email',
+            'sexe',
+            'recherche',
+            'anniversaire',
+            'presentation',
+            'interets',
+            'adresse',
+            'adresseLat',
+            'adresseLng'
+        ]);
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $interests = Interest::getInterests();
@@ -165,7 +187,7 @@ class UserController extends Controller {
                 'isValidAddress' => true
             ]
         ]);
-        if ($validator->fails()) {
+        if ($validator->fails() || !$checkInputs) {
             $user = User::getUser($session->getValue('id'));
             return view('pages.home.myprofil',
             [
@@ -232,6 +254,12 @@ class UserController extends Controller {
     public function submitProfilPic(Request $request) {
         $errorHandler = new ErrorHandler;
         $file = $request->file('picture');
+        $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, [
+            'picture',
+            'photoNo',
+            'submit'
+        ]);
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
         if ($file == null) {
@@ -298,24 +326,27 @@ class UserController extends Controller {
         $file = $request->file('picture');
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
-        if ($file == null) {
-            $errorHandler->addError("fichier invalid", "fichier");
-            $ret = true;
-        } elseif ($file == null || !$file->isValid()) {
-            $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
-            $ret = true;
-        } elseif ($file->guessExtension() == "jpeg" ||
-                  $file->guessExtension() == "png" ||
-                  $file->guessExtension() == "gif"){
-            $path = "pictures/" . $user->getLogin();
-            $filename = $inputs['photoNo'] . "." . $file->guessExtension();
-            $fullPath = $path . "/" . $filename;
-            Photo::setUserPhoto($session->getValue('id'), $fullPath, $inputs['photoNo']);
-            $file->move($path, $filename);
-            $ret = false;
-        } else {
-            $errorHandler->addError("extension invalide", "fichier");
-            $ret = true;
+        $ret = true;
+        if (Tool::checkInputs($inputs, ['photoNo'])){
+            if ($file == null) {
+                $errorHandler->addError("fichier invalid", "fichier");
+                $ret = true;
+            } elseif ($file == null || !$file->isValid()) {
+                $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
+                $ret = true;
+            } elseif ($file->guessExtension() == "jpeg" ||
+                    $file->guessExtension() == "png" ||
+                    $file->guessExtension() == "gif"){
+                $path = "pictures/" . $user->getLogin();
+                $filename = $inputs['photoNo'] . "." . $file->guessExtension();
+                $fullPath = $path . "/" . $filename;
+                Photo::setUserPhoto($session->getValue('id'), $fullPath, $inputs['photoNo']);
+                $file->move($path, $filename);
+                $ret = false;
+            } else {
+                $errorHandler->addError("extension invalide", "fichier");
+                $ret = true;
+            }
         }
         return view('pages.home.myprofil',
         [

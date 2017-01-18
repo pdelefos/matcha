@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Classes\Validator;
 use App\Classes\ErrorHandler;
 use App\Classes\Session;
+use App\Models\Tool;
 
 class AuthController extends Controller
 {
@@ -25,6 +26,13 @@ class AuthController extends Controller
     //Validation et insertion des données en base
     public function submitRegister(Request $request) {
         $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, [
+            'nom',
+            'prenom',
+            'email',
+            'login',
+            'password'
+        ]);
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $validator->check($inputs, [
@@ -57,7 +65,7 @@ class AuthController extends Controller
                 'password' => true
             ]
         ]);
-        if ($validator->fails()) {
+        if ($validator->fails() || !$checkInputs) {
             return view('pages.register', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         } else {
             $user = new User();     
@@ -80,6 +88,10 @@ class AuthController extends Controller
 
     public function submitConnexion(Request $request) {
         $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, [
+            'login',
+            'password'
+        ]);
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $validator->check($inputs, [
@@ -96,13 +108,14 @@ class AuthController extends Controller
                 'password' => true
             ]
         ]);
+        if ($validator->fails() || !$checkInputs)
+            return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
         $user = new User();
         $user->setLogin($request->input('login'));
         $user->setPassword(hash("whirlpool", $request->input('password')));
         if (!$user_id = $user->login())
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
-        if ($validator->fails())
-            return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+
         $session = Session::getInstance();
         $session->login(['id' => $user_id, 'login' => $request->input('login')]);
         return redirect()->route('home');
@@ -110,6 +123,7 @@ class AuthController extends Controller
 
     public function submitRecover(Request $request) {
         $inputs = $request->all();
+        $checkInputs = Tool::checkInputs($inputs, ['email']);
         $errorHandler = new ErrorHandler;
         $validator = new Validator($errorHandler);
         $validator->check($inputs, [
@@ -119,7 +133,7 @@ class AuthController extends Controller
                 'emailExist' => true
             ]
         ]);
-        if ($validator->fails())
+        if ($validator->fails() || !$checkInputs)
             return view('pages.recover', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
     }
 

@@ -44,7 +44,7 @@ $page_need = array(
                         </div>
                     @endforeach
                 </div>
-                <a href="{{ route('modification') }}" class="white-link"><div data-icon="ei-gear" data-size="m" class="profil-mod"></div></a>
+                <a href="{{ route('modification') }}" class="white-link settings"><div data-icon="ei-gear" data-size="m" class="profil-mod"></div></a>
             </div>
             <div class="profil-infobar">
                 <div class="profil-infobar-wrap">

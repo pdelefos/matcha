@@ -8,7 +8,7 @@ $page_need = array(
 
 @section('content')
 
-    @if (isset($user_completed) && !$user_completed)
+    @if (!$user->getCompleted())
         @include('modals.profile')
     @endif
     <div class="app-wrap home-page">

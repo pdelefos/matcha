@@ -24,6 +24,7 @@ class User {
 	private $latitude;
 	private $longitude;
 	private $presentation;
+	private $completed;
 	private $interests = array();
 	private $photos = array();
 
@@ -139,7 +140,7 @@ class User {
 	}
 
 	// Renvoi true si l'utilisateur a un profil complet
-	static function getCompleted($id) {
+	static function getUserCompleted($id) {
 		$ret = app('db')->select('SELECT completed FROM user WHERE id = :id',
 		['id' => $id]);
 		if ($ret)
@@ -181,6 +182,7 @@ class User {
 		$user->setLocalisation($ret[0]->{'localisation'});
 		$user->setLatitude($ret[0]->{'latitude'});
 		$user->setLongitude($ret[0]->{'longitude'});
+		$user->setCompleted($ret[0]->{'completed'});
 		$user->setInterests(Interest::getUserInterest($user_id));
 		$user->setPresentation($ret[0]->{'presentation'});
 		$user->setPhotos(Photo::getUserPhotos($user_id));
@@ -265,6 +267,10 @@ class User {
 		$this->photos = $photos;
 	}
 
+	public function setCompleted($completed) {
+		$this->completed = $completed;
+	}
+
 	//---------------------------------------------------------//
 	// GET
 	//---------------------------------------------------------//
@@ -347,5 +353,9 @@ class User {
 
 	public function getPhotos() {
 		return $this->photos;
+	}
+
+	public function getCompleted() {
+		return $this->completed;
 	}
 }

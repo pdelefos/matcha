@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Classes\Session;
+use App\Models\User;
 
 class AuthMiddleware
 {
@@ -13,6 +14,8 @@ class AuthMiddleware
         $session = Session::getInstance();
         if(empty($session->getValue('login')))
             return redirect()->route('root');
+        // if (!User::getUserCompleted(User::getId($session->getValue('login'))))
+        //     return redirect()->route('home');
         return $next($request);
     }
 }
