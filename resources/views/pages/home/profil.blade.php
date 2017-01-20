@@ -14,8 +14,10 @@ $page_need = array(
                     </a><tab>
                 </div>
                 <div class="profil-bar-login">
-                    <span class="status status-off"></span>
-                    {{ $user->getLogin() }}
+                    <span>{{ $user->getLogin() }}</span>
+                    <span class="status status-off">{{$user->getLastVisit()}}</span>
+                </div>
+                <div class="profil-bar-info">
                     <span class="profil-bar-fullname">({{ $user->getFuscNames() }})</span>
                     <span class="sexe-symbol">
                         @if ($user->getSexe() == "homme")
@@ -67,24 +69,38 @@ $page_need = array(
                     </div>
                 @endforeach
             </div>
+            <div class="action-user">
+                <a href="{{route('block', ['login' => $user->getLogin()])}}" class="">
+                    <div class="action-button block-user">
+                        bloquer
+                    </div>
+                </a>
+                <a href="" class="">
+                    <div class="action-button report-user">
+                        reporter
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
     <script>
         const statusElem = document.querySelector('.status');
 
         function toggleStatus(status) {
-            if (status == '0'){
-                statusElem.classList.remove('status-on');
-                statusElem.classList.add('status-off');
-            } else {
+            if (status == '1'){
                 statusElem.classList.remove('status-off');
                 statusElem.classList.add('status-on');
+                statusElem.innerHTML = "en ligne";
+            } else {
+                statusElem.classList.remove('status-on');
+                statusElem.classList.add('status-off');
+                statusElem.innerHTML = status;
             }
         }
 
         function notifOnline() {
-            const root = "<?= route('root') . "/home/notifications/userisonline/" . $user->getLogin()?>";
-            $.post(root, (data, status) => {
+            const root = "<?= route('userIsOnline', ['login' => $user->getLogin()]) ?>";
+            $.get(root, (data, status) => {
                 toggleStatus(data);
             })
         }

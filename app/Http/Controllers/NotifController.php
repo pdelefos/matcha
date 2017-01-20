@@ -26,6 +26,8 @@ class NotifController extends Controller {
             $user = User::getUser(User::getId($login));
             if ($user->isOnline())
                 return 1;
+            else
+                return $user->getLastVisit();
         return 0;
     }
 }

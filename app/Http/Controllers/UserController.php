@@ -34,6 +34,10 @@ class UserController extends Controller {
             ]);
         } elseif (User::loginExists($login)) {
             $user = User::getUser(User::getId($login));
+            $session = Session::getInstance();
+            $current = User::getUser($session->getValue('id'));
+            if ($current->isBlocked(User::getId($login)))
+                return view('errors.blocked', ['user' => $user, 'request' => $request]);
             return view('pages.home.profil', ['user' => $user, 'request' => $request]);
         } else {
             return view('errors.profil', ['login' => $login, 'request' => $request]);
@@ -360,5 +364,20 @@ class UserController extends Controller {
             'modPicture' => false,
             'modPhotos' => $ret
         ]);
+    }
+
+    public function blockUser(Request $request, $login) {
+        // var_dump($login);
+        // die();
+        $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        $blocked_id = User::getId($login);
+        if (!$user->isBlocked($blocked_id)){
+            $user->block($blocked_id);
+            return redirect()->route('home');
+        } else {
+            $user->unblock($blocked_id);
+            return redirect()->route('profile', ['login' => $login]);
+        }
     }
 }

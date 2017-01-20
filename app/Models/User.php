@@ -43,6 +43,7 @@ class User {
 				'prenom' => $this->prenom,
 				'password' => $this->password
 			]);
+		self::updateLastVisit();
 		if ($ret)
 			return Self::getId($this->login);
 		return false;
@@ -133,10 +134,57 @@ class User {
 
 	public function goOffline() {
 		Online::goOffline($this->id);
+		self::updateLastVisit();
+	}
+
+	private function updateLastVisit() {
+		app('db')->update('UPDATE user SET last = :last WHERE id = :id', [
+			'last' => date('d/m/Y'),
+			'id' => $this->id
+		]);
+	}
+
+	public function getLastVisit() {
+		$ret = app('db')->select('SELECT * FROM user WHERE id = :id', [
+			'id' => $this->id
+		]);
+		if ($ret)
+			return $ret[0]->{'last'};
+		return false;
 	}
 
 	public function isOnline() {
 		return Online::isOnline($this->id);
+	}
+
+	public function block($blocked_id) {
+		$ret = app('db')->insert('INSERT INTO block_table (asking_id, blocked_id) VALUES (:asking_id, :blocked_id)', [
+			'asking_id' => $this->id,
+			'blocked_id' => $blocked_id
+		]);
+		if ($ret)
+			return true;
+		return false;
+	}
+
+	public function unblock($blocked_id) {
+		$ret = app('db')->delete('DELETE FROM block_table WHERE asking_id = :asking_id AND blocked_id = :blocked_id', [
+			'asking_id' => $this->id,
+			'blocked_id' => $blocked_id
+		]);
+		if ($ret)
+			return true;
+		return false;
+	}
+
+	public function isBlocked($blocked_id) {
+		$ret = app('db')->select('SELECT * FROM block_table WHERE asking_id = :asking_id AND blocked_id = :blocked_id', [
+			'asking_id' => $this->id,
+			'blocked_id' => $blocked_id
+		]);
+		if ($ret)
+			return true;
+		return false;
 	}
 
 	//---------------------------------------------------------//

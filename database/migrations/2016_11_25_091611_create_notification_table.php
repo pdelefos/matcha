@@ -18,6 +18,8 @@ class CreateNotificationTable extends Migration
             $table->foreign('user_id')->references('id')->on('user');
             $table->integer('notification_id')->unsigned();
             $table->foreign('notification_id')->references('id')->on('notification_type');
+            $table->integer('other_id')->unsigned()->nullable();
+            $table->foreign('other_id')->references('id')->on('user');
             $table->timestamps();
         });
     }

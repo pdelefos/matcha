@@ -25,6 +25,8 @@ $page_need = array(
                 </div>
                 <div class="profil-bar-login">
                     {{ $user->getLogin() }}
+                </div>
+                <div class="profil-bar-info">
                     <span class="profil-bar-fullname">({{ $user->getFuscNames() }})</span>
                     <span class="sexe-symbol">
                         @if ($user->getSexe() == "homme")
@@ -71,9 +73,9 @@ $page_need = array(
                 @foreach($user->getPhotos() as $photo)
                     <div class="profil-photo_item">
                     @if(!empty($photo['src']))
-                            <a href="{{route('root')}}/home/photo/{{$ind}}"><img class="profil-photos" src="{{route('root') . '/' . $photo['src']}}"></a>
+                            <a href="{{route('root')}}/profil/photo/{{$ind}}"><img class="profil-photos" src="{{route('root') . '/' . $photo['src']}}"></a>
                     @else
-                            <a href="{{route('root')}}/home/photo/{{$ind}}"><img src="{{route('root') . '/images/arrow-down.png'}}"></a>
+                            <a href="{{route('root')}}/profil/photo/{{$ind}}"><img src="{{route('root') . '/images/arrow-down.png'}}"></a>
                     @endif
                     <?php $ind++; ?>
                     </div>
@@ -81,15 +83,4 @@ $page_need = array(
             </div>
         </div>
     </div>
-    <script>
-        function notifOnline() {
-            const root = "<?= route('userIsOnline') ?>";
-            $.post(root, (data, status) => {
-                console.info(data);
-                console.warn(status);
-            })
-        }
-        // setInterval(notifOnline, 1000);
-        notifOnline()
-    </script>
 @stop

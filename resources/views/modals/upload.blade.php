@@ -7,7 +7,7 @@
             @if (isset($error_fichier) && $error_fichier != "") 
                 <div class="file-error">{{$error_fichier}}</div>
             @endif
-        <a href="{{ route('root') }}/home/profil/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
+        <a href="{{ route('root') }}/profil/user/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
         <h2 class="profile-modal__title">photo de profil</h2>
         <form action="{{ route('profilpic') }}" method="post" enctype="multipart/form-data">
         <div class="hublot" style=""></div>

@@ -29,7 +29,7 @@
 
 <div id="complet-profile_modal" class="profile-modal">
     <div class="profile-modal__content profile-modal__content__modif">
-        <a href="{{ route('root') }}/home/profil/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
+        <a href="{{ route('root') }}/profil/user/me" class="modal-close"><div data-icon="ei-close-o" data-size="m"></div></a>
         <h2 class="profile-modal__title">modifications</h2>
         <form class="profile-form" action="" method="post">
             <div class="form-row">

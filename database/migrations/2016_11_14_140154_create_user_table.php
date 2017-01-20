@@ -30,6 +30,7 @@ class CreateUserTable extends Migration
             $table->integer('latitude')->unsigned()->nullable();
             $table->integer('longitude')->unsigned()->nullable();
             $table->longText('presentation', 500)->nullable();
+            $table->dateTime('last')->nullable();
             $table->timestamps();
         });
     }

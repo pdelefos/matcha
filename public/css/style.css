@@ -613,7 +613,8 @@ input[type=radio]:checked ~ label {
   height: 18.77em;
   overflow: hidden;
   width: 60em;
-  margin: 0 auto; }
+  margin: 0 auto;
+  position: relative; }
 
 .profil-bar-picplace {
   border-radius: 50%;
@@ -638,8 +639,16 @@ input[type=radio]:checked ~ label {
 .profil-bar-login {
   position: relative;
   display: inline-block;
-  bottom: 1.8em;
+  bottom: 2.5em;
   left: 0.3em;
+  font-size: 3em;
+  font-family: 'Lato'; }
+
+.profil-bar-info {
+  position: absolute;
+  display: inline-block;
+  bottom: 2.4em;
+  left: 5.5em;
   font-size: 3em;
   font-family: 'Lato'; }
 
@@ -655,7 +664,13 @@ input[type=radio]:checked ~ label {
   vertical-align: middle; }
 
 .status-on {
-  background-color: #55FEDE; }
+  background-color: #55FEDE;
+  width: inherit;
+  height: inherit;
+  font-size: 13px;
+  padding: 6px;
+  border-radius: 8px;
+  color: #637CFE; }
 
 .status-off {
   background-color: #d2545a;
@@ -773,6 +788,34 @@ input[type=radio]:checked ~ label {
 .profil-photos {
   width: 100%;
   height: 100%; }
+
+.action-user {
+  margin: 0 auto;
+  text-align: center; }
+
+.action-user a {
+  text-decoration: none;
+  color: #fff; }
+
+.block-user {
+  margin-right: 10em; }
+
+.action-button {
+  display: inline-block;
+  background-color: #d2545a;
+  padding: 5px;
+  margin-bottom: 4em;
+  color: #fff;
+  border-radius: 8px;
+  height: 3em;
+  line-height: 3em;
+  font-size: 20px;
+  width: 10em;
+  transition: 0.5s;
+  cursor: pointer; }
+
+.action-button:hover {
+  transform: scale(0.8); }
 
 /*------------------------------------*\
 #PICTURE-MODAL

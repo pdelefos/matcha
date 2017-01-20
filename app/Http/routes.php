@@ -53,29 +53,31 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     // Route du profil de l'utilisateur
 
-    $app->get('/home/profil/{login}', ['as' => 'profile', 'uses' => 'UserController@showProfile']);
+    $app->get('/profil/user/{login}', ['as' => 'profile', 'uses' => 'UserController@showProfile']);
 
-    $app->get('/home/modification', ['as' => 'modification', 'uses' => 'UserController@modificationProfile']);
+    $app->get('/profil/modification', ['as' => 'modification', 'uses' => 'UserController@modificationProfile']);
 
-    $app->post('/home/modification', ['as' => 'modification', 'uses' => 'UserController@submitModificationProfile']);
+    $app->post('/profil/modification', ['as' => 'modification', 'uses' => 'UserController@submitModificationProfile']);
 
-    $app->get('/home/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@showProfilPic']);
+    $app->get('/profil/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@showProfilPic']);
 
-    $app->post('/home/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@submitProfilPic']);
+    $app->post('/profil/profilpic', ['as' => 'profilpic', 'uses' => 'UserController@submitProfilPic']);
 
-    $app->get('/home/photo/{no}', ['as' => 'photo', 'uses' => 'UserController@showPhotos']);
+    $app->get('/profil/photo/{no}', ['as' => 'photo', 'uses' => 'UserController@showPhotos']);
 
-    $app->post('/home/photo', ['as' => 'photo', 'uses' => 'UserController@submitPhotos']);
+    $app->post('/profil/photo', ['as' => 'photo', 'uses' => 'UserController@submitPhotos']);
+
+    $app->get('/profil/bloquer/{login}', ['as' => 'block', 'uses' => 'UserController@blockUser']);
 
     // Route des notifications
 
-    $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'NotifController@showNotif']);
+    $app->get('/notifications', ['as' => 'notif', 'uses' => 'NotifController@showNotif']);
 
-    $app->post('/home/notifications/userisonline/{login}', ['as' => 'userIsOnline', 'uses' => 'NotifController@isOnline']);
+    $app->get('/notifications/userisonline/{login}', ['as' => 'userIsOnline', 'uses' => 'NotifController@isOnline']);
 
     // Route du chat
 
-    $app->get('/home/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
+    $app->get('/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
 });
 
 /*--------------------------------------------------------------------------
