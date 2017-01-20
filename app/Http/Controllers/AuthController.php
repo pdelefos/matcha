@@ -75,6 +75,8 @@ class AuthController extends Controller
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
             $user_id = $user->register();
+            $user->setId($user_id);
+            $user->goOnline();
             $session = Session::getInstance();
             $session->login(['id' => $user_id, 'login' => $request->input('login')]);
             return redirect()->route('home');
@@ -113,11 +115,14 @@ class AuthController extends Controller
         $user = new User();
         $user->setLogin($request->input('login'));
         $user->setPassword(hash("whirlpool", $request->input('password')));
-        if (!$user_id = $user->login())
+        if (!$user_id = $user->login()){
             $validator->errors()->addError('Combinaison login/mot de passe invalide', 'login');
-
+            return view('pages.connexion', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        }
         $session = Session::getInstance();
         $session->login(['id' => $user_id, 'login' => $request->input('login')]);
+        $user = User::getUser($user_id);
+        $user->goOnline();
         return redirect()->route('home');
     }
 
@@ -145,6 +150,8 @@ class AuthController extends Controller
     // deconnecte l'utilisateur courant et le renvoi au register
     public function logout() {
         $session = Session::getInstance();
+        $user = User::getUser($session->getValue('id'));
+        $user->goOffline();
         $session->logout();
         return redirect()->route('root');
     }

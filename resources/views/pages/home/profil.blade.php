@@ -9,9 +9,12 @@ $page_need = array(
         <div class="profil-box">
             <div class="profil-bar">
                 <div class="profil-bar-picplace">
-                    <img src="../images/mona.jpg" alt="" class="profil-bar__picture">
+                    <a href="{{ route('profilpic') }}">
+                        <div class="profil-bar__picture" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
+                    </a><tab>
                 </div>
                 <div class="profil-bar-login">
+                    <span class="status status-off"></span>
                     {{ $user->getLogin() }}
                     <span class="profil-bar-fullname">({{ $user->getFuscNames() }})</span>
                     <span class="sexe-symbol">
@@ -45,7 +48,7 @@ $page_need = array(
                         <div data-icon="ei-cart" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__localisation">
-                        <div class="item-value">New York</div>
+                        <div class="item-value">{{ $user->getCity() }}</div>
                         <div data-icon="ei-location" data-size="m"></div>
                     </div>
                 </div>
@@ -54,19 +57,38 @@ $page_need = array(
                 {{ $user->getPresentation() }}
             </div>
             <div class="profil-photo-wrap">
-                <div class="profil-photo_item">
-                    
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
-                <div class="profil-photo_item">
-                    
-                </div>
+                <?php $ind = 1; ?>
+                @foreach($user->getPhotos() as $photo)
+                    <div class="profil-photo_item">
+                    @if(!empty($photo['src']))
+                            <img class="profil-photos" src="{{route('root') . '/' . $photo['src']}}">
+                    @endif
+                    <?php $ind++; ?>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
+    <script>
+        const statusElem = document.querySelector('.status');
+
+        function toggleStatus(status) {
+            if (status == '0'){
+                statusElem.classList.remove('status-on');
+                statusElem.classList.add('status-off');
+            } else {
+                statusElem.classList.remove('status-off');
+                statusElem.classList.add('status-on');
+            }
+        }
+
+        function notifOnline() {
+            const root = "<?= route('root') . "/home/notifications/userisonline/" . $user->getLogin()?>";
+            $.post(root, (data, status) => {
+                toggleStatus(data);
+            })
+        }
+        setInterval(notifOnline, 1000);
+        // notifOnline()
+    </script>
 @stop

@@ -2,9 +2,6 @@
 $page_need = array(
     'url_app' => route('root')
 );
-// foreach($user->getPhotos() as $photo)
-//     var_dump($photo['src']);
-// die();
 ?>
 @extends('layouts.default')
 @section('content')
@@ -84,4 +81,15 @@ $page_need = array(
             </div>
         </div>
     </div>
+    <script>
+        function notifOnline() {
+            const root = "<?= route('userIsOnline') ?>";
+            $.post(root, (data, status) => {
+                console.info(data);
+                console.warn(status);
+            })
+        }
+        // setInterval(notifOnline, 1000);
+        notifOnline()
+    </script>
 @stop

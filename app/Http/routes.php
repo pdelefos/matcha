@@ -71,6 +71,8 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], fun
 
     $app->get('/home/notifications', ['as' => 'notif', 'uses' => 'NotifController@showNotif']);
 
+    $app->post('/home/notifications/userisonline/{login}', ['as' => 'userIsOnline', 'uses' => 'NotifController@isOnline']);
+
     // Route du chat
 
     $app->get('/home/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);

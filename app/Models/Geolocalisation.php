@@ -23,7 +23,7 @@ class Geolocalisation {
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=" . self::$apiKey;
 
         $obj = self::getJsonCurl($url);
-
+        
         $status = $obj->{'status'};
         if ($status == "ZERO_RESULTS" || $status == "INVALID_REQUEST")
             return false;

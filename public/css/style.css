@@ -647,6 +647,24 @@ input[type=radio]:checked ~ label {
   font-size: 0.5em;
   font-family: 'LatoLight'; }
 
+.status {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  border-radius: 50%;
+  vertical-align: middle; }
+
+.status-on {
+  background-color: #55FEDE; }
+
+.status-off {
+  background-color: #d2545a;
+  width: inherit;
+  height: inherit;
+  font-size: 13px;
+  padding: 6px;
+  border-radius: 8px; }
+
 .sexe-symbol {
   color: #55FEDE;
   font-size: 0.7em; }

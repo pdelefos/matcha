@@ -78,10 +78,13 @@ class UserController extends Controller {
             ]
         ]);
         if ($validator->fails() || !$checkInputs) {
-            $user_completed = User::getCompleted($session->getValue('id'));
+            $user_completed = User::getUserCompleted($session->getValue('id'));
+            $session = Session::getInstance();
+            $user = User::getUser($session->getValue('id'));
             $interests = Interest::getInterests();
             return view('pages.home.home',
             [
+                'user' => $user,
                 'prev_values' => $request,
                 'errorHandler' => $validator->errors(),
                 'interests' => $interests,

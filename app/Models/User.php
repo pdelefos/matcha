@@ -6,6 +6,7 @@ use App\Models\Interest;
 use App\Models\Orientation;
 use App\Models\Geolocalisation;
 use App\Models\Photo;
+use App\Models\Online;
 
 class User {
 
@@ -124,6 +125,18 @@ class User {
 	// Enregistre le tableau d'interets de l'utilisateur en base
 	private function saveInterests() {
 		Interest::saveInterests($this->id, $this->interests);
+	}
+
+	public function goOnline() {
+		Online::goOnline($this->id);
+	}
+
+	public function goOffline() {
+		Online::goOffline($this->id);
+	}
+
+	public function isOnline() {
+		return Online::isOnline($this->id);
 	}
 
 	//---------------------------------------------------------//

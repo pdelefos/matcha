@@ -17,6 +17,7 @@ class CreateNotificationTypeTable extends Migration
             $table->string('description', 50);
             $table->timestamps();
         });
+        DB::table('notification_type')->insert(['description' => 'online']);
     }
 
     /**

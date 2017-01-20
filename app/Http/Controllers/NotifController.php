@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class NotifController extends Controller {
 
@@ -17,5 +18,14 @@ class NotifController extends Controller {
         [
             'request' => $request
         ]);
+    }
+
+    public function isOnline(Request $request, $login) {
+        $login = htmlentities($login);
+        if (User::loginExists($login))
+            $user = User::getUser(User::getId($login));
+            if ($user->isOnline())
+                return 1;
+        return 0;
     }
 }
