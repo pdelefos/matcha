@@ -817,6 +817,11 @@ input[type=radio]:checked ~ label {
 .action-button:hover {
   transform: scale(0.8); }
 
+.deblock-btn {
+  text-align: center;
+  display: block;
+  margin: 0 auto; }
+
 /*------------------------------------*\
 #PICTURE-MODAL
 \*------------------------------------*/
