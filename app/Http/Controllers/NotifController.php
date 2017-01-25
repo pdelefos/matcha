@@ -23,7 +23,7 @@ class NotifController extends Controller {
     public function isOnline(Request $request, $login) {
         $login = htmlentities($login);
         if (User::loginExists($login))
-            $user = User::getUser(User::getId($login));
+            $user = User::getUser(User::getUserId($login));
             if ($user->isOnline())
                 return 1;
             else

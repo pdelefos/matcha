@@ -12,7 +12,10 @@ $page_need = array(
         @include('modals.profile')
     @endif
     <div class="app-wrap home-page">
-
+        {{ var_dump($result) }}
     </div>
-
+<script>
+    const usersList = <?= $result ?>;
+    console.log(usersList);
+</script>
 @stop

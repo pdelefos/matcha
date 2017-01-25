@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Classes\Session;
 use App\Models\Interest;
+use App\Models\Search;
 
 class HomeController extends Controller {
 
@@ -20,11 +21,13 @@ class HomeController extends Controller {
         $user_id = $session->getValue('id');
         $user = User::getUser($user_id);
         $interests = Interest::getInterests();
+        $result = Search::suggestions($user);
         return view('pages.home.home',
         [
             'interests' => $interests, 
             'user' => $user,
-            'request' => $request
+            'request' => $request,
+            'result' => $result
         ]);
     }
 }

@@ -10,7 +10,7 @@ $page_need = array(
             <div class="profil-bar">
                 <div class="profil-bar-picplace">
                     <a href="{{ route('profilpic') }}">
-                        <div class="profil-bar__picture" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
+                        <div class="profil-bar__picture_noh" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
                     </a><tab>
                 </div>
                 <div class="profil-bar-login">
@@ -77,7 +77,7 @@ $page_need = array(
                 </a>
                 <a href="" class="">
                     <div class="action-button report-user">
-                        reporter
+                        signaler
                     </div>
                 </a>
             </div>

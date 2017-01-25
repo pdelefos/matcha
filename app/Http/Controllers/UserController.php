@@ -21,9 +21,9 @@ class UserController extends Controller {
 
     // Render le profil de l'utilisateur
     public function showProfile(Request $request, $login) {
+        $session = Session::getInstance();
         $login = htmlentities($login);
-        if ($login == 'me') {
-            $session = Session::getInstance();
+        if ($login == 'me' || $login == $session->getValue('login')) {
             $user = User::getUser($session->getValue('id'));
             return view('pages.home.myprofil', [
                 'user' => $user,
@@ -33,10 +33,9 @@ class UserController extends Controller {
                 'modPhotos' => false
             ]);
         } elseif (User::loginExists($login)) {
-            $user = User::getUser(User::getId($login));
-            $session = Session::getInstance();
+            $user = User::getUser(User::getUserId($login));
             $current = User::getUser($session->getValue('id'));
-            if ($current->isBlocked(User::getId($login)))
+            if ($current->isBlocked(User::getUserId($login)))
                 return view('errors.blocked', ['user' => $user, 'request' => $request]);
             return view('pages.home.profil', ['user' => $user, 'request' => $request]);
         } else {
@@ -273,7 +272,8 @@ class UserController extends Controller {
             $errorHandler->addError("fichier invalid", "fichier");
             $ret = true;
         } elseif ($file == null || !$file->isValid()) {
-            $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
+            $errorHandler->addError($request->file('picture')->getErrorMessage()
+                            , "fichier");
             $ret = true;
         } elseif ($file->guessExtension() == "jpeg" ||
                   $file->guessExtension() == "png" ||
@@ -362,17 +362,16 @@ class UserController extends Controller {
             'modification' => false,
             'errorHandler' => $errorHandler,
             'modPicture' => false,
-            'modPhotos' => $ret
+            'modPhotos' => $ret,
+            'photoNo' => $inputs['photoNo']
         ]);
     }
 
     public function blockUser(Request $request, $login) {
-        // var_dump($login);
-        // die();
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
-        $blocked_id = User::getId($login);
-        if (!$user->isBlocked($blocked_id)){
+        $blocked_id = User::getUserId($login);
+        if (!$user->isBlocked($blocked_id) || $login == $session->getValue('login')){
             $user->block($blocked_id);
             return redirect()->route('home');
         } else {

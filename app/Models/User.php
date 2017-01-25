@@ -67,6 +67,7 @@ class User {
 			sexe_id = :sexe_id,
 			orientation_sexe_id = :orientation_sexe_id,
 			anniversaire = :anniversaire,
+			age = :age,
 			localisation = :localisation,
 			latitude = :latitude,
 			longitude = :longitude,
@@ -77,6 +78,7 @@ class User {
 				'sexe_id' => Sexe::getId($this->sexe),
 				'orientation_sexe_id' => Orientation::getId($this->orientation),
 				'anniversaire' => $this->anniversaire,
+				'age' => Self::calcAge($this->anniversaire),
 				'localisation' => $this->localisation,
 				'latitude' => $this->latitude,
 				'longitude' => $this->longitude,
@@ -98,6 +100,7 @@ class User {
 			sexe_id = :sexe_id,
 			orientation_sexe_id = :orientation_sexe_id,
 			anniversaire = :anniversaire,
+			age = :age,
 			localisation = :localisation,
 			latitude = :latitude,
 			longitude = :longitude,
@@ -111,6 +114,7 @@ class User {
 				'sexe_id' => Sexe::getId($this->sexe),
 				'orientation_sexe_id' => Orientation::getId($this->orientation),
 				'anniversaire' => $this->anniversaire,
+				'age' => Self::calcAge($this->anniversaire),
 				'localisation' => $this->localisation,
 				'latitude' => $this->latitude,
 				'longitude' => $this->longitude,
@@ -192,7 +196,7 @@ class User {
 	//---------------------------------------------------------//
 
 	// Renvoi l'ID correspondant au login de l'utilisateur
-	static function getId($login) {
+	static function getUserId($login) {
 		$ret = app('db')->select('SELECT id FROM user WHERE login = :login',
 		['login' => $login]);
 		if ($ret)
@@ -238,7 +242,7 @@ class User {
 		$user->setAvatar($ret[0]->{'avatar'});
 		$user->setSexe(Sexe::getDesc($ret[0]->{'sexe_id'}));
 		$user->setAnniversaire($ret[0]->{'anniversaire'});
-		$user->setAge(Self::calcAge($ret[0]->{'anniversaire'}));
+		$user->setAge($ret[0]->{'age'});
 		$user->setOrientation(Orientation::getDesc($ret[0]->{'orientation_sexe_id'}));
 		$user->setLocalisation($ret[0]->{'localisation'});
 		$user->setLatitude($ret[0]->{'latitude'});
@@ -335,6 +339,10 @@ class User {
 	//---------------------------------------------------------//
 	// GET
 	//---------------------------------------------------------//
+
+	public function getId() {
+		return $this->id;
+	}
 
 	public function getLogin() {
 		return $this->login;
