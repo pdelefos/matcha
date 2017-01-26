@@ -9,9 +9,7 @@ $page_need = array(
         <div class="profil-box">
             <div class="profil-bar">
                 <div class="profil-bar-picplace">
-                    <a href="{{ route('profilpic') }}">
-                        <div class="profil-bar__picture_noh" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
-                    </a><tab>
+                    <div class="profil-bar__picture_noh" style="background-image:url({{route('root') . '/' . $user->getAvatar()}})"></div>
                 </div>
                 <div class="profil-bar-login">
                     <span>{{ $user->getLogin() }}</span>

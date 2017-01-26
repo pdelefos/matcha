@@ -12,7 +12,7 @@ function setLatLng(latitude, longitude) {
 function getAdresse(latitude, longitude) {
     latlng = latitude + "," + longitude
     setLatLng(latitude, longitude)
-    const googleapi = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng
+    const googleapi = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng
     $.getJSON(googleapi, function(data, textStatus) {
         const adresse = data['results'][0].formatted_address
         setAdresse(adresse)
