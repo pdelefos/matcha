@@ -12,19 +12,22 @@ $page_need = array(
         @include('modals.profile')
     @endif
     <div class="app-wrap home-page">
-        <section id="age-slider" class="range-slider toto">
-            <span class="rangeValues"></span>
-            <input value="5" min="0" max="15" type="range">
-            <input value="10" min="0" max="15" type="range">
+        <?php var_dump(json_encode((array)$user)) ?><br/>
+        <label for="age-slider">age</label>
+        <section id="age-slider" class="range-slider">
+            <span class="rangeValues"></span> ans
+            <input type="range">
+            <input type="range">
         </section>
-        <section id="score-slider" class="range-slider">
-            <span class="rangeValues"></span>
-            <input value="5" min="0" max="15" type="range">
-            <input value="10" min="0" max="15" type="range">
+        <label for="location-slider">distance</label>
+        <section id="location-slider"class="range-slider">
+            <span class="rangeValues"></span> km
+            <input type="range">
         </section>
     </div>
 <script>
 const usersList = <?= $result ?>;
+const currUser = <?= json_encode((array)$user) ?>;
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.0/geolocator.js"></script>
 <script src="js/doubleSlider.js"></script>

@@ -26,6 +26,8 @@
         const file = document.querySelector('input[type=file]').files[0]
         const reader = new FileReader()
 
+        console.log(file);
+
         reader.onloadend = function () {
             preview.src = reader.result
         }
