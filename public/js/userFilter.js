@@ -14,8 +14,8 @@ function go(e) {
     const arrayByAge = usersList.filter(sortAge.bind(this, ageMin, ageMax));
     const locationSliderValue = getSliderValues(locationSlider);
     let locMax = locationSliderValue.min;
-    const arrayByLoc = arrayByAge.filter(sortDistance);
-    console.log(locationSliderValue);
+    const arrayByLoc = arrayByAge.filter(sortDistance.bind(this, locMax));
+    console.log(arrayByLoc);
 }
 
 ageSlider.addEventListener('change', go);
@@ -29,17 +29,13 @@ function sortAge(min, max, elem) {
     return elem.age >= min && elem.age <= max;
 }
 
-function sortDistance(user) {
-    console.log(getUserDistance(currUser, user));
+function sortDistance(locMax, elem) {
+    return getDistance(currUser, elem) <= locMax;
 }
 
-function getUserDistance(currUser, userDest) {
-    const origUser = {
-        lat: currUser,
-        lng: 
-    }
-    console.log(origUser);
-}
+/*----------------------------------------------------------*\
+#Geolocator functions
+\*----------------------------------------------------------*/
 
 /**
 * Get the distance in km between 2 users

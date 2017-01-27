@@ -12,7 +12,6 @@ $page_need = array(
         @include('modals.profile')
     @endif
     <div class="app-wrap home-page">
-        <?php var_dump(json_encode((array)$user)) ?><br/>
         <label for="age-slider">age</label>
         <section id="age-slider" class="range-slider">
             <span class="rangeValues"></span> ans
@@ -27,7 +26,7 @@ $page_need = array(
     </div>
 <script>
 const usersList = <?= $result ?>;
-const currUser = <?= json_encode((array)$user) ?>;
+const currUser = <?= $currUser ?>;
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.0/geolocator.js"></script>
 <script src="js/doubleSlider.js"></script>
