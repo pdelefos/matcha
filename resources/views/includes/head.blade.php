@@ -14,3 +14,5 @@
 <!--evil-icons-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/evil-icons/1.9.0/evil-icons.min.css">
 <script src="https://cdn.jsdelivr.net/evil-icons/1.9.0/evil-icons.min.js"></script>
+<!--responsiv-->
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1">

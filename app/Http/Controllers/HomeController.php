@@ -20,10 +20,7 @@ class HomeController extends Controller {
         $session = Session::getInstance();
         $user_id = $session->getValue('id');
         $user = User::getUser($user_id);
-        $currUser['login'] = $user->getLogin();
-        $currUser['latitude'] = $user->getLatitude();
-        $currUser['longitude'] = $user->getLongitude();
-        $currUser = json_encode($currUser);
+        $currUser= self::getJsCurrentUser($user);
         $interests = Interest::getInterests();
         $result = Search::suggestions($user);
         return view('pages.home.home',
@@ -34,5 +31,13 @@ class HomeController extends Controller {
             'request' => $request,
             'result' => $result
         ]);
+    }
+
+    private function getJsCurrentUser(User $user) {
+        $currUser['login'] = $user->getLogin();
+        $currUser['latitude'] = $user->getLatitude();
+        $currUser['longitude'] = $user->getLongitude();
+        $currUser['interets'] = $user->getInterests();
+        return json_encode($currUser);
     }
 }

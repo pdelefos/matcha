@@ -1,36 +1,154 @@
 "use strict";
 
+const spooky = document.querySelector('#spooky');
+spooky.remove();
+
+
+
+
+/*----------------------------------------------------------*\
+#Filter User
+\*----------------------------------------------------------*/
+
 const ageSlider = document.querySelector('#age-slider');
 const locationSlider = document.querySelector('#location-slider');
-
+const scoreSlider = document.querySelector('#score-slider');
+const interetSlider = document.querySelector('#interet-slider');
+const sortBySelect = document.querySelector('.sort');
 
 setSliderValues(ageSlider, 10, 80, 10, 80);
 setSliderValues(locationSlider, 10, 300, 10);
+setSliderValues(scoreSlider, 0, 100, 0, 100);
+setSliderValues(interetSlider, 0, 5, 0);
 
-function go(e) {
+function filterSort(e) {
+    //age
     const ageSliderValues = getSliderValues(ageSlider);
     let ageMin = ageSliderValues.min;
     let ageMax = ageSliderValues.max;
-    const arrayByAge = usersList.filter(sortAge.bind(this, ageMin, ageMax));
+    const arrayByAge = usersList.filter(filterAge.bind(this, ageMin, ageMax));
+
+    //distance
     const locationSliderValue = getSliderValues(locationSlider);
     let locMax = locationSliderValue.min;
-    const arrayByLoc = arrayByAge.filter(sortDistance.bind(this, locMax));
-    console.log(arrayByLoc);
+    const arrayByLoc = arrayByAge.filter(filterDistance.bind(this, locMax));
+
+    //score
+    const scoreSliderValues = getSliderValues(scoreSlider);
+    let scoreMin = scoreSliderValues.min;
+    let scoreMax = scoreSliderValues.max;
+    const arrayByScore = arrayByLoc.filter(filterScore.bind(this, scoreMin, 
+        scoreMax));
+
+    //interets
+    const interetSliderValue = getSliderValues(interetSlider);
+    let interetsMax = interetSliderValue.min;
+    const arrayByInterets = arrayByScore.filter(filterInterets.bind(this, 
+        interetsMax))
+
+    const sortBy = sortBySelect.value.toString();
+    var paka;
+    switch (sortBy) {
+        case 'age':
+            paka = arrayByInterets.sort(sortAgeAsc);
+            break;
+        case 'distance':
+            paka = arrayByInterets.sort(sortDistanceAsc);
+            break;
+        case 'score':
+            paka = arrayByInterets.sort(sortScoreAsc);
+            break;
+        case 'interets':
+            paka = arrayByInterets.sort(sortInterestAsc);
+            break;
+        default:
+            break;
+    }
+    console.log(paka);
 }
 
-ageSlider.addEventListener('change', go);
-locationSlider.addEventListener('change', go);
+ageSlider.addEventListener('change', filterSort);
+locationSlider.addEventListener('change', filterSort);
+scoreSlider.addEventListener('change', filterSort);
+interetSlider.addEventListener('change', filterSort);
+sortBySelect.addEventListener('change', filterSort);
 
 /*----------------------------------------------------------*\
-#Sorting functions
+#Sort functions
 \*----------------------------------------------------------*/
 
-function sortAge(min, max, elem) {
+function sortAgeAsc(elemA, elemB) {
+    return elemA.age > elemB.age ? 1 : -1;
+}
+
+function sortAgeDesc(elemA, elemB) {
+    return elemA.age > elemB.age ? -1 : 1;
+}
+
+function sortDistanceAsc(elemA, elemB) {
+    return elemA.distance > elemB.distance ? 1 : -1;
+}
+
+function sortDistanceDesc(elemA, elemB) {
+    return elemA.distance > elemB.distance ? -1 : 1;
+}
+
+function sortScoreAsc(elemA, elemB) {
+    return elemA.score > elemB.score ? 1 : -1;
+}
+
+function sortScoreDesc(elemA, elemB) {
+    return elemA.score > elemB.score ? -1 : 1;
+}
+
+function sortInterestAsc(elemA, elemB) {
+    return elemA.nbInteretsCom > elemB.getNbInteretsCom ? 1 : -1;
+}
+
+function sortInterestDesc(elemA, elemB) {
+    return elemA.nbInteretsCom > elemB.getNbInteretsCom ? -1 : 1;
+}
+
+/*----------------------------------------------------------*\
+#Filter functions
+\*----------------------------------------------------------*/
+
+function filterAge(min, max, elem) {
     return elem.age >= min && elem.age <= max;
 }
 
-function sortDistance(locMax, elem) {
+function filterDistance(locMax, elem) {
     return getDistance(currUser, elem) <= locMax;
+}
+
+function filterScore(min, max, elem) {
+    return elem.score >= min && elem.score <= max;
+}
+
+function filterInterets(nbInteretsMax, elem) {
+    return getNbInteretsCom(currUser, elem) >= nbInteretsMax;
+}
+
+/*----------------------------------------------------------*\
+#Interests functions
+\*----------------------------------------------------------*/
+
+/**
+* Get the number of interest in common between 2 users
+* @param {object} userOrigin - Origin User
+* @param {object} userDest - Destination User
+* @return {Number} distance - rounded distance in km
+*/
+function getNbInteretsCom(origUser, destUser) {
+    var nbInteretsCom = 0;
+    origUser.interets.forEach(origInteret => {
+        destUser.interets.forEach(destInteret => {
+            if (origInteret === destInteret)
+                nbInteretsCom++;
+        });
+    });
+    destUser.nbInteretsCom = nbInteretsCom;
+    return nbInteretsCom;
 }
 
 /*----------------------------------------------------------*\
@@ -52,7 +170,7 @@ function getDistance(origUser, destUser) {
         lat: destUser.latitude,
         lng: destUser.longitude
     };
-    const distance = geolocator.calcDistance({
+    const distance = Math.round(geolocator.calcDistance({
         from: {
             latitude: orig.lat,
             longitude: orig.lng
@@ -63,8 +181,9 @@ function getDistance(origUser, destUser) {
         },
         formula: geolocator.DistanceFormula.HAVERSINE,
         unitSystem: geolocator.UnitSystem.METRIC
-    });
-    return Math.round(distance);
+    }));
+    destUser.distance = distance;
+    return distance;
 }
 
 /*----------------------------------------------------------*\

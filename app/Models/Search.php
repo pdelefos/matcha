@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Orientation;
+use App\Models\Interest;
 use Illuminate\Support\Facades\DB as DB;
 
 class Search {
@@ -20,6 +21,10 @@ class Search {
                 ->when($blocked, function ($query) use ($blocked) {
                     return $query->whereNotIn('user.id', $blocked);
                 })->distinct()->get();
+        foreach($ret as $user) {
+            $user->{'score'} = 0;
+            $user->{'interets'} = Interest::getUserInterest(User::getUserId($user->{'login'}));
+        }
         return json_encode($ret);
     }
 

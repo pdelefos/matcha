@@ -23,8 +23,25 @@ $page_need = array(
             <span class="rangeValues"></span> km
             <input type="range">
         </section>
+        <label for="score-slider">score</label>
+        <section id="score-slider" class="range-slider">
+            <span class="rangeValues"></span> pts
+            <input type="range">
+            <input type="range">
+        </section>
+        <label for="interet-slider">interets</label>
+        <section id="interet-slider" class="range-slider">
+            <span class="rangeValues"></span>
+            <input type="range">
+        </section>
+        <select class="sort" id="">
+            <option value="age">age</option>
+            <option value="distance">distance</option>
+            <option value="score">score</option>
+            <option value="interets">interets</option>
+        </select>
     </div>
-<script>
+<script id="spooky">
 const usersList = <?= $result ?>;
 const currUser = <?= $currUser ?>;
 </script>
