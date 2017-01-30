@@ -26,7 +26,7 @@ if (isset($prev_values)) {
 
 <div id="complet-profile_modal" class="profile-modal">
     <div class="profile-modal__content">
-        <h2 class="profile-modal__title">On a besoin de plus d'info !</h2>
+        <h2 class="profile-modal__title">On a besoin de plus d'infos !</h2>
         <form class="profile-form" action="" method="post">
             <div class="form-row">
                 <label class="form-label">Je suis</label>

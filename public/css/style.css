@@ -338,7 +338,8 @@ html, body {
   font-size: 20px; }
 
 .home-page {
-  background: #34BFBF; }
+  background: #34BFBF;
+  font-family: 'Lato'; }
 
 .profile-page {
   background: #1894C9; }
@@ -353,6 +354,125 @@ html, body {
   bottom: 0;
   position: absolute;
   width: 100%; }
+
+.search-bar {
+  background-color: #637CFE;
+  width: 100%;
+  overflow: auto;
+  height: 6.3em; }
+
+.search-link {
+  margin: 0 auto;
+  display: block;
+  text-decoration: none;
+  color: #637CFE;
+  border-radius: 8px;
+  width: 100px;
+  height: 40px;
+  background-color: #55FEDE;
+  margin-top: 30px;
+  text-align: center;
+  line-height: 40px;
+  transition: 0.5s; }
+
+.search-link:hover {
+  transform: scale(0.9); }
+
+.filter-sort-bar {
+  display: flex;
+  background-color: #965FF4;
+  width: 100%;
+  overflow: auto;
+  height: 6.3em; }
+
+.filter-bar {
+  flex: 1;
+  border-right: 2px solid #fff; }
+
+.filter-bar__row {
+  width: 100%;
+  display: flex;
+  height: 50%; }
+
+.filter-label {
+  color: #fff;
+  text-transform: uppercase; }
+
+.filter-slider {
+  width: 50%;
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 6px;
+  color: #fff; }
+
+.sort-bar {
+  flex: 1;
+  text-align: center; }
+
+.sort {
+  height: 40px;
+  width: 400px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  margin-bottom: 7px;
+  margin-top: 5px;
+  color: #fff;
+  font-size: 1em; }
+
+.display-users {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 40px; }
+
+.user-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none; }
+
+.user-item {
+  background-color: #637CFE;
+  overflow: hidden;
+  border-radius: 8px;
+  height: 500px;
+  width: 400px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+.user-item:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+.user-link {
+  text-decoration: none;
+  color: #fff; }
+
+.user-item__pic {
+  width: 100%;
+  height: 60%; }
+
+.user-item__login {
+  width: 100%;
+  background-color: #55FEDE;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  color: #637CFE;
+  font-size: 20px;
+  margin-top: -3px; }
+
+.user-item__row {
+  width: 100%;
+  margin-top: 15px;
+  height: 57px;
+  display: flex; }
+
+.user-item-info {
+  flex: 1;
+  text-align: center; }
+
+.modal-search {
+  height: 450px !important; }
 
 /*------------------------------------*\
   #PROFILE-MODAL
@@ -490,7 +610,8 @@ html, body {
   #CUSTOM-RADIO
 \*------------------------------------*/
 .custom-radio ul {
-  list-style: none; }
+  list-style: none;
+  font-family: 'Lato'; }
 
 .custom-radio ul li:first-child {
   margin-right: -3px;
@@ -508,7 +629,8 @@ html, body {
   border: 2px solid #fff;
   height: 100%;
   cursor: pointer;
-  width: 197px; }
+  width: 197px;
+  text-align: center; }
 
 .custom-radio ul li:hover {
   background-color: #fff;
@@ -915,7 +1037,7 @@ input[type=radio]:checked ~ label {
 section.range-slider {
   position: relative;
   width: 200px;
-  height: 35px;
+  height: 45px;
   text-align: center; }
 
 section.range-slider input {

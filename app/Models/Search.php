@@ -5,16 +5,25 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Orientation;
 use App\Models\Interest;
+use App\Classes\Session;
 use Illuminate\Support\Facades\DB as DB;
 
 class Search {
+
+    public static function search() {
+        
+    }
+
     public static function suggestions(User $user) {
+        $session = Session::getInstance();
+        $user_id = $session->getValue('id');
         $blocked = self::getBlocked($user);
         $orientation = self::getSexPref($user);
         $ret = DB::table('user')
                 ->join('user_interets', 'user.id', '=', 'user_interets.user_id')
                 ->join('interets', 'user_interets.interets_id', '=', 'interets.id')                
                 ->select('login', 'avatar', 'latitude', 'longitude', 'age')
+                ->where('user.id', '<>', $user_id)
                 ->when($orientation, function ($query) use ($orientation) {
                     return $query->whereIn('user.sexe_id', $orientation);
                 })

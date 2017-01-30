@@ -45,7 +45,7 @@ class User {
 			]);
 		self::updateLastVisit();
 		if ($ret)
-			return Self::getId($this->login);
+			return Self::getUserId($this->login);
 		return false;
 	}
 

@@ -56,6 +56,12 @@ $app->group(['middleware' => 'auth',
     $app->post('/home', ['as' => 'home',
                 'uses' => 'UserController@submitProfile']);
 
+    $app->get('/recherche', ['as' => 'recherche', 
+                'uses' => 'HomeController@showSearch']);
+
+    $app->post('/recherche', ['as' => 'recherche', 
+                'uses' => 'HomeController@submitSearch']);
+
     // Route du profil de l'utilisateur
 
     $app->get('/profil/user/{login}', ['as' => 'profile',

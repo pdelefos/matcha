@@ -20,8 +20,19 @@ class HomeController extends Controller {
         $session = Session::getInstance();
         $user_id = $session->getValue('id');
         $user = User::getUser($user_id);
-        $currUser= self::getJsCurrentUser($user);
         $interests = Interest::getInterests();
+        if (!$user->getCompleted()) {
+            return view('pages.home.home',
+            [
+                'interests' => $interests, 
+                'user' => $user,
+                'request' => $request,
+                'currUser' => "[]",
+                'result' => "[]",
+                'search' => false
+            ]);
+        }
+        $currUser= self::getJsCurrentUser($user);
         $result = Search::suggestions($user);
         return view('pages.home.home',
         [
@@ -29,7 +40,45 @@ class HomeController extends Controller {
             'user' => $user,
             'currUser' => $currUser,
             'request' => $request,
-            'result' => $result
+            'result' => $result,
+            'search' => false
+        ]);
+    }
+
+    public function showSearch(Request $request) {
+        $session = Session::getInstance();
+        $user_id = $session->getValue('id');
+        $user = User::getUser($user_id);
+        $currUser= self::getJsCurrentUser($user);
+        $interests = Interest::getInterests();
+        $result = Search::suggestions($user);
+        return view('pages.home.home',
+        [
+            'interests' => $interests,
+            'user' => $user,
+            'request' => $request,
+            'currUser' => $currUser,
+            'result' => $result,
+            'search' => true
+        ]);
+    }
+
+    public function submitSearch(Request $request) {
+        // var_dump($request->all());
+        $session = Session::getInstance();
+        $user_id = $session->getValue('id');
+        $user = User::getUser($user_id);
+        $currUser= self::getJsCurrentUser($user);
+        $interests = Interest::getInterests();
+        $result = Search::suggestions($user);
+        return view('pages.home.home',
+        [
+            'interests' => $interests,
+            'user' => $user,
+            'request' => $request,
+            'currUser' => $currUser,
+            'result' => $result,
+            'search' => false
         ]);
     }
 

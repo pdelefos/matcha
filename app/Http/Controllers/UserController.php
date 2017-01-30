@@ -92,7 +92,10 @@ class UserController extends Controller {
                 'errorHandler' => $validator->errors(),
                 'interests' => $interests,
                 'user_completed' => $user_completed,
-                'request' => $request
+                'request' => $request,
+                'result' => "[]",
+                'currUser' => "[]",
+                'search' => false
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
