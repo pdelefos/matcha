@@ -420,9 +420,10 @@ html, body {
   font-size: 1em; }
 
 .display-users {
-  width: 90%;
   margin: 0 auto;
-  margin-top: 40px; }
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px; }
 
 .user-list {
   display: flex;
@@ -951,6 +952,15 @@ input[type=radio]:checked ~ label {
   text-align: center;
   display: block;
   margin: 0 auto; }
+
+.block-link {
+  text-decoration: none;
+  display: block;
+  margin-top: 220px;
+  position: relative;
+  width: 212px;
+  margin-left: auto;
+  margin-right: auto; }
 
 /*------------------------------------*\
 #PICTURE-MODAL

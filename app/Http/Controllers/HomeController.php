@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Classes\Session;
 use App\Models\Interest;
 use App\Models\Search;
+use App\Models\Tool;
+use App\Classes\Validator;
+use App\Classes\ErrorHandler;
 
 class HomeController extends Controller {
 
@@ -64,22 +67,18 @@ class HomeController extends Controller {
     }
 
     public function submitSearch(Request $request) {
-        // var_dump($request->all());
+        $inputs = $request->all();
+        if (!isset($inputs['age']) && !isset($inputs['score']) &&
+            !isset($inputs['adresse']) && !isset($inputs['interets']))
+            return redirect()->route('recherche');
         $session = Session::getInstance();
         $user_id = $session->getValue('id');
         $user = User::getUser($user_id);
         $currUser= self::getJsCurrentUser($user);
         $interests = Interest::getInterests();
-        $result = Search::suggestions($user);
-        return view('pages.home.home',
-        [
-            'interests' => $interests,
-            'user' => $user,
-            'request' => $request,
-            'currUser' => $currUser,
-            'result' => $result,
-            'search' => false
-        ]);
+        $result = Search::search($user, $inputs);
+        var_dump($result);
+        die();
     }
 
     private function getJsCurrentUser(User $user) {

@@ -12,16 +12,16 @@
                 <label class="form-label">age :</label>
                 <section class="range-slider filter-slider">
                     <span class="rangeValues"></span> ans
-                    <input name="age['min']"type="range" min="0" max="99" value="0">
-                    <input name="age['max']"type="range" min="0" max="99" value="99">
+                    <input name="age[min]"type="range" min="0" max="99" value="0">
+                    <input name="age[max]"type="range" min="0" max="99" value="99">
                 </section>
              </div>
              <div class="form-row">
                 <label class="form-label">score :</label>
                 <section id="score-slider" class="range-slider filter-slider">
                     <span class="rangeValues"></span> pts
-                    <input name="score['min']" type="range" min="0" max="100" value="0">
-                    <input name="score['max']" type="range" min="0" max="100" value="100">
+                    <input name="score[min]" type="range" min="0" max="100" value="0">
+                    <input name="score[max]" type="range" min="0" max="100" value="100">
                 </section>
              </div>
              <div class="form-row">

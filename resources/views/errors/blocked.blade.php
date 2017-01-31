@@ -7,7 +7,7 @@ $page_need = array(
 @section('content')
     <div class="app-wrap profile-page">
         <div class="profil-error">Vous avez bloqué l'utilisateur <span class="profil-error__login">{{ $user->getLogin() }}</span></div>
-        <a href="{{route('block', ['login' => "dydyl"])}}">
+        <a href="{{route('block', ['login' => $user->getLogin()])}}" class="block-link">
             <div class="action-button deblock-btn">
                 débloquer
             </div>
