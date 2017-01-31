@@ -77,8 +77,15 @@ class HomeController extends Controller {
         $currUser= self::getJsCurrentUser($user);
         $interests = Interest::getInterests();
         $result = Search::search($user, $inputs);
-        var_dump($result);
-        die();
+                return view('pages.home.home',
+        [
+            'interests' => $interests, 
+            'user' => $user,
+            'currUser' => $currUser,
+            'request' => $request,
+            'result' => $result,
+            'search' => false
+        ]);
     }
 
     private function getJsCurrentUser(User $user) {

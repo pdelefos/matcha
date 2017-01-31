@@ -1,7 +1,7 @@
 "use strict";
 
 const spooky = document.querySelector('#spooky');
-spooky.remove();
+// spooky.remove();
 
 /*----------------------------------------------------------*\
 #Filter User
@@ -18,6 +18,8 @@ const displayUsers = document.querySelector('.user-list');
 init();
 
 function init() {
+    console.log(usersList);
+    console.log(Array.from(usersList));
     // Order default value
     setOrderDefault(orderRadioList, 'asc');
     // Age init
@@ -44,9 +46,25 @@ function init() {
         finalArray = sortDesc(usersList, sortBy);
     else
         finalArray = sortAsc(usersList, sortBy);
+    
+    
+
+    // finalArray.sort((elemA, elemB) => {
+    //     if (elemA.dylan > elemB.dylan)
+    //         return 1;
+    //     else
+    //         return -1;
+    // });
     populateList(finalArray, displayUsers);
     console.log(finalArray);
 }
+
+// function dylanMmr(array = []) {
+//     array.forEach(user => {
+//         user.dylan = Math.round((user.age * 8 + user.distance * 6 + user.score * 4) / 18);
+//     })
+//     return array;
+// }
 
 
 

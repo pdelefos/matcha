@@ -72,6 +72,7 @@ class User {
 			latitude = :latitude,
 			longitude = :longitude,
 			presentation = :presentation,
+			city = :city,
 			completed = :completed
 			WHERE id = :id',
 			[
@@ -83,6 +84,7 @@ class User {
 				'latitude' => $this->latitude,
 				'longitude' => $this->longitude,
 				'presentation' => $this->presentation,
+				'city' => Geolocalisation::getCityFromLatLng($this->getLatitude(), $this->getLongitude()),
 				'id' => $this->id,
 				'completed' => true
 			]);
@@ -105,6 +107,7 @@ class User {
 			latitude = :latitude,
 			longitude = :longitude,
 			presentation = :presentation,
+			city = :city,
 			completed = :completed
 			WHERE id = :id',
 			[
@@ -119,6 +122,7 @@ class User {
 				'latitude' => $this->latitude,
 				'longitude' => $this->longitude,
 				'presentation' => $this->presentation,
+				'city' => Geolocalisation::getCityFromLatLng($this->getLatitude(), $this->getLongitude()),
 				'id' => $this->id,
 				'completed' => true
 			]);

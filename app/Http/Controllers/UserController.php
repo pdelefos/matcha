@@ -272,7 +272,7 @@ class UserController extends Controller {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
         if ($file == null) {
-            $errorHandler->addError("fichier invalid", "fichier");
+            $errorHandler->addError("fichier invalide", "fichier");
             $ret = true;
         } elseif ($file == null || !$file->isValid()) {
             $errorHandler->addError($request->file('picture')->getErrorMessage()
@@ -339,7 +339,7 @@ class UserController extends Controller {
         $ret = true;
         if (Tool::checkInputs($inputs, ['photoNo'])){
             if ($file == null) {
-                $errorHandler->addError("fichier invalid", "fichier");
+                $errorHandler->addError("fichier invalide", "fichier");
                 $ret = true;
             } elseif ($file == null || !$file->isValid()) {
                 $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");

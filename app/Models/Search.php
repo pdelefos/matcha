@@ -16,30 +16,58 @@ class Search {
         $user_id = $session->getValue('id');
         $blocked = self::getBlocked($user);
         $orientation = self::getSexPref($user);
+        $inputs['age'] = self::secureRange($inputs['age']);
+        $inputs['score'] = self::secureRange($inputs['score']);
         $ret = DB::table('user')
                 ->join('user_interets', 'user.id', '=', 'user_interets.user_id')
                 ->join('interets', 'user_interets.interets_id', '=', 'interets.id')                
-                ->select('login', 'avatar', 'latitude', 'longitude', 'age', 'sexe_id')
+                ->select('login', 'avatar', 'latitude', 'longitude', 'age', 'city')
                 ->whereIn('user.orientation_sexe_id', [Sexe::getId($user->getSexe()), Orientation::getId('indifferent')])
                 ->where('user.id', '<>', $user_id)
                 ->where('user.completed', '<>' , 0)
                 ->whereIn('user.sexe_id', $orientation)
-                ->when($inputs['age'], function ($query) use ($inputs) {
+                ->when((isset($inputs['adresse']) && $inputs['adresse'] != ''), function ($query) use ($inputs) {
+                    return $query->where('city', 'like', "%" . $inputs['adresse'] . "%");
+                })
+                ->when(isset($inputs['age']), function ($query) use ($inputs) {
                     return $query->whereBetween('user.age', [$inputs['age']['min'], $inputs['age']['max']]);
                 })
                 ->when($blocked, function ($query) use ($blocked) {
                     return $query->whereNotIn('user.id', $blocked);
                 })->distinct()->get();
-        $arrayScore = [];
+        $i = 0;
         foreach($ret as $user) {
-            $user->{'score'} = 0;
-            if ($user->{'login'} == "pdelefos")
-                $arrayScore[] = "$user";
+            $user->{'score'} = 0; // implementation du calcul du score
+            if (isset($inputs['score']) && 
+                ($user->{'score'} < (int) $inputs['score']['min'] ||
+                $user->{'score'} > (int) $inputs['score']['max']))
+                unset($ret[$i]);
             $user->{'interets'} = Interest::getUserInterest(User::getUserId($user->{'login'}));
+            if (isset($inputs['interets']) && !self::searchInterets($user->{'interets'}, $inputs['interets']))
+                unset($ret[$i]);
+            $i++;
         }
-        $ret = array_diff($ret, $arrayScore);
-        // return json_encode($ret);
-        return $ret;
+        $ret = array_values($ret);
+        return json_encode($ret);
+    }
+
+    private static function searchInterets($interetsUser, $interetsSearch) {
+        foreach($interetsUser as $intUser) {
+            foreach($interetsSearch as $intSearch) {
+                if ($intUser == $intSearch)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static function secureRange($input){
+        if(isset($input)) {
+            if ($input['min'] < 0) $input['min'] = 0;
+            if ($input['max'] > 100) $input['max'] = 100;
+            return $input;
+        }
+        return $input;
     }
 
     public static function suggestions(User $user) {
@@ -50,7 +78,7 @@ class Search {
         $ret = DB::table('user')
                 ->join('user_interets', 'user.id', '=', 'user_interets.user_id')
                 ->join('interets', 'user_interets.interets_id', '=', 'interets.id')                
-                ->select('login', 'avatar', 'latitude', 'longitude', 'age', 'sexe_id')
+                ->select('login', 'avatar', 'latitude', 'longitude', 'age', 'city')
                 ->whereIn('user.orientation_sexe_id', [Sexe::getId($user->getSexe()), Orientation::getId('indifferent')])
                 ->where('user.id', '<>', $user_id)
                 ->where('user.completed', '<>' , 0)
@@ -59,7 +87,7 @@ class Search {
                     return $query->whereNotIn('user.id', $blocked);
                 })->distinct()->get();
         foreach($ret as $user) {
-            $user->{'score'} = 0;
+            $user->{'score'} = 0; // implementation du calcul du score
             $user->{'interets'} = Interest::getUserInterest(User::getUserId($user->{'login'}));
         }
         return json_encode($ret);

@@ -96,6 +96,9 @@ $app->group(['middleware' => 'auth',
     $app->get('/notifications/userisonline/{login}', ['as' => 'userIsOnline',
                 'uses' => 'NotifController@isOnline']);
 
+    $app->get('/like/{login}', ['as' => 'like',
+                'uses' => 'NotifController@likeUser']);
+
     // Route du chat
 
     $app->get('/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
