@@ -91,4 +91,45 @@ class Likes {
             return true;
         return false;
     }
+
+    public static function getStatus($id) {
+        $session = Session::getInstance();
+        $user_id = $session->getValue('id');
+        if (!self::isMatch($id)) {
+            if (!self::isUserLike($user_id, $id) && 
+                !self::isUserLike($id, $user_id))
+                return 'nothing';
+            if (self::isUserLike($user_id, $id) && 
+                !self::isUserLike($id, $user_id))
+                return 'like';
+            if (!self::isUserLike($user_id, $id) && 
+                self::isUserLike($id, $user_id))
+                return 'likeback';
+        } else {
+            return 'match';
+        }
+    }
+
+    public static function getNbLike($id) {
+        $blocked = self::getBlocked($id);
+        $ret = DB::table(self::$table_name)
+                    ->where('other_id', '=', $id)
+                    ->whereNotIn('user_id', $blocked)
+                    ->count();
+        if ($ret)
+            return $ret;
+        return 0;
+    }
+
+    private static function getBlocked($id) {
+        $bloqued = DB::table('block_table')
+                    ->select('blocked_id')
+                    ->where('asking_id', $id)->get();
+        $ret = [];
+        if (!isset($bloqued[0]))
+            return $ret;
+        foreach($bloqued as $block)
+            $ret[] = $block->blocked_id;
+        return $ret;
+    }
 }

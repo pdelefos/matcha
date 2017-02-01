@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Orientation;
 use App\Models\Interest;
 use App\Models\Sexe;
+use App\Models\Score;
 use App\Classes\Session;
 use Illuminate\Support\Facades\DB as DB;
 
@@ -37,7 +38,7 @@ class Search {
                 })->distinct()->get();
         $i = 0;
         foreach($ret as $user) {
-            $user->{'score'} = 0; // implementation du calcul du score
+            $user->{'score'} = Score::getScore(User::getUserId($user->{'login'})); // implementation du calcul du score
             if (isset($inputs['score']) && 
                 ($user->{'score'} < (int) $inputs['score']['min'] ||
                 $user->{'score'} > (int) $inputs['score']['max']))
@@ -87,7 +88,7 @@ class Search {
                     return $query->whereNotIn('user.id', $blocked);
                 })->distinct()->get();
         foreach($ret as $user) {
-            $user->{'score'} = 0; // implementation du calcul du score
+            $user->{'score'} = Score::getScore(User::getUserId($user->{'login'})); // implementation du calcul du score
             $user->{'interets'} = Interest::getUserInterest(User::getUserId($user->{'login'}));
         }
         return json_encode($ret);

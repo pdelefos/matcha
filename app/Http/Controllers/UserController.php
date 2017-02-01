@@ -11,6 +11,8 @@ use App\Models\Interest;
 use App\Models\Geolocalisation;
 use App\Models\Photo;
 use App\Models\Tool;
+use App\Models\Likes;
+use App\Models\Visit;
 
 class UserController extends Controller {
 
@@ -35,9 +37,11 @@ class UserController extends Controller {
         } elseif (User::loginExists($login)) {
             $user = User::getUser(User::getUserId($login));
             $current = User::getUser($session->getValue('id'));
+            $likeStatus = Likes::getStatus(User::getUserId($login));
             if ($current->isBlocked(User::getUserId($login)))
                 return view('errors.blocked', ['user' => $user, 'request' => $request]);
-            return view('pages.home.profil', ['user' => $user, 'request' => $request]);
+            Visit::visit(User::getUserId($login));
+            return view('pages.home.profil', ['user' => $user, 'request' => $request, 'likeStatus' => $likeStatus]);
         } else {
             return view('errors.profil', ['login' => $login, 'request' => $request]);
         }

@@ -7,6 +7,7 @@ use App\Models\Orientation;
 use App\Models\Geolocalisation;
 use App\Models\Photo;
 use App\Models\Online;
+use App\Models\Score;
 
 class User {
 
@@ -430,5 +431,9 @@ class User {
 
 	public function getCompleted() {
 		return $this->completed;
+	}
+
+	public function getScore() {
+		return Score::getScore($this->id);
 	}
 }

@@ -33,13 +33,13 @@ $page_need = array(
                     @endforeach
                 </div>
                 <div class="like">
-                    like
+                    {{$likeStatus}}
                 </div>
             </div>
             <div class="profil-infobar">
                 <div class="profil-infobar-wrap">
                     <div class="profil-infobar__item profil-infobar__score">
-                        <div class="item-value">0</div>
+                        <div class="item-value">{{ $user->getScore() }} pts</div>
                         <div data-icon="ei-trophy" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__age">
@@ -85,12 +85,38 @@ $page_need = array(
         </div>
     </div>
     <script>
+        const likeButton = document.querySelector('.like');
          function doLike() {
             const root = "<?= route('like', ['login' => $user->getLogin()]) ?>";
             $.get(root, (data, status) => {
-                console.log(data);
+                switch (data) {
+                    case 'like':
+                        likeButton.innerHTML = 'tu like';
+                        return ;
+                    case 'unlike':
+                        likeButton.innerHTML = 'tu unlike';
+                        return ;
+                    case 'match':
+                        likeButton.innerHTML = 'c\'est un match';
+                        return ;
+                    case 'unmatch':
+                        likeButton.innerHTML = 'c\'est un unmatch';
+                        return ;
+                    case 'ownlike':
+                        likeButton.innerHTML = 'tu ne peux pas te liker';
+                        return ;
+                    case 'blocked':
+                        likeButton.innerHTML = 'tu as bloqué cet utilisateur';
+                        return ;
+                    case 'nopicture':
+                        likeButton.innerHTML = 'il faut une photo de profil';
+                        return ;
+                    default:
+                        break;
+                }
             }) 
          }
+         likeButton.addEventListener('click', doLike);
     </script>
     <script>
         const statusElem = document.querySelector('.status');

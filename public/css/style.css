@@ -821,6 +821,19 @@ input[type=radio]:checked ~ label {
   left: 16em;
   bottom: 3.5em; }
 
+.like {
+  cursor: pointer;
+  position: absolute;
+  top: 130px;
+  right: 50px;
+  background-color: #d2545a;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition-duration: 0.5s; }
+
+.like:hover {
+  transform: scale(0.9); }
+
 .profil-bar-interests__item {
   background-color: #637CFE;
   margin: 0.3em;
@@ -1088,3 +1101,46 @@ section.range-slider input:last-of-type::-moz-range-track {
 
 section.range-slider input[type=range]::-moz-focus-outer {
   border: 0; }
+
+/*------------------------------------*\
+#NOTIFICATIONS-PAGE
+\*------------------------------------*/
+.visit-notif-container {
+  margin-top: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: 'Lato';
+  text-align: center; }
+
+.notif-title {
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #fff;
+  display: block; }
+
+.notif-box {
+  box-sizing: border-box;
+  width: 400px;
+  background-color: #965FF4;
+  border-radius: 8px;
+  margin-right: 50px; }
+
+.visit-box {
+  box-sizing: border-box;
+  width: 400px;
+  background-color: #965FF4;
+  border-radius: 8px; }
+
+.list-visit {
+  list-style: none; }
+
+.item-visit {
+  background-color: #d2545a;
+  padding: 4px 8px;
+  margin-bottom: 10px; }
+
+.item-visit-unseen {
+  background-color: #55FEDE; }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Classes\Session;
 use App\Models\Likes;
+use App\Models\Visit;
 
 class NotifController extends Controller {
 
@@ -16,9 +17,12 @@ class NotifController extends Controller {
 
     // Render la vue Notification
     public function showNotif(Request $request) {
+        $visits = Visit::getCurrentVisits();
+        Visit::setCurrentAsSeen();
         return view('pages.home.notification',
         [
-            'request' => $request
+            'request' => $request,
+            'visits' => $visits
         ]);
     }
 
@@ -43,11 +47,12 @@ class NotifController extends Controller {
         $response = [];
         if (User::loginExists($login)) {
             if ($user_id == $other_id) {
-                return $response['error'] = "vous ne pouvez pas vous liker";
+                return $response['error'] = "ownlike";
             } else if ($user->isBlocked($other_id)) {
-                return $response['error'] = "L'utilisateur que vous voulez liker à été bloqué";
+                $response['error'] = "blocked";
+                return $response;
             } else if (empty($user->getAvatar())) {
-                return $response['error'] = "il faut une photo de profil pour liker";
+                return $response['error'] = "nopicture";
             } else {
                 $other_id = User::getUserId($login);
                 // si pas de match

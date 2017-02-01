@@ -48,7 +48,7 @@ $page_need = array(
             <div class="profil-infobar">
                 <div class="profil-infobar-wrap">
                     <div class="profil-infobar__item profil-infobar__score">
-                        <div class="item-value">0</div>
+                        <div class="item-value">{{ $user->getScore() }} pts</div>
                         <div data-icon="ei-trophy" data-size="m"></div>
                     </div>
                     <div class="profil-infobar__item profil-infobar__age">
