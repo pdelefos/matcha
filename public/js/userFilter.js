@@ -1,7 +1,7 @@
 "use strict";
 
 const spooky = document.querySelector('#spooky');
-// spooky.remove();
+spooky.remove();
 
 /*----------------------------------------------------------*\
 #Filter User

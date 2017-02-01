@@ -32,6 +32,9 @@ $page_need = array(
                         </div>
                     @endforeach
                 </div>
+                <div class="like">
+                    like
+                </div>
             </div>
             <div class="profil-infobar">
                 <div class="profil-infobar-wrap">
@@ -81,6 +84,14 @@ $page_need = array(
             </div>
         </div>
     </div>
+    <script>
+         function doLike() {
+            const root = "<?= route('like', ['login' => $user->getLogin()]) ?>";
+            $.get(root, (data, status) => {
+                console.log(data);
+            }) 
+         }
+    </script>
     <script>
         const statusElem = document.querySelector('.status');
 
