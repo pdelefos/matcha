@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Classes\Session;
 use App\Models\Likes;
 use App\Models\Visit;
+use App\Models\Notification;
 
 class NotifController extends Controller {
 
@@ -19,10 +20,12 @@ class NotifController extends Controller {
     public function showNotif(Request $request) {
         $visits = Visit::getCurrentVisits();
         Visit::setCurrentAsSeen();
+        $notifs = Notification::getCurrentNotifs();
         return view('pages.home.notification',
         [
             'request' => $request,
-            'visits' => $visits
+            'visits' => $visits,
+            'notifs' => $notifs
         ]);
     }
 
@@ -61,28 +64,36 @@ class NotifController extends Controller {
                     if (!Likes::isLike($other_id) && 
                         !Likes::isUserLike($other_id, $user_id)) {
                         Likes::like($other_id);
+                        Notification::setNotif($user_id, $other_id, 'like');
                         return $response['success'] = "like";
                         // si like et pas de like-back
                     } else if (Likes::isLike($other_id) && 
                                 !Likes::isUserLike($other_id, $user_id)) {
                         Likes::deleteLike($other_id);
+                        Notification::setNotif($user_id, $other_id, 'unlike');
                         return $response['success'] = "unlike";
                         // si pas de like et like-back
                     } else if (!Likes::isLike($other_id) && 
                                 Likes::isUserLike($other_id, $user_id)) {
                         Likes::like($other_id);
                         Likes::match($other_id);
+                        Notification::setNotif($user_id, $other_id, 'match');                        
                         return $response['success'] = "match";
                     }
                 // si match
                 } else {
                     Likes::deleteMatch($other_id);
                     Likes::deleteLike($other_id);
+                    Notification::setNotif($user_id, $other_id, 'unlike');                    
                     return $response['success'] = "unmatch";
                 }
             }
         } else {
             return $response['error'] = "cette utilisateur n'existe pas";
         }
+    }
+
+    public function getNotif(Request $request) {
+        return 'lol';
     }
 }

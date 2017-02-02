@@ -93,6 +93,9 @@ $app->group(['middleware' => 'auth',
     $app->get('/notifications', ['as' => 'notif',
                 'uses' => 'NotifController@showNotif']);
 
+    $app->get('/notifications/getnotif', ['as' => 'getnotif',
+                'uses' => 'NotifController@getNotif']);
+
     $app->get('/notifications/userisonline/{login}', ['as' => 'userIsOnline',
                 'uses' => 'NotifController@isOnline']);
 

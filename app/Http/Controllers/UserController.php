@@ -13,6 +13,7 @@ use App\Models\Photo;
 use App\Models\Tool;
 use App\Models\Likes;
 use App\Models\Visit;
+use App\Models\Notification;
 
 class UserController extends Controller {
 
@@ -35,12 +36,14 @@ class UserController extends Controller {
                 'modPhotos' => false
             ]);
         } elseif (User::loginExists($login)) {
-            $user = User::getUser(User::getUserId($login));
             $current = User::getUser($session->getValue('id'));
-            $likeStatus = Likes::getStatus(User::getUserId($login));
-            if ($current->isBlocked(User::getUserId($login)))
+            $other_id = User::getUserId($login);
+            $user = User::getUser($other_id);
+            $likeStatus = Likes::getStatus($other_id);
+            if ($current->isBlocked($other_id))
                 return view('errors.blocked', ['user' => $user, 'request' => $request]);
-            Visit::visit(User::getUserId($login));
+            Visit::visit($other_id);
+            Notification::setNotif($current->getId(), $other_id, 'visit');
             return view('pages.home.profil', ['user' => $user, 'request' => $request, 'likeStatus' => $likeStatus]);
         } else {
             return view('errors.profil', ['login' => $login, 'request' => $request]);

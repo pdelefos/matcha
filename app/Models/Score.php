@@ -13,8 +13,7 @@ class Score {
     public static function getScore($id) {
         $nbVisit = Visit::getNbVisit($id);
         $nbLike = Likes::getNbLike($id);
-
-        $score = (($nbVisit * 2) + ($nbLike * 5)) / 7;
+        $score = (($nbVisit * 4) + ($nbLike * 6)) / 10;
         return (int) round($score);
     }
 }
