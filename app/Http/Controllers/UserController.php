@@ -378,15 +378,40 @@ class UserController extends Controller {
     }
 
     public function blockUser(Request $request, $login) {
-        $session = Session::getInstance();
-        $user = User::getUser($session->getValue('id'));
-        $blocked_id = User::getUserId($login);
-        if (!$user->isBlocked($blocked_id) || $login == $session->getValue('login')){
-            $user->block($blocked_id);
-            return redirect()->route('home');
-        } else {
-            $user->unblock($blocked_id);
-            return redirect()->route('profile', ['login' => $login]);
+        $login = htmlentities($login);
+        if (User::loginExists($login)) {
+            $session = Session::getInstance();
+            $user = User::getUser($session->getValue('id'));
+            $blocked_id = User::getUserId($login);
+            if (!$user->isBlocked($blocked_id) || $login == $session->getValue('login')){
+                $user->block($blocked_id);
+                return redirect()->route('home');
+            } else {
+                $user->unblock($blocked_id);
+                return redirect()->route('profile', ['login' => $login]);
+            }
         }
+    }
+
+    public function reportUser(Request $request, $login) {
+        $login = htmlentities($login);
+        $session = Session::getInstance();
+        if (User::loginExists($login) && $login != $session->getValue('login')) {
+            $email = "fifiblop@gmail.com";
+            $subject = "MATCHA - REPORT";
+            $message = "<html>
+                        <body>
+                        <h2>report d'un utilisateur<h2>
+                        <p>l'utilisateur " . $login . " fait l'objet d'un signalement</p>
+                        </body>
+                        </html>";
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers .= 'From: camagru@yopmail.com' . "\r\n" .
+            $headers .= 'Reply-To: camagru@yopmail.com' . "\r\n" .
+            $headers .= 'X-Mailer: PHP/' . phpversion();
+            mail($email, $subject, $message, $headers);
+        }
+        return redirect()->route('profile', ['login' => $login]);
     }
 }

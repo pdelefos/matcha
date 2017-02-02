@@ -21,6 +21,7 @@ class NotifController extends Controller {
         $visits = Visit::getCurrentVisits();
         Visit::setCurrentAsSeen();
         $notifs = Notification::getCurrentNotifs();
+        Notification::setCurrentAsSeen();
         return view('pages.home.notification',
         [
             'request' => $request,
@@ -94,6 +95,6 @@ class NotifController extends Controller {
     }
 
     public function getNotif(Request $request) {
-        return 'lol';
+        return Notification::getNbNotif();
     }
 }

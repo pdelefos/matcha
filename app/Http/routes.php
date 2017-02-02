@@ -37,6 +37,9 @@ $app->get('/recover', ['as' => 'recover',
 
 $app->post('/recover', "AuthController@submitRecover");
 
+$app->get('/recover/hash/{hash}', ['as' => 'dorecover',
+            'uses' => 'AuthController@doRecover']);
+
 // Déconnexion
 
 $app->get('/home/deconnexion', ['as' => 'deconnexion',
@@ -87,6 +90,9 @@ $app->group(['middleware' => 'auth',
 
     $app->get('/profil/bloquer/{login}', ['as' => 'block',
                 'uses' => 'UserController@blockUser']);
+
+    $app->get('/profil/reporter/{login}', ['as' => 'report',
+                'uses' => 'UserController@reportUser']);
 
     // Route des notifications
 

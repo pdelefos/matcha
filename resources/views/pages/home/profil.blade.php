@@ -76,7 +76,7 @@ $page_need = array(
                         bloquer
                     </div>
                 </a>
-                <a href="" class="">
+                <a href="{{route('report', ['login' => $user->getLogin()])}}" class="">
                     <div class="action-button report-user">
                         signaler
                     </div>

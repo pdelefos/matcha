@@ -17,6 +17,7 @@ class User {
 	private $nom;
 	private $prenom;
 	private $password;
+	private $hash;
 	private $avatar;
 	private $sexe;
 	private $orientation;
@@ -35,14 +36,15 @@ class User {
 
 	// Enregistre un nouvel utilisateur en base
 	public function register() {
-		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password) 
-			VALUES (:login, :email, :nom, :prenom, :password)',
+		$ret = app('db')->insert('INSERT INTO user (login, email, nom, prenom, password, hash) 
+			VALUES (:login, :email, :nom, :prenom, :password, :hash)',
 			[
 				'login' => $this->login,
 				'email' => $this->email,
 				'nom' => $this->nom,
 				'prenom' => $this->prenom,
-				'password' => $this->password
+				'password' => $this->password,
+				'hash' => $this->hash
 			]);
 		self::updateLastVisit();
 		if ($ret)
@@ -265,6 +267,14 @@ class User {
 		return (int) ((time() - strtotime(str_replace("/", "-", $birthday))) / 3600 / 24 / 365);
 	}
 
+	public static function getHashByEmail($email) {
+		$ret = app('db')->select('SELECT hash FROM user WHERE email = :email',
+		['email' => $email]);
+		if ($ret)
+			return $ret[0]->{'hash'};
+		return false;
+	}
+
 	//---------------------------------------------------------//
 	// SET
 	//---------------------------------------------------------//
@@ -291,6 +301,10 @@ class User {
 
 	public function setPassword($password) {
 		$this->password = $password;
+	}
+
+	public function setHash($hash) {
+		$this->hash = $hash;
 	}
 
 	public function setAvatar($avatar) {

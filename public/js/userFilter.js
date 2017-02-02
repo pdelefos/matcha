@@ -134,22 +134,18 @@ function populateList(users = [], usersList) {
                 <div class="user-item__login">${user.login}</div>
                  <div class="user-item__row">
                     <div class="user-item-age user-item-info">
-                        <div data-icon="ei-calendar" data-size="s"></div>    
-                        ${user.age} ans
+                        Age : ${user.age} ans
                     </div>
                     <div class="user-item-loca user-item-info">
-                        <div data-icon="ei-location" data-size="s"></div>   
-                        ${user.distance} km
+                        Distance : ${user.distance} km
                     </div>
                  </div>
                  <div class="user-item__row">
                      <div class="user-item-score user-item-info">
-                         <div data-icon="ei-trophy" data-size="s"></div>
-                        ${user.score} pts
+                        Score : ${user.score} pts
                      </div>
                      <div class="user-item-interets user-item-info">
-                        <div data-icon="ei-tag" data-size="s"></div>
-                        ${user.nbInteretsCom} 
+                        Interets en commun : ${user.nbInteretsCom} 
                      </div>
                  </div>
             </li>

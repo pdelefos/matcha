@@ -12,9 +12,9 @@ $page_need = array(
                 <ul class="list-visit">
                     @foreach($notifs as $notif)
                         @if ($notif->{'seen'} == 0)
-                            <li class="item-visit item-visit-unseen">{{ $notif->{'login'} }} vous à {{ $notif->{'description'} }}</li>
+                            <li class="item-visit item-visit-unseen"><a href="{{route('profile', ['login' => $notif->{'login'}])}}">{{ $notif->{'login'} }}</a> vous à {{ $notif->{'description'} }}</li>
                         @else
-                            <li class="item-visit">{{ $notif->{'login'} }} vous à {{ $notif->{'description'} }}</li>
+                            <li class="item-visit"><a href="{{route('profile', ['login' => $notif->{'login'}])}}">{{ $notif->{'login'} }}</a> vous à {{ $notif->{'description'} }}</li>
                         @endif
                     @endforeach
                 </ul>
@@ -24,9 +24,9 @@ $page_need = array(
                 <ul class="list-visit">
                     @foreach($visits as $visit)
                         @if ($visit->{'seen'} == 0)
-                            <li class="item-visit item-visit-unseen">{{ $visit->{'login'} }} à visité votre profil</li>
+                            <li class="item-visit item-visit-unseen"><a href="{{route('profile', ['login' => $visit->{'login'}])}}">{{ $visit->{'login'} }}</a> à visité votre profil</li>
                         @else
-                            <li class="item-visit">{{ $visit->{'login'} }} à visité votre profil</li>
+                            <li class="item-visit"><a href="{{route('profile', ['login' => $visit->{'login'}])}}">{{ $visit->{'login'} }}</a> à visité votre profil</li>
                         @endif
                     @endforeach
                 </ul>

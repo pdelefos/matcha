@@ -74,6 +74,7 @@ class AuthController extends Controller
             $user->setNom($request->input('nom'));
             $user->setPrenom($request->input('prenom'));
             $user->setPassword(hash("whirlpool", $request->input('password')));
+            $user->setHash(hash("whirlpool", $request->input('password') . $request->input('login')));
             $user_id = $user->register();
             $user->setId($user_id);
             $user->goOnline();
@@ -140,6 +141,27 @@ class AuthController extends Controller
         ]);
         if ($validator->fails() || !$checkInputs)
             return view('pages.recover', ['prev_values' => $request, 'errorHandler' => $validator->errors()]);
+        $email = $inputs['email'];
+        if ($hash = User::getHashByEmail($email)) {
+            $subject = "MATCHA - RECUPERER MOT DE PASSE";
+            $message = "<html>
+                        <body>
+                        <h2>Procédure de récupèration de mot de passe<h2>
+                        <a href='" . route('dorecover', ['hash' => $hash]) . "'>clique ici</a>
+                        </body>
+                        </html>";
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers .= 'From: camagru@yopmail.com' . "\r\n" .
+            $headers .= 'Reply-To: camagru@yopmail.com' . "\r\n" .
+            $headers .= 'X-Mailer: PHP/' . phpversion();
+            mail($email, $subject, $message, $headers);
+        }
+        return view('pages.recover');
+    }
+
+    public function doRecover(Request $request, $hash) {
+        return $hash;
     }
 
     // Render la page de récupération de mot de passe

@@ -31,9 +31,20 @@ class Notification {
         return false;
     }
 
-    // static function getNbNotif($user_id) {
-
-    // }
+    static function getNbNotif() {
+        $session = Session::getInstance();
+        $user_id = $session->getValue('id');
+        $blocked = self::getBlocked($user_id);
+        $ret = DB::table(self::$table_name)
+                    ->where('other_id', '=', $user_id)
+                    ->where('other_id', '=', $user_id)
+                    ->where('seen', '=', 0)
+                    ->whereNotIn('user_id', $blocked)
+                    ->count();
+        if ($ret)
+            return $ret;
+        return 0;
+    }
 
     public static function getCurrentNotifs() {
         $session = Session::getInstance();
@@ -44,6 +55,7 @@ class Notification {
                     ->join('notification_type', 'notification_type.id', '=', 'notification.notification_id')
                     ->select('user_id', 'other_id', 'user.login', 'seen', 'notification_type.description')
                     ->where('other_id', '=', $user_id)
+                    ->where('notification_type.description', '<>', 'visit')
                     ->whereNotIn('user_id', $blocked)
                     ->latest(25)
                     ->orderBy('notification.created_at', 'desc')
