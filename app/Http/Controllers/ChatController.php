@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Classes\Session;
+use App\Models\User;
+use App\Models\Likes;
+use App\Models\Message;
 
 class ChatController extends Controller {
     
@@ -17,5 +21,32 @@ class ChatController extends Controller {
         [
             'request' => $request
         ]);
+    }
+
+    public function getConvWith(Request $request, $login) {
+        $login = htmlentities($login);
+        if (User::loginExists($login) && Likes::isMatch(User::getUserId($login))) {
+            $session = Session::getInstance();
+            $user_id = $session->getValue('id');
+            $other_id = User::getUserId($login);
+            $ret = Message::getConv($user_id, $other_id);
+            return json_encode($ret);
+        } else {
+            $ret['error'] = 'utilisateur n\'existe pas ou n\'est pas matché';
+            return json_encode($ret);
+        }
+    }
+
+    public function sendMessage(Request $request){
+        $session = Session::getInstance();
+        $currentUser = User::getUser($session->getValue('id'));
+        $inputs = $request->all();
+        $login = $inputs['dest'];
+        $login = htmlentities($login);
+        if (User::loginExists($login) && Likes::isMatch(User::getUserId($login))
+            && !$currentUser->isBlocked(User::getUserId($login))) {
+            if (strlen($inputs['msg']) <= 500)
+                Message::sendMessage($currentUser->getId(), User::getUserId($login), $inputs['msg']);
+        }
     }
 }

@@ -32,8 +32,11 @@ $page_need = array(
                         </div>
                     @endforeach
                 </div>
+                <div class="etat">
+                    État : {{$likeStatus}}
+                </div>
                 <div class="like">
-                    {{$likeStatus}}
+                    <div data-icon="ei-heart" data-size="m"></div>
                 </div>
             </div>
             <div class="profil-infobar">
@@ -85,31 +88,33 @@ $page_need = array(
         </div>
     </div>
     <script>
+        const likeEtat = document.querySelector('.etat');
         const likeButton = document.querySelector('.like');
+        console.log(likeEtat);
          function doLike() {
             const root = "<?= route('like', ['login' => $user->getLogin()]) ?>";
             $.get(root, (data, status) => {
                 switch (data) {
                     case 'like':
-                        likeButton.innerHTML = 'tu like';
+                        likeEtat.innerHTML = 'État : tu like';
                         return ;
                     case 'unlike':
-                        likeButton.innerHTML = 'tu unlike';
+                        likeEtat.innerHTML = 'État : tu unlike';
                         return ;
                     case 'match':
-                        likeButton.innerHTML = 'c\'est un match';
+                        likeEtat.innerHTML = 'État : c\'est un match';
                         return ;
                     case 'unmatch':
-                        likeButton.innerHTML = 'c\'est un unmatch';
+                        likeEtat.innerHTML = 'État : c\'est un unmatch';
                         return ;
                     case 'ownlike':
-                        likeButton.innerHTML = 'tu ne peux pas te liker';
+                        likeEtat.innerHTML = 'État : tu ne peux pas te liker';
                         return ;
                     case 'blocked':
-                        likeButton.innerHTML = 'tu as bloqué cet utilisateur';
+                        likeEtat.innerHTML = 'État : tu as bloqué cet utilisateur';
                         return ;
                     case 'nopicture':
-                        likeButton.innerHTML = 'il faut une photo de profil';
+                        likeEtat.innerHTML = 'État : il faut une photo de profil';
                         return ;
                     default:
                         break;

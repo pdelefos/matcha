@@ -114,6 +114,10 @@ $app->group(['middleware' => 'auth',
     // Route du chat
 
     $app->get('/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
+
+    $app->get('/chat/getconversation/{login}', ['as' => 'getconv', 'uses' => 'ChatController@getConvWith']);
+
+    $app->post('/chat/sendmessage', ['as' => 'sendmessage', 'uses' => 'ChatController@sendMessage']);
 });
 
 /*--------------------------------------------------------------------------
