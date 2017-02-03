@@ -160,14 +160,40 @@ class AuthController extends Controller
         return view('pages.recover');
     }
 
-    public function doRecover(Request $request, $hash) {
-        return $hash;
-    }
-
     // Render la page de récupération de mot de passe
     public function showRecover() {
         return view('pages.recover');
     }
+
+    public function doRecover(Request $request, $hash) {
+        // si hash n'existe pas redirection vers connexion
+        if (User::hashExist($hash))
+            return view('pages.newpassword');
+        return redirect()->route('connection');
+    }
+
+    public function submitPassword(Request $request, $hash) {
+        if (User::hashExist($hash)) {
+            $inputs = $request->all();
+            $checkInputs = Tool::checkInputs($inputs, ['password']);
+            $errorHandler = new ErrorHandler;
+            $validator = new Validator($errorHandler);
+            $validator->check($inputs, [
+                'password' => [
+                    'required' => true,
+                    'minlength' => 5,
+                    'maxlength' => 150,
+                    'password' => true
+                ]
+            ]);
+            if ($validator->fails() || !$checkInputs)
+                return view('pages.newpassword', ['errorHandler' => $validator->errors()]);
+            User::updatePasswordByHash($hash, hash('whirlpool', $inputs['password']));
+            return view('pages.newpassword');
+        }
+        return redirect()->route('connection');
+    }
+
 
     // deconnecte l'utilisateur courant et le renvoi au register
     public function logout() {

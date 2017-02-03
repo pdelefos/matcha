@@ -40,6 +40,9 @@ $app->post('/recover', "AuthController@submitRecover");
 $app->get('/recover/hash/{hash}', ['as' => 'dorecover',
             'uses' => 'AuthController@doRecover']);
 
+$app->post('/recover/hash/{hash}', ['as' => 'dorecover',
+            'uses' => 'AuthController@submitPassword']);       
+
 // Déconnexion
 
 $app->get('/home/deconnexion', ['as' => 'deconnexion',

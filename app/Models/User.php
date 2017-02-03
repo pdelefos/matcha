@@ -275,6 +275,24 @@ class User {
 		return false;
 	}
 
+	public static function hashExist($hash) {
+		$ret = app('db')->select('SELECT id FROM user WHERE hash = :hash', 
+		['hash' => $hash]);
+		if($ret)
+			return true;
+		return false;
+	}
+
+	public static function updatePasswordByHash($hash, $password) {
+		$ret = app('db')->update('UPDATE user SET password = :password WHERE hash = :hash', [
+			'password' => $password,
+			'hash' => $hash
+		]);
+		if($ret)
+			return true;
+		return false;
+	}
+
 	//---------------------------------------------------------//
 	// SET
 	//---------------------------------------------------------//
