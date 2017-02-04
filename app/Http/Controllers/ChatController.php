@@ -17,6 +17,8 @@ class ChatController extends Controller {
 
     // Render la vue Chat
     public function showChat(Request $request) {
+        $session = Session::getInstance();
+        $usersConv = Likes::getAllMatches($session->getValue('id'));
         return view('pages.home.chat',
         [
             'request' => $request

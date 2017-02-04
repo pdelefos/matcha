@@ -33,6 +33,7 @@ $page_need = array(
     <script>
         const convUsers = document.querySelector('.chat-users__list');
         const usersPool = convUsers.querySelectorAll('.chat-users__item');
+        const chatWindow = document.querySelector('.chat-conversation__window');
         const conversationList = document.querySelector('.chat-conversation__list');
         const formSendMessage = document.querySelector('.send-message');
         let refresh;
@@ -60,6 +61,7 @@ $page_need = array(
                 } else {
                     conversationList.innerHTML = '';
                 }
+                chatWindow.scrollTop = chatWindow.scrollHeight;
             })
         }
 
@@ -77,6 +79,7 @@ $page_need = array(
                     },
                     success: function (retour) {
                         input.value = '';
+                        chatWindow.scrollTop = chatWindow.scrollHeight;                        
                     }
                 })
             }
@@ -86,6 +89,5 @@ $page_need = array(
         usersPool.forEach(elem => {
             elem.addEventListener('click', getCurrentConv);
         })
-
     </script>
 @stop
