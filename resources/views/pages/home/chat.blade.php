@@ -9,11 +9,9 @@ $page_need = array(
         <div class="chat-container">
             <div class="chat-users">
                 <ul class="chat-users__list">
-                    <li class="chat-users__item" data-name="sulo">sulo</li>
-                    <li class="chat-users__item" data-name="silbo">silbo</li>
-                    <li class="chat-users__item" data-name="poulet">poulet</li>
-                    <li class="chat-users__item" data-name="pdelefos">pdelefos</li>
-                    <li class="chat-users__item" data-name="choupinette">choupinette</li>
+                    @forEach($usersConv as $user)
+                        <li class="chat-users__item" data-name="{{ $user->{'login'} }}">{{ $user->{'login'} }}</li>
+                    @endforeach
                 </ul>
             </div>
             <div class="chat-conversation">
@@ -43,8 +41,10 @@ $page_need = array(
             if (typeof refresh !== 'undefined')
                 clearInterval(refresh);
             const currentConvUser = this.dataset.name;
+            setActive(currentConvUser);
             currentDest = this.dataset.name;
             const pathGetConv = `<?= route('root') ?>/chat/getconversation/${currentConvUser}`;
+            getConversation(pathGetConv);
             refresh = setInterval(getConversation.bind(null, pathGetConv), 1000);
         }
 
@@ -89,5 +89,13 @@ $page_need = array(
         usersPool.forEach(elem => {
             elem.addEventListener('click', getCurrentConv);
         })
+
+        function setActive(user) {
+            usersPool.forEach(elem => {
+                elem.classList.remove('chat-users__item-active')                
+                if (elem.dataset.name == user)
+                    elem.classList.add('chat-users__item-active')
+            })
+        }
     </script>
 @stop

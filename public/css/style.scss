@@ -1347,7 +1347,7 @@
 
   .chat-users__list {
     list-style: none;
-    color: #000;
+    color: #fff;
   }
 
   .chat-users__item {
@@ -1358,6 +1358,10 @@
     background-color: $green;
     border-bottom: 1px solid #fff;
     cursor: pointer;    
+  }
+
+  .chat-users__item-active {
+    color: #000;
   }
 
   .chat-conversation {

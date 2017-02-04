@@ -21,7 +21,8 @@ class ChatController extends Controller {
         $usersConv = Likes::getAllMatches($session->getValue('id'));
         return view('pages.home.chat',
         [
-            'request' => $request
+            'request' => $request,
+            'usersConv' => $usersConv
         ]);
     }
 

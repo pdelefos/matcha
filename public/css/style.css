@@ -1167,7 +1167,7 @@ section.range-slider input[type=range]::-moz-focus-outer {
 
 .chat-users__list {
   list-style: none;
-  color: #000; }
+  color: #fff; }
 
 .chat-users__item {
   height: 80px;
@@ -1177,6 +1177,9 @@ section.range-slider input[type=range]::-moz-focus-outer {
   background-color: #55FEDE;
   border-bottom: 1px solid #fff;
   cursor: pointer; }
+
+.chat-users__item-active {
+  color: #000; }
 
 .chat-conversation {
   height: 100vh;

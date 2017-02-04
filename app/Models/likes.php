@@ -94,8 +94,6 @@ class Likes {
 
     public static function getAllMatches($from_id) {
         $ret = DB::table('match')
-                ->join('user', 'user.id', '=', 'match.user_id')
-                ->join('user', 'user.id', '=', 'match.other_id')
                 ->select('user_id', 'other_id')
                 ->where('user_id', "=", $from_id)
                 ->orWhere('other_id', "=", $from_id)
@@ -107,8 +105,10 @@ class Likes {
             if ($match->{'other_id'} != $from_id)
                 $array[] = $match->{'other_id'};
         }
-        var_dump($array);
-        die();
+        $ret = DB::table('user')
+                ->select('login')
+                ->whereIn('id', $array)
+                ->get();
         if ($ret)
             return $ret;
         return [];
