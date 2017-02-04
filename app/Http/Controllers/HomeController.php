@@ -32,7 +32,8 @@ class HomeController extends Controller {
                 'request' => $request,
                 'currUser' => "[]",
                 'result' => "[]",
-                'search' => false
+                'search' => false,
+                'mmr' => 1
             ]);
         }
         $currUser= self::getJsCurrentUser($user);
@@ -44,7 +45,8 @@ class HomeController extends Controller {
             'currUser' => $currUser,
             'request' => $request,
             'result' => $result,
-            'search' => false
+            'search' => false,
+            'mmr' => 1
         ]);
     }
 
@@ -62,7 +64,8 @@ class HomeController extends Controller {
             'request' => $request,
             'currUser' => $currUser,
             'result' => $result,
-            'search' => true
+            'search' => true,
+            'mmr' => 0
         ]);
     }
 
@@ -84,7 +87,8 @@ class HomeController extends Controller {
             'currUser' => $currUser,
             'request' => $request,
             'result' => $result,
-            'search' => false
+            'search' => false,
+            'mmr' => 0
         ]);
     }
 

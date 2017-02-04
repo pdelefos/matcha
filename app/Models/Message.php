@@ -45,6 +45,23 @@ class Message {
         return $array;
     }
 
+    static function setConvAsSeen($from_id, $to_id) {
+        $blocked = self::getBlocked($from_id);
+        $ret = DB::table(self::$table_name)
+                    ->where('user_id', $from_id)
+                    ->where('other_id', $to_id)
+                    ->whereNotIn('other_id', $blocked)
+                    ->update(['seen' => 1]);
+        $ret = DB::table(self::$table_name)
+                    ->where('user_id', $to_id)
+                    ->where('other_id', $from_id)
+                    ->whereNotIn('user_id', $blocked)
+                    ->update(['seen_other' => 1]);
+        if ($ret)
+            return true;
+        return false;
+    }
+
     private static function getBlocked($id) {
         $bloqued = DB::table('block_table')
                     ->select('blocked_id')
@@ -55,5 +72,20 @@ class Message {
         foreach($bloqued as $block)
             $ret[] = $block->blocked_id;
         return $ret;
+    }
+
+    public static function getNbVisit($from_id) {
+        $blocked = self::getBlocked($from_id);
+        $ret = DB::table(self::$table_name)
+                    ->where('user_id', $from_id)
+                    ->whereNotIn('other_id', $blocked)
+                    ->where('seen', '=', 0)
+                    ->count();
+        $ret1 = DB::table(self::$table_name)
+                    ->where('other_id', $from_id)
+                    ->whereNotIn('user_id', $blocked)
+                    ->where('seen_other', '=', 0)
+                    ->count();
+        return $ret + $ret1;
     }
 }

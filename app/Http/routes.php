@@ -118,6 +118,8 @@ $app->group(['middleware' => 'auth',
     $app->get('/chat/getconversation/{login}', ['as' => 'getconv', 'uses' => 'ChatController@getConvWith']);
 
     $app->post('/chat/sendmessage', ['as' => 'sendmessage', 'uses' => 'ChatController@sendMessage']);
+
+    $app->get('/chat/getnotif', ['as' => 'getmsgnotif', 'uses' => 'ChatController@getNotif']);
 });
 
 /*--------------------------------------------------------------------------

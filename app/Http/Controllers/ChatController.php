@@ -33,6 +33,7 @@ class ChatController extends Controller {
             $user_id = $session->getValue('id');
             $other_id = User::getUserId($login);
             $ret = Message::getConv($user_id, $other_id);
+            Message::setConvAsSeen($user_id, $other_id);
             return json_encode($ret);
         } else {
             $ret['error'] = 'utilisateur n\'existe pas ou n\'est pas matché';
@@ -40,16 +41,24 @@ class ChatController extends Controller {
         }
     }
 
-    public function sendMessage(Request $request){
+    public function sendMessage(Request $request) {
         $session = Session::getInstance();
         $currentUser = User::getUser($session->getValue('id'));
         $inputs = $request->all();
-        $login = $inputs['dest'];
+        if (isset($inputs['dest']))
+            $login = $inputs['dest'];
+        else
+            $login = "";
         $login = htmlentities($login);
         if (User::loginExists($login) && Likes::isMatch(User::getUserId($login))
             && !$currentUser->isBlocked(User::getUserId($login))) {
-            if (strlen($inputs['msg']) <= 500)
+            if (isset($inputs['msg']) && strlen($inputs['msg']) <= 500 || !empty($inputs['msg']))
                 Message::sendMessage($currentUser->getId(), User::getUserId($login), $inputs['msg']);
         }
+    }
+
+    public function getNotif(Request $request) {
+        $session = Session::getInstance();
+        return Message::getNbVisit($session->getValue('id'));
     }
 }

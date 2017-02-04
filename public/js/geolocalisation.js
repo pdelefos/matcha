@@ -46,7 +46,6 @@ function error(objErreur) {
             strErreur = "Erreur inconnue."
             break
     }
-    console.log(strErreur)
 }
 
 var options = {

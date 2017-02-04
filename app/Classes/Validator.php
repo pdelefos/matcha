@@ -150,6 +150,9 @@ class Validator {
 
     // Verifie que la date n'est pas vide
     protected function requiredDate($field, $value, $condition) {
+        if (!isset($value['jour']) || !isset($value['mois'])
+            || !isset($value['annee']))
+            return false;
         $jour = $value['jour'];
         $mois = $value['mois'];
         $annee = $value['annee'];
@@ -170,12 +173,15 @@ class Validator {
 
     // Verifie la validité de la date
     protected function validDate($field, $value, $condition) {
+        if (!isset($value['jour']) || !isset($value['mois'])
+            || !isset($value['annee']))
+            return false;
         $jour = $value['jour'];
         $mois = $value['mois'];
         $annee = $value['annee'];
         if (empty($jour) || empty($mois) || empty($annee))
             return false;
-        return checkdate($mois, $jour, $annee);
+        return checkdate((int) $mois, (int) $jour, (int) $annee);
     }
 
     protected function emailExist($field, $value, $condition) {

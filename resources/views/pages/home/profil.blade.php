@@ -90,7 +90,6 @@ $page_need = array(
     <script>
         const likeEtat = document.querySelector('.etat');
         const likeButton = document.querySelector('.like');
-        console.log(likeEtat);
          function doLike() {
             const root = "<?= route('like', ['login' => $user->getLogin()]) ?>";
             $.get(root, (data, status) => {

@@ -81,6 +81,7 @@ $page_need = array(
 const usersList = <?= $result ?>;
 const currUser = <?= $currUser ?>;
 const rootPath = "<?= route('root') ?>";
+const mmr = "<?= $mmr ?>";
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.0/geolocator.js"></script>
 <script src="js/doubleSlider.js"></script>

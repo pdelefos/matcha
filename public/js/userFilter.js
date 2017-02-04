@@ -18,8 +18,6 @@ const displayUsers = document.querySelector('.user-list');
 init();
 
 function init() {
-    console.log(usersList);
-    console.log(Array.from(usersList));
     // Order default value
     setOrderDefault(orderRadioList, 'asc');
     // Age init
@@ -47,24 +45,24 @@ function init() {
     else
         finalArray = sortAsc(usersList, sortBy);
     
-    
+    if (mmr == 1) 
+        finalArray = mmrSort(finalArray);
 
-    // finalArray.sort((elemA, elemB) => {
-    //     if (elemA.dylan > elemB.dylan)
-    //         return 1;
-    //     else
-    //         return -1;
-    // });
     populateList(finalArray, displayUsers);
-    console.log(finalArray);
 }
 
-// function dylanMmr(array = []) {
-//     array.forEach(user => {
-//         user.dylan = Math.round((user.age * 8 + user.distance * 6 + user.score * 4) / 18);
-//     })
-//     return array;
-// }
+function mmrSort(array = []) {
+    array.forEach(user => {
+        user.mmr = Math.round((user.distance * -5 + user.score * 4 + user.nbInteretsCom * 3) / 12);
+    })
+    array.sort((elemA, elemB) => {
+        if (elemA.mmr > elemB.mmr)
+            return -1;
+        else
+            return 1;
+    });
+    return array;
+}
 
 
 
@@ -103,7 +101,6 @@ function filterSort(e) {
     else
         finalArray = sortAsc(arrayByInterets, sortBy);
     populateList(finalArray, displayUsers);
-    console.log(finalArray);
 }
 
 ageSlider.addEventListener('change', filterSort);

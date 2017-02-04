@@ -54,6 +54,13 @@ class UserController extends Controller {
     public function submitProfile(Request $request) {
         $session = Session::getInstance();
         $inputs = $request->all();
+        $errorHandler = new ErrorHandler;
+        $validator = new Validator($errorHandler);
+        if (!isset($inputs['anniversaire']) ||
+            !isset($inputs['anniversaire']['jour']) ||
+            !isset($inputs['anniversaire']['mois']) ||
+            !isset($inputs['anniversaire']['annee']))
+            $validator->errors()->addError('date invalide', 'anniversaire');
         $checkInputs = Tool::checkInputs($inputs, [
             'sexe',
             'recherche',
@@ -62,8 +69,6 @@ class UserController extends Controller {
             'interets',
             'adresse'
         ]);
-        $errorHandler = new ErrorHandler;
-        $validator = new Validator($errorHandler);
         $validator->check($inputs, [
             'sexe' => [
                 'required' => true
@@ -76,7 +81,8 @@ class UserController extends Controller {
                 'validDate' => true
             ],
             'presentation' => [
-                'required' => true
+                'required' => true,
+                'maxlength' => 500
             ],
             'interets' => [
                 'requiredTagsMin' => 2,
@@ -102,7 +108,8 @@ class UserController extends Controller {
                 'request' => $request,
                 'result' => "[]",
                 'currUser' => "[]",
-                'search' => false
+                'search' => false,
+                'mmr' => 0
             ]);
         } else {
             $jour = $inputs['anniversaire']['jour'];
@@ -148,7 +155,14 @@ class UserController extends Controller {
     // Enregistre les modifications du profil
     public function submitModificationProfile(Request $request) {
         $session = Session::getInstance();
+        $errorHandler = new ErrorHandler;
+        $validator = new Validator($errorHandler);
         $inputs = $request->all();
+        if (!isset($inputs['anniversaire']) ||
+            !isset($inputs['anniversaire']['jour']) ||
+            !isset($inputs['anniversaire']['mois']) ||
+            !isset($inputs['anniversaire']['annee']))
+            $validator->errors()->addError('date invalide', 'anniversaire');
         $checkInputs = Tool::checkInputs($inputs, [
             'nom',
             'prenom',
@@ -162,8 +176,6 @@ class UserController extends Controller {
             'adresseLat',
             'adresseLng'
         ]);
-        $errorHandler = new ErrorHandler;
-        $validator = new Validator($errorHandler);
         $interests = Interest::getInterests();
         $validator->check($inputs, [
             'nom' => [
@@ -192,7 +204,8 @@ class UserController extends Controller {
                 'validDate' => true
             ],
             'presentation' => [
-                'required' => true
+                'required' => true,
+                'maxlength' => 500
             ],
             'interets' => [
                 'requiredTagsMin' => 2,
@@ -344,37 +357,39 @@ class UserController extends Controller {
         $session = Session::getInstance();
         $user = User::getUser($session->getValue('id'));
         $ret = true;
-        if (Tool::checkInputs($inputs, ['photoNo'])){
-            if ($file == null) {
-                $errorHandler->addError("fichier invalide", "fichier");
-                $ret = true;
-            } elseif ($file == null || !$file->isValid()) {
-                $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
-                $ret = true;
-            } elseif ($file->guessExtension() == "jpeg" ||
-                    $file->guessExtension() == "png" ||
-                    $file->guessExtension() == "gif"){
-                $path = "pictures/" . $user->getLogin();
-                $filename = $inputs['photoNo'] . "." . $file->guessExtension();
-                $fullPath = $path . "/" . $filename;
-                Photo::setUserPhoto($session->getValue('id'), $fullPath, $inputs['photoNo']);
-                $file->move($path, $filename);
-                $ret = false;
-            } else {
-                $errorHandler->addError("extension invalide", "fichier");
-                $ret = true;
+        if (isset($inputs['photoNo'])) {
+            if (Tool::checkInputs($inputs, ['photoNo'])){
+                if ($file == null) {
+                    $errorHandler->addError("fichier invalide", "fichier");
+                    $ret = true;
+                } elseif ($file == null || !$file->isValid()) {
+                    $errorHandler->addError($request->file('picture')->getErrorMessage(), "fichier");
+                    $ret = true;
+                } elseif ($file->guessExtension() == "jpeg" ||
+                        $file->guessExtension() == "png" ||
+                        $file->guessExtension() == "gif"){
+                    $path = "pictures/" . $user->getLogin();
+                    $filename = $inputs['photoNo'] . "." . $file->guessExtension();
+                    $fullPath = $path . "/" . $filename;
+                    Photo::setUserPhoto($session->getValue('id'), $fullPath, $inputs['photoNo']);
+                    $file->move($path, $filename);
+                    $ret = false;
+                } else {
+                    $errorHandler->addError("extension invalide", "fichier");
+                    $ret = true;
+                }
             }
+            return view('pages.home.myprofil',
+            [
+                'user' => $user,
+                'request' => $request,
+                'modification' => false,
+                'errorHandler' => $errorHandler,
+                'modPicture' => false,
+                'modPhotos' => $ret,
+                'photoNo' => $inputs['photoNo']
+            ]);
         }
-        return view('pages.home.myprofil',
-        [
-            'user' => $user,
-            'request' => $request,
-            'modification' => false,
-            'errorHandler' => $errorHandler,
-            'modPicture' => false,
-            'modPhotos' => $ret,
-            'photoNo' => $inputs['photoNo']
-        ]);
     }
 
     public function blockUser(Request $request, $login) {
